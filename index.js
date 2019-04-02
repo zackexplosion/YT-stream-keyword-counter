@@ -16,11 +16,12 @@ const source_socket = require('socket.io-client')(SOURCE_URL)
 const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-const moment = require('moment')
+const moment = require('moment-timezone')
 moment.locale('zh-tw')
 
 const getNow = () =>{
-  return `${moment().format('LL')} ${moment().format('LTS')}`
+  zone = 'Asia/Taipei'
+  return `${moment().tz(zone).format('LL')} ${moment().tz(zone).format('LTS')}`
 }
 
 // setup index route
