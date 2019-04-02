@@ -69,7 +69,7 @@ source_socket.on('update', function(data){
 source_socket.on('disconnect', function(){
   console.log('disconnect from', SOURCE_URL)
 })
-
-http.listen(process.env.PORT || 3000, function () {
-  console.log('Example app listening on port http://localhost:3000!');
+const PORT = process.env.PORT || 3000
+http.listen(PORT, function () {
+  console.log(`App serving on http://localhost:${PORT}!`);
 })
