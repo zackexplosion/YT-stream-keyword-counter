@@ -7,8 +7,8 @@ html
     link(href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css", rel="stylesheet", integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T", crossorigin="anonymous")
     link(rel='icon', type='image/png', href='./icon.png')
     link(rel='shortcut icon', type='image/png', href='./icon.png')
-  body
-    h1#title CTI Hant Counter
+  body.container
+    h1#title 中天韓總計數器
     div 從 2019/04/01起總共出現了.. #[#count]
     div.video-wrapper
       iframe(src=`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
