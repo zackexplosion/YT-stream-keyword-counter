@@ -10,6 +10,7 @@ const db = low(adapter)
 db.defaults({ count: 0, views:0, reads: 0, messages: [] }).write()
 
 // packages
+const path = require('path')
 const express = require('express')
 const source_socket = require('socket.io-client')(SOURCE_URL)
 const app = express()
