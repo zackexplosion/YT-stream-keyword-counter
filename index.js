@@ -35,6 +35,10 @@ app.get('/', function (req, res) {
   })
 })
 
+app.get('/dbdownload', (req, res) =>{
+  res.download(DB_PATH)
+})
+
 // setup server io
 io.on('connection', function(socket){
   io.emit('initMessages', {
