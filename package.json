@@ -17,6 +17,7 @@
     "socket.io": "^2.2.0"
   },
   "devDependencies": {
-    "nodemon": "^1.18.10"
+    "nodemon": "^1.18.10",
+    "shipit-deploy": "^4.1.4"
   }
 }
