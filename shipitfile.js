@@ -26,7 +26,7 @@ module.exports = function (shipit) {
     const name = 'cti-hant-counter-crawler'
     const current_path = `${shipit.config.deployTo}/current`
     try {
-      await shipit.remote(`PORT=${PORT} pm2 start ${current_path}/index.js --name ${name}`)
+      await shipit.remote(`DB_PATH=../db.json PORT=${PORT} pm2 start ${current_path}/index.js --name ${name}`)
     } catch (error) {
       await shipit.remote(`pm2 restart ${name}`)
     }

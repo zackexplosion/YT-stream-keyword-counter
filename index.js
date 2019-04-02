@@ -1,11 +1,11 @@
 // env params with default value
 const SOURCE_URL = process.env.SOURCE_URL || 'http://35.199.161.19'
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
-
+const DB_PATH = process.env.DB_PATH || 'db.json'
 // db setup
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db.json')
+const adapter = new FileSync(DB_PATH)
 const db = low(adapter)
 db.defaults({ count: 0, views:0, reads: 0, messages: [] }).write()
 
@@ -25,6 +25,7 @@ const getNow = () =>{
 // setup index route
 app.use(express.static('./public'))
 app.set('view engine', 'pug')
+app.set('views', path.join(__dirname, '/views'))
 const startTime = moment()
 app.get('/', function (req, res) {
   res.render('index', {
