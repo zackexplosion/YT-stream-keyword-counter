@@ -23,7 +23,7 @@ module.exports = function (shipit) {
   })
 
   shipit.task('startApp', async () => {
-    const name = 'cti-hant-counter'
+    const name = 'cti-hant-counter-crawler'
     const current_path = `${shipit.config.deployTo}/current`
     try {
       await shipit.remote(`PORT=${PORT} pm2 start ${current_path}/index.js --name ${name}`)
