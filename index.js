@@ -2,6 +2,7 @@
 const SOURCE_URL = process.env.SOURCE_URL || 'http://35.199.161.19'
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 const DB_PATH = process.env.DB_PATH || 'db.json'
+
 // db setup
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
@@ -24,17 +25,20 @@ const getNow = () =>{
   return `${moment().tz(zone).format('LL')} ${moment().tz(zone).format('LTS')}`
 }
 
-// setup index route
-app.use(express.static('./public'))
+app.use(express.static(path.join(__dirname, '/public')))
+
+// setup view engine
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, '/views'))
-const startTime = moment()
+
+// setup index route
 app.get('/', function (req, res) {
   res.render('index', {
-    startTime, YOUTUBE_VIDEO_ID
+    YOUTUBE_VIDEO_ID
   })
 })
 
+// db download route
 app.get('/dbdownload', (req, res) =>{
   res.download(DB_PATH)
 })
@@ -54,10 +58,13 @@ source_socket.on('connect', function(){
 })
 
 source_socket.on('update', function(data){
+  // add datetime prop
   data.datetime = getNow()
 
   // exclude init message
   if (data.text != '即時字幕載入中...') {
+
+    // save data to db
     db.get('messages')
     .push({
       text: data.text,
@@ -76,6 +83,8 @@ source_socket.on('update', function(data){
 source_socket.on('disconnect', function(){
   console.log('disconnect from', SOURCE_URL)
 })
+
+// start app
 const PORT = process.env.PORT || 3000
 http.listen(PORT, function () {
   console.log(`App serving on http://localhost:${PORT}!`);
