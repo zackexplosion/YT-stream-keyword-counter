@@ -19,6 +19,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const moment = require('moment-timezone')
 moment.locale('zh-tw')
+moment().tz('Asia/Taipei')
 
 const getNow = () =>{
   zone = 'Asia/Taipei'
