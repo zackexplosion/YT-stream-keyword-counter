@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index.js -e .js",
+    "dev": "nodemon app/index.js -e .js --ignore 'app/assets' ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -17,6 +17,7 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "pug": "^2.0.3",
+    "rimraf": "^2.6.3",
     "sharp": "^0.22.0",
     "socket.io": "^2.2.0",
     "tesseract.js": "^1.0.14",
