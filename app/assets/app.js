@@ -23,7 +23,7 @@
   })
 
   socket.on('updateCounter', data => {
-
+    chartUpdater()
     $.ajax('/keywords').then(c => {
       keywords.html(c)
     })
@@ -35,7 +35,8 @@
     live_counter.html(data)
   })
 
-  var ctx_live = document.getElementById("chart")
+  // var ctx_live = document.getElementById("chart")
+  var ctx_live = $('#chart canvas')
   var myChart = new Chart(ctx_live, {
     type: 'bar',
     data: {
@@ -64,11 +65,26 @@
         }]
       }
     }
-  });
-  $.ajax('/chartdata').then(res =>{
-    myChart.data.labels = res.x.reverse()
-    myChart.data.datasets[0].data = res.data
-
-    myChart.update()
   })
+  const chartUpdater = () =>{
+    $.ajax('/chartdata').then(res =>{
+      myChart.options.title ={
+        display: true,
+        text: '現在時間:' + res.now
+      }
+      myChart.data.labels = res.x.reverse()
+      myChart.data.datasets[0].data = res.data
+
+      myChart.update()
+      setTimeout(()=>{
+        $('#chart span').hide()
+      }, 1000)
+
+    })
+  }
+
+  chartUpdater()
+
+  // setInterval(chartUpdater, 3000)
+
 })()

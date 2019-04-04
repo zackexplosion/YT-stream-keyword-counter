@@ -56,7 +56,7 @@ app.get('/', function (req, res) {
 })
 
 const getDate = d =>{
-  return moment(d.replace(/年|月/g, '-').replace(/日/, ''))
+  return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
 }
 
 var chartdata = {
@@ -84,13 +84,13 @@ app.get('/chartdata', function (req, res) {
 
     matches.forEach(m =>{
       let t = getDate(m.created_at)
-      // log('t', t.format('lll'), 'is between?', a.format('lll'), b.format('lll'), t.isBetween(a,b))
+      log('t', t.format('lll'), 'is between?', a.format('lll'), b.format('lll'), t.isBetween(a,b))
       if (t.isBetween(a,b)) {
         data[i]++
       }
     })
 
-    x.unshift(b.format('lll'))
+    x.unshift(b.format('LT'))
   }
 
   let now = moment().format('lll')
