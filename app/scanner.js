@@ -9,7 +9,7 @@ module.exports = async function main (args) {
   try {
     // clear tmp dir
     await new Promise((resolve, reject) => {
-      rimraf('./tmp/*', function(err){
+      rimraf('./tmp/*.png', function(err){
         if (err) reject(err)
         resolve()
       })

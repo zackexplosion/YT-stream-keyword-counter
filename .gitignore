@@ -2,5 +2,5 @@ node_modules
 db.json
 db*.json
 *.traineddata
-tmp
+tmp/*.png
 yarn-error.log
