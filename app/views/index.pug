@@ -43,7 +43,7 @@ html
       }
   body.container
     h1#title 中天韓國瑜計數器
-    h2 從 #{startedAt} 開始，統計了...
+    h2 從 #{startedAt} 開始，總共統計了...
     ul#keywords.list-group.list-group-horizontal
       each c,k in counter
         li.list-group-item=`${k}: ${c}`
@@ -55,6 +55,8 @@ html
       .progress-bar.progress-bar-striped.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
     hr
     ul#history.list-group
+      each h in history.reverse()
+        li.list-group-item=`${h.created_at}: ${h.matches}`
 
     button#live-counter.btn.btn-danger(type='button')
       | 目前有 #[span.badge.badge-light=user_live_count] 位又老又窮的鄉民在線上

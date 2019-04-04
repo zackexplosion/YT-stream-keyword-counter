@@ -42,7 +42,7 @@
       keywords.append(createListItem(`${k}: ${data.counter[k]}`))
     })
 
-    history.prepend(createListItem(data.matches))
+    history.prepend(createListItem(`${data.created_at}: ${data.matches}`))
   })
 
   socket.on('uuc', function updateUserCounter(data){

@@ -54,7 +54,6 @@ module.exports = ({ io, log })  => {
         code = c.code
       }
     })
-    log(status, code)
     return code
   }
 
@@ -92,6 +91,7 @@ module.exports = ({ io, log })  => {
 
     if (code == 6) {
       return io.emit('updateCounter', {
+        created_at: info.created_at,
         counter: info.counter,
         matches: info.matches
       })

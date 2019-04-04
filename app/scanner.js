@@ -55,7 +55,7 @@ module.exports = async function main (args) {
       created_at, raws
     }).write()
 
-    handleProgress({counter, matches, status: 'update counter'})
+    handleProgress({created_at, counter, matches, status: 'update counter'})
   } else {
     handleProgress({status: 'Counter not changed.', matches})
   }
