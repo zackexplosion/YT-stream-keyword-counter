@@ -1,19 +1,33 @@
 const HOST = process.env.WEB_HOST || 'https://hant.zackexplosion.fun'
 const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
 const socket = require('socket.io-client')(HOST)
+const devSocket = require('socket.io-client')('http://localhost:3000')
 const path = require('path')
-
 require(path.join(__dirname, '/common'))
 
-socket.on('connect', function() {
-  console.log('connected to:', HOST)
+function startScanner() {
   function handleProgress (info) {
-    log('EVENT_TOKEN', EVENT_TOKEN, info)
+    log(info)
     socket.emit(EVENT_TOKEN, info)
+    devSocket.emit(EVENT_TOKEN, info)
   }
   require(path.join(__dirname, '/scanner'))({log, handleProgress})
+}
+
+var servers = []
+function handler (server) {
+  servers.push(server)
+
+  if (servers.length == 2) {
+    startScanner()
+  }
+}
+
+socket.on('connect', function(){
+  handler('proc')
 })
 
-socket.on('disconnect', function(){
-  console.log('disconnect from:', HOST)
+
+devSocket.on('connect', function(){
+  handler('dev')
 })

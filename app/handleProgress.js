@@ -78,7 +78,6 @@ module.exports = ({ db, io, log })  => {
     }
 
     // log('code', code)
-    log(info)
     switch(code){
       case 3:
         let gate = last_progress + 10
@@ -88,6 +87,7 @@ module.exports = ({ db, io, log })  => {
         if (skip) return
         break
       case 7:
+        log(info)
         const { matches, created_at } = info
         var is_found_matches = false
         var counter = db.get('counter').value()
@@ -99,7 +99,6 @@ module.exports = ({ db, io, log })  => {
         })
 
         if (is_found_matches) {
-          let { counter, created_at, matches } = info
           db.update('counter', counter).write()
 
           db.get('matches').push({
@@ -116,10 +115,11 @@ module.exports = ({ db, io, log })  => {
             matches
           })
         } else {
-          handleProgress({status: 'Counter not changed.', matches})
+          return handleProgress({status: 'Counter not changed.'})
         }
-      break
     }
+
+    log(info)
 
     if (code) {
       info = {
