@@ -40,6 +40,7 @@ io.on('connection', function(socket){
   socket.on('disconnect', (reason) => {
     if(socket.id == is_scanner_connected){
       log('scanner disaconnect')
+      is_scanner_connected = false
     }
     user_live_count--
   })
