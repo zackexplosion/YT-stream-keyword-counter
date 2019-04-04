@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "deploy": "shipit production deploy",
     "start": "node app/index.js",
     "dev": "nodemon app/index.js -e .js --ignore 'app/assets' ",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -12,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "fluent-ffmpeg": "^2.1.2",
+    "ffmpeg-binaries": "^4.0.0",
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
@@ -25,6 +26,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.18.10",
+    "shipit-cli": "^4.2.0",
     "shipit-deploy": "^4.1.4"
   }
 }

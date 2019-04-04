@@ -3,3 +3,4 @@ db.json
 db*.json
 *.traineddata
 tmp
+yarn-error.log
