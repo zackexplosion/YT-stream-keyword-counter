@@ -31,6 +31,22 @@ app.set('view engine', 'pug')
 app.set('views', path.join(BASE_DIR, '/views'))
 
 let user_live_count = 0
+// user live counter
+io.on('connection', function(socket){
+  // update user counter
+  user_live_count++
+  socket.on('disconnect', (reason) => {
+    user_live_count--
+  })
+})
+
+function updateUserCounter () {
+  io.emit('uuc', user_live_count)
+}
+
+// update to client every 5 seconds
+setInterval(updateUserCounter, 1000 * 5)
+
 // setup index route
 app.get('/', function (req, res) {
   res.render('index', {
@@ -52,18 +68,10 @@ app.get('/codesheet', function (req, res) {
 })
 
 // db download route
-app.get('/dbdownload', (req, res) =>{
-  res.download(DB_PATH)
-})
+// app.get('/dbdownload', (req, res) =>{
+//   res.download(DB_PATH)
+// })
 
-// setup server io
-io.on('connection', function(socket){
-  // update user counter
-  io.emit('uuc', ++user_live_count)
-  socket.on('disconnect', (reason) => {
-    io.emit('uuc', --user_live_count)
-  })
-})
 
 // start app
 const PORT = process.env.PORT || 3000

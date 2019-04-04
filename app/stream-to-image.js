@@ -30,8 +30,9 @@ const takeScreenshot = (url, outFile, progress) => new Promise((resolve, reject)
 
 const TMP_FILE = path.join(BASE_DIR, '/tmp/stream.png')
 const TMP_FILE_CUTTED = path.join(BASE_DIR, '/tmp/stream-cutted.png')
-
-module.exports = async progress => {
+// disable cache
+sharp.cache(false)
+module.exports = async (progress = function(){}) => {
   try {
     await takeScreenshot(`https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`, TMP_FILE, progress)
     await sharp(TMP_FILE)
