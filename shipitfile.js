@@ -1,4 +1,3 @@
-const PORT = 8082
 module.exports = function (shipit) {
   require('shipit-deploy')(shipit)
 
@@ -28,8 +27,9 @@ module.exports = function (shipit) {
     const current_path = `${shipit.config.deployTo}/current`
     try {
       // let cmd = `
-      const KEYWORDS = '韓|國瑜|韓國瑜|賣菜郎'
-      const cmd = `NODE_ENV=production TARGET_KEYWORDS='${KEYWORDS}' DB_RAW_PATH=${shipit.config.deployTo}/db-raw.json DB_PATH=${shipit.config.deployTo}/db.json PORT=${PORT} pm2 start ${current_path}/app/web-server.js --name ${name}`
+      // const KEYWORDS = '韓|國瑜|韓國瑜|賣菜郎'
+      // const cmd = `DB_RAW_PATH=${shipit.config.deployTo}/db-raw.json DB_PATH=${shipit.config.deployTo}/db.json PORT=${PORT} pm2 start ${current_path}/app/web-server.js`
+      const cmd = `pm2 start echosystem.config.js`
       await shipit.remote(cmd)
     } catch (error) {
       await shipit.remote(`pm2 restart ${name}`)

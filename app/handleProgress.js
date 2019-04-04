@@ -135,6 +135,7 @@ module.exports = ({ db, io, log })  => {
   }
 
   return {
+    getCode,
     statusCodeSheet,
     handleProgress
   }
