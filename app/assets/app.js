@@ -41,12 +41,14 @@
     type: 'bar',
     data: {
       labels: [],
-      datasets: [{
-        data: [],
-        borderWidth: 1,
-        borderColor:'#00c0ef',
-        label: '總出現次數',
-      }]
+      datasets: [
+      // {
+      //   data: [],
+      //   borderWidth: 1,
+      //   borderColor:'#00c0ef',
+      //   label: '總出現次數',
+      // }
+      ]
     },
     options: {
       responsive: true,
@@ -73,7 +75,12 @@
         text: '現在時間:' + res.now
       }
       myChart.data.labels = res.x.reverse()
-      myChart.data.datasets[0].data = res.data
+      // myChart.data.datasets[0].data = res.data
+      myChart.data.datasets = []
+
+      Object.keys(res.sheets).forEach(k =>{
+        myChart.data.datasets.push(res.sheets[k])
+      })
 
       myChart.update()
       setTimeout(()=>{
