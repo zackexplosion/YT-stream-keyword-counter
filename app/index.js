@@ -35,6 +35,7 @@ let user_live_count = 0
 app.get('/', function (req, res) {
   res.render('index', {
     counter: db.get('counter').value(),
+    startedAt: db.get('matches[0].created_at').value(),
     history: db.get('matches').takeRight(5).value(),
     user_live_count,
     YOUTUBE_VIDEO_ID

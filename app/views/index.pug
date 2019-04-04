@@ -42,8 +42,8 @@ html
         right: 0;
       }
   body.container
-    h1#title 中天韓國瑜計數器，目前統計了...
-
+    h1#title 中天韓國瑜計數器
+    h2 從 #{startedAt} 開始，統計了...
     ul#keywords.list-group.list-group-horizontal
       each c,k in counter
         li.list-group-item=`${k}: ${c}`
