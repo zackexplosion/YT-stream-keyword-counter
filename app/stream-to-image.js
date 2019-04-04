@@ -31,15 +31,20 @@ const TMP_FILE = './tmp/stream.png'
 const TMP_FILE_CUTTED = './tmp/stream-cutted.png'
 
 module.exports = async progress => {
-  await takeScreenshot(`https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`, TMP_FILE, progress)
-  await sharp(TMP_FILE)
-        .extract({
-          left: OCR_IMAGE_LEFT,
-          top: OCR_IMAGE_TOP,
-          width: OCR_IMAGE_WIDTH,
-          height: OCR_IMAGE_HEIGHT
-        })
-        .toFile(TMP_FILE_CUTTED)
-  progress({'status': 'taking screenshot.', progress: 1})
+  try {
+    await takeScreenshot(`https://www.youtube.com/watch?v=${YOUTUBE_VIDEO_ID}`, TMP_FILE, progress)
+    await sharp(TMP_FILE)
+          .extract({
+            left: OCR_IMAGE_LEFT,
+            top: OCR_IMAGE_TOP,
+            width: OCR_IMAGE_WIDTH,
+            height: OCR_IMAGE_HEIGHT
+          })
+          .toFile(TMP_FILE_CUTTED)
+    progress({'status': 'taking screenshot.', progress: 1})
+  } catch (error) {
+    console.error(error)
+  }
+
   return true
 }
