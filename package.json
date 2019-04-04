@@ -6,6 +6,8 @@
   "scripts": {
     "deploy": "shipit production deploy",
     "start": "node app/index.js",
+    "devScannerServer": "pm2-dev start app/scanner-server.js",
+    "scannerServer": "pm2 start -f app/scanner-server.js",
     "dev": "nodemon app/index.js -e .js --ignore 'app/assets' ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +19,7 @@
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
+    "pm2": "^3.4.1",
     "pug": "^2.0.3",
     "rimraf": "^2.6.3",
     "sharp": "^0.22.0",

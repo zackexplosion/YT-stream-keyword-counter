@@ -4,7 +4,7 @@ const rimraf = require('rimraf')
 const path = require('path')
 var last_matched = ''
 module.exports = async function main (args) {
-  const { db, log, db_raw, handleProgress, moment} = args
+  const { log, handleProgress} = args
 
   var scan_result
   try {
@@ -42,20 +42,15 @@ module.exports = async function main (args) {
     })
   }
 
-
+  let created_at = moment().format('LL LTS')
   if (is_found_matches) {
-    db.update('counter', counter).write()
-
-    let created_at = moment().format('LL LTS')
-    db.get('matches').push({
-      created_at, matches
-    }).write()
-
-    db_raw.get('matches').push({
-      created_at, raws
-    }).write()
-
-    handleProgress({created_at, counter, matches, status: 'update counter'})
+    handleProgress({
+      created_at,
+      counter,
+      matches,
+      raws,
+      status: 'update counter'
+    })
   } else {
     handleProgress({status: 'Counter not changed.', matches})
   }

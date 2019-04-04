@@ -1,5 +1,4 @@
 (function(){
-  var codeSheet
   const socket = io('/')
   const status = document.getElementById('status')
   const progress = document.getElementById('progress')
@@ -9,7 +8,6 @@
   const live_counter = $('#live-counter .badge')
 
   $.ajax('/codesheet').then(codeSheet =>{
-    console.log(codeSheet)
     const getText = code => {
       let text = 'yee'
       codeSheet.forEach(c =>{

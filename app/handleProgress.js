@@ -90,10 +90,21 @@ module.exports = ({ io, log })  => {
     log(info)
 
     if (code == 6) {
+      let { counter, created_at, matches } = info
+      db.update('counter', counter).write()
+
+      db.get('matches').push({
+        created_at, matches
+      }).write()
+
+      db_raw.get('raws').push({
+        created_at, raws
+      }).write()
+
       return io.emit('updateCounter', {
-        created_at: info.created_at,
-        counter: info.counter,
-        matches: info.matches
+        created_at,
+        counter,
+        matches
       })
     }
 

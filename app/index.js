@@ -1,16 +1,7 @@
 const db = require('./db')
 const db_raw = require('./db-raw')
-const moment = require('moment-timezone')
-moment.locale('zh-tw')
-moment.tz.setDefault('Asia/Taipei')
 
-const BASE_DIR = __dirname
-global.BASE_DIR = BASE_DIR
-function log(){
-  let arg = Array.prototype.slice.call(arguments, 0)
-  arg.unshift(moment().format('LL LTS') + ':')
-  console.log.apply(null, arg)
-}
+require(path.join(__dirname, '/common'))
 // env params with default value
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 

@@ -24,4 +24,4 @@ COPY . .
 
 
 EXPOSE 8080
-CMD [ "PORT=8080", "pm2", "app/index.js" ]
+CMD [ "pm2", "app/index.js" ]
