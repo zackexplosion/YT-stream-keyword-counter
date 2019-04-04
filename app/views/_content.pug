@@ -4,13 +4,7 @@
     h4 從 #{startedAt} 開始，總共統計了...
 .row
   #keywords.col-lg
-    each c,k in counter
-      button.btn.btn-light=k
-        | #[span.badge.badge-primary.badge-pill=c]
-    //- ul.list-group
-    //-   each c,k in counter
-    //-     li.list-group-item.d-flex.justify-content-between.align-items-center=k
-    //-       | #[span.badge.badge-primary.badge-pill=c]
+    include _keywords
 hr
 .row.content
   .col-lg

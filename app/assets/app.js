@@ -32,11 +32,18 @@
     return `<li class="list-group-item">${text}</li>`
   }
 
-  socket.on('updateCounter', data => {
-    keywords.html('')
+  // function updateKeywords() {
+  //   keywords.html('')
 
-    Object.keys(data.counter).forEach(k =>{
-      keywords.append(`<li class="list-group-item d-flex justify-content-between align-items-center">${k} <span class="badge badge-primary badge-pill">${data.counter[k]}</span></li>`)
+  //   Object.keys(data.counter).forEach(k => {
+  //     keywords.append(`<li class="list-group-item d-flex justify-content-between align-items-center">${k} <span class="badge badge-primary badge-pill">${data.counter[k]}</span></li>`)
+  //   })
+  // }
+
+  socket.on('updateCounter', data => {
+
+    $.ajax('/keywords').then(c => {
+      keywords.html(c)
     })
 
     history.prepend(createListItem(`${data.created_at}: ${data.matches}`))

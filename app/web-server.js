@@ -55,6 +55,12 @@ app.get('/', function (req, res) {
   })
 })
 
+app.get('/keywords', (req, res) => {
+  res.render('_keywords', {
+    counter: db.get('counter').value()
+  })
+})
+
 app.get('/codesheet', function (req, res) {
   res.json(statusCodeSheet.map(s =>{
     return {

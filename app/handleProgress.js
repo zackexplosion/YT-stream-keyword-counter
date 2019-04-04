@@ -110,7 +110,6 @@ module.exports = ({ db, io, log })  => {
           log('updateCounter', info)
           return io.emit('updateCounter', {
             created_at,
-            counter,
             matches
           })
         } else {
