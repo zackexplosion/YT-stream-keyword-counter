@@ -9,17 +9,17 @@ module.exports = async function main (args) {
   try {
     // clear tmp dir
     await new Promise((resolve, reject) => {
-      rimraf(path.join(BASE_DIR, '/tmp/*.png'), function(err){
+      rimraf(path.join(BASE_DIR, 'tmp', '*.png'), function(err){
         if (err) reject(err)
         resolve()
       })
     })
 
     // screenshot from stream
-    await require(path.join(BASE_DIR, '/stream-to-image'))(handleProgress)
+    await require(path.join(BASE_DIR, 'stream-to-image'))(handleProgress)
 
     // run OCR
-    scan_result = await require(path.join(BASE_DIR, '/image-to-text-and-grap'))(handleProgress)
+    scan_result = await require(path.join(BASE_DIR, 'image-to-text-and-grap'))(handleProgress)
   } catch (error) {
     log(error)
   }

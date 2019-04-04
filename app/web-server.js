@@ -2,8 +2,14 @@ const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('
 const db = require('./db')
 // const db_raw = require('./db-raw')
 const randomColor = () => {
-  return '#'+Math.floor(Math.random()*16777215).toString(16);
+  var letters = '0123456789ABCDEF'
+  var color = '#'
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)]
+  }
+  return color
 }
+
 // env params with default value
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
@@ -95,7 +101,7 @@ app.get('/chartdata', function (req, res) {
         if (m.matches.indexOf(k) != -1 && t.isBetween(a,b)) {
           if(!sheets[k]) sheets[k] = {
             data: Array(ranges+1).fill(0),
-            borderWidth: 1,
+            borderWidth: 3,
             borderColor: randomColor(),
             label: k
           }

@@ -16,12 +16,9 @@ COPY yarn.lock ./
 # If you are building your code for production
 RUN yarn --production
 
-RUN yarn add pm2
-
 # Bundle app source
 COPY . .
 
 
-
 EXPOSE 8080
-CMD [ "pm2", "app/index.js" ]
+CMD [ "yarn", "scannerServer" ]
