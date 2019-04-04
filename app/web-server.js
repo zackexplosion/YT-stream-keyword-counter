@@ -31,17 +31,25 @@ app.set('view engine', 'pug')
 app.set('views', path.join(BASE_DIR, '/views'))
 
 let user_live_count = 0
+let is_scanner_connected = false
 // user live counter
 io.on('connection', function(socket){
   // log('an user connect', socket.id)
   // update user counter
   user_live_count++
   socket.on('disconnect', (reason) => {
+    if(socket.id == is_scanner_connected){
+      log('scanner disaconnect')
+    }
     user_live_count--
   })
 
+  // ignore other scanner connection
+  if (is_scanner_connected) return
+
   // recieve scanner server messages
   socket.on(EVENT_TOKEN, data =>{
+    is_scanner_connected = socket.id
     handleProgress(data)
   })
 })
@@ -68,13 +76,11 @@ const getDate = d =>{
   return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
 }
 
-var chartdata = {
-
-}
+var chartdata = null
 app.get('/chartdata', function (req, res) {
-  // if (getDate(chartdata.now)) {
-  //   return res.json(chartdata)
-  // }
+  if (chartdata && moment.duration(getDate(chartdata.now).diff(moment()) < moment.duration(5, 'minutes') )) {
+    return res.json(chartdata)
+  }
   // let keywords = Object.keys(db.get('counter').value())
   let ranges = 6
   // filter out of range data
