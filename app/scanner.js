@@ -1,17 +1,12 @@
 const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
-const SCAN_INTERVAL = parseInt(process.env.SCAN_INTERVAL || 10)
+const SCAN_INTERVAL = parseInt(process.env.SCAN_INTERVAL || 20)
 const rimraf = require('rimraf')
 var last_matched = ''
 module.exports = async function main (args) {
   const { db, log, db_raw, handleProgress, moment} = args
+
   var scan_result
   try {
-    // screenshot from stream
-    await require('../lib/stream-to-image')(handleProgress)
-
-    // run OCR
-    scan_result = await require('../lib/image-to-text-and-grap')(handleProgress)
-
     // clear tmp dir
     await new Promise((resolve, reject) => {
       rimraf('./tmp/*', function(err){
@@ -19,6 +14,12 @@ module.exports = async function main (args) {
         resolve()
       })
     })
+
+    // screenshot from stream
+    await require('./stream-to-image')(handleProgress)
+
+    // run OCR
+    scan_result = await require('./image-to-text-and-grap')(handleProgress)
   } catch (error) {
     log(error)
   }
@@ -27,17 +28,21 @@ module.exports = async function main (args) {
 
   // prevent same result
   var same_result = true
+  var is_found_matches = false
   if ( last_matched != matches ){
     last_matched = matches
     same_result = false
     var counter = db.get('counter').value()
-    var is_found_matches = false
     KEYWORDS.forEach(k => {
       if (matches.indexOf(k) > 0) {
         is_found_matches = true
         counter[k]++
       }
     })
+  }
+
+
+  if (is_found_matches) {
     db.update('counter', counter).write()
 
     let created_at = moment().format('LL LTS')
@@ -48,30 +53,38 @@ module.exports = async function main (args) {
     db_raw.get('matches').push({
       created_at, raws
     }).write()
-  }
 
-
-  if (is_found_matches && !same_result) {
-    handleProgress({code: 'COUNTER_CHANGED', counter, matches, status: `Counter updated.`})
+    handleProgress({counter, matches, status: 'update counter'})
   } else {
     handleProgress({status: 'Counter not changed.', matches})
   }
 
-  let countdown = SCAN_INTERVAL
-  let c = setInterval(() => {
-    countdown--
-    if (countdown < 8) {
-      handleProgress({status: `Scanner sleeping, run next scan in ${countdown}`})
+  var sleeping_counter = 0.1
+  var c = setInterval(() => {
+    sleeping_counter = sleeping_counter + 0.1
+
+    if (sleeping_counter > 0.3) {
+      handleProgress({status: `Scanner sleeping`, progress: sleeping_counter})
     }
 
-    if (countdown == 1) {
+    if (sleeping_counter >= (SCAN_INTERVAL/10) - 1) {
       clearInterval(c)
+      // do next scan
+      main(args)
     }
+
   }, 1000)
 
-  setTimeout(() =>{
-    main(args)
-  }, 1000 * SCAN_INTERVAL)
+  // setTimeout(()=>{
+  //   handleProgress({status: `Scanner sleeping`})
+  // }, 1000 * 5)
+
+  // setTimeout(()=>{
+  //   // do next scan
+  //   main(args)
+  // }, 1000 * SCAN_INTERVAL)
+
+
 }
 
 

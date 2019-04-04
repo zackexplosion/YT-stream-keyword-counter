@@ -1,5 +1,5 @@
-const db = require('../lib/db')
-const db_raw = require('../lib/db-raw')
+const db = require('./db')
+const db_raw = require('./db-raw')
 const moment = require('moment-timezone')
 moment.locale('zh-tw')
 moment.tz.setDefault('Asia/Taipei')
@@ -19,13 +19,7 @@ const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
 
-const handleProgress = info => {
-  if (!info.status) return
-  if (info.progress) {
-    info.progress = parseInt(info.progress * 100)
-  }
-  io.emit('progressUpdate', info)
-}
+const { handleProgress, statusCodeSheet } = require('./handleProgress')({io, log})
 
 app.use(express.static(path.join(__dirname, '/public')))
 app.use(express.static(path.join(__dirname, '/assets')))
@@ -34,12 +28,24 @@ app.use(express.static(path.join(__dirname, '/assets')))
 app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, '/views'))
 
+let user_live_count = 0
 // setup index route
 app.get('/', function (req, res) {
-  let counter = db.get('counter').value()
   res.render('index', {
-    YOUTUBE_VIDEO_ID, counter
+    counter: db.get('counter').value(),
+    history: db.get('matches').takeRight(5).value(),
+    user_live_count,
+    YOUTUBE_VIDEO_ID
   })
+})
+
+app.get('/codesheet', function (req, res) {
+  res.json(statusCodeSheet.map(s =>{
+    return {
+      c: s.code,
+      t: s.text
+    }
+  }))
 })
 
 // db download route
@@ -47,16 +53,15 @@ app.get('/dbdownload', (req, res) =>{
   res.download(DB_PATH)
 })
 
-let user_live_count = 0
 // setup server io
 io.on('connection', function(socket){
-  log('a user connected', socket.id)
-  io.emit('updateUserCounter', ++user_live_count)
+  // update user counter
+  io.emit('uuc', ++user_live_count)
   socket.on('disconnect', (reason) => {
-    io.emit('updateUserCounter', --user_live_count)
-    log(socket.id, 'disconnected')
+    io.emit('uuc', --user_live_count)
   })
 })
+
 
 // start app
 const PORT = process.env.PORT || 3000

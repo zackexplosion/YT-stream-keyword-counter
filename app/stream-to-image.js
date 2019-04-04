@@ -14,7 +14,7 @@ const ytdl = require('ytdl-core')
 const sharp = require('sharp')
 
 const takeScreenshot = (url, outFile, progress) => new Promise((resolve, reject) => {
-  progress({'status': 'taking screenshot.', progress: 0})
+  progress({'status': 'taking screenshot.', progress: 0.1})
   ytdl.getInfo(url).then(info => {
     progress({'status': 'taking screenshot.', progress: 0.5})
     const format = ytdl.chooseFormat(info.formats, { quality: 'highestvideo' })
@@ -40,6 +40,6 @@ module.exports = async progress => {
           height: OCR_IMAGE_HEIGHT
         })
         .toFile(TMP_FILE_CUTTED)
-  progress({'status': 'taking screenshot complete.', progress: 1})
+  progress({'status': 'taking screenshot.', progress: 1})
   return true
 }

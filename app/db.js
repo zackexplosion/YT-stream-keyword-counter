@@ -9,6 +9,6 @@ let counter = {}
 KEYWORDS.forEach(k => {
   counter[k] = 0
 })
-db.defaults({ counter, raws: [], matches: [] }).write()
+db.defaults({ counter, matches: [] }).write()
 
 module.exports = db

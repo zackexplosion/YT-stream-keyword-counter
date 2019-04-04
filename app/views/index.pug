@@ -10,7 +10,7 @@ html
     meta(content="https://hant.zackexplosion.fun/screenshot.png", property="og:image")
     style.
       body {
-        padding-top: 20px;
+        padding-top: 60px;
         //- background: #CCC;
       }
       .video-wrapper{
@@ -36,6 +36,11 @@ html
         max-height: 200px;
         overflow-y: scroll;
       }
+      #live-counter {
+        position: fixed;
+        bottom: 10px;
+        right: 0;
+      }
   body.container
     h1#title 中天韓國瑜計數器，目前統計了...
 
@@ -48,7 +53,11 @@ html
       | 即時狀態載入中...
     #progress.progress
       .progress-bar.progress-bar-striped.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
+    hr
     ul#history.list-group
+
+    button#live-counter.btn.btn-danger(type='button')
+      | 目前有 #[span.badge.badge-light=user_live_count] 位又老又窮的鄉民在線上
 
     //- a#download(target="_blank" href="/dbdownload") 資料庫下載
     a.github-corner(href='https://github.com/zackexplosion/hant-counter-crawler', aria-label='View source on GitHub', target="_blank")
@@ -59,7 +68,7 @@ html
     style.
       .github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js')
-    script(src='https://code.jquery.com/jquery-3.3.1.slim.min.js', integrity='sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo', crossorigin='anonymous')
+    script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
 
