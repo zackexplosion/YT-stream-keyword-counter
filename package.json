@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4",
-    "ffmpeg-binaries": "^4.0.0",
+    "ffmpeg-binaries": "https://github.com/BannerBomb/node-ffmpeg-binaries.git#patch-1",
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",

@@ -1012,9 +1012,9 @@ fd-slicer@~1.1.0:
   dependencies:
     pend "~1.2.0"
 
-ffmpeg-binaries@^4.0.0:
+"ffmpeg-binaries@https://github.com/BannerBomb/node-ffmpeg-binaries.git#patch-1":
   version "4.0.0"
-  resolved "https://registry.yarnpkg.com/ffmpeg-binaries/-/ffmpeg-binaries-4.0.0.tgz#698fa082c0512b1b083a1298e3fab4e41feeede3"
+  resolved "https://github.com/BannerBomb/node-ffmpeg-binaries.git#6f3df36dbb1987fcc40b1293f75bbccb61ed1844"
   dependencies:
     decompress "^4.2.0"
     decompress-tarxz "^2.1.1"

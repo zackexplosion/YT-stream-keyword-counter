@@ -15,8 +15,8 @@ module.exports = function (shipit) {
 
   shipit.on('deployed', async function () {
     try {
-      // await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
-      await shipit.remote(`cd ${shipit.currentPath} && nvm use && npm install --production`)
+      await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
+      // await shipit.remote(`cd ${shipit.currentPath} && nvm use && npm install --production`)
     } catch (error) {
       console.log(error)
     }
