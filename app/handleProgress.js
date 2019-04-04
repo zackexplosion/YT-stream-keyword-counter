@@ -1,3 +1,4 @@
+const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
 const statusCodeSheet = [
   {
     code: 1,
@@ -28,6 +29,10 @@ const statusCodeSheet = [
     code: 6,
     status: 'update counter',
     text: '蔣公轉世啦！更新計數器'
+  },
+  {
+    code: 7,
+    status: 'scan finished',
   }
 ]
 
@@ -39,17 +44,10 @@ const excludes = [
 const DEFAULT_PROGRESS = 25
 var last_progress = 0
 
-module.exports = ({ io, log })  => {
+module.exports = ({ db, io, log })  => {
   function getCode (status) {
     let code
     statusCodeSheet.forEach(c =>{
-      // const reg = new RegExp(c.status, 'g')
-      // const m = status.match(reg)
-      // if (m) {
-      //   log(m)
-      //   code = c.c
-      // }
-      // log(c)
       if (c.status && c.status.indexOf(status) != -1) {
         code = c.code
       }
@@ -79,33 +77,48 @@ module.exports = ({ io, log })  => {
       progress = DEFAULT_PROGRESS
     }
 
-    if (code == 3 ){
-      let gate = last_progress + 10
-      let skip = gate <= progress || gate > 100
-      last_progress = progress
-      if (skip) return
-      // log('last_progress', last_progress, progress,  skip)
-    }
-
+    // log('code', code)
     log(info)
+    switch(code){
+      case 3:
+        let gate = last_progress + 10
+        let skip = gate <= progress || gate > 100
+        last_progress = progress
+        // log('last_progress', last_progress, progress,  skip)
+        if (skip) return
+        break
+      case 7:
+        const { matches, created_at } = info
+        var is_found_matches = false
+        var counter = db.get('counter').value()
+        KEYWORDS.forEach(k => {
+          if (matches.indexOf(k) > 0) {
+            is_found_matches = true
+            counter[k]++
+          }
+        })
 
-    if (code == 6) {
-      let { counter, created_at, matches } = info
-      db.update('counter', counter).write()
+        if (is_found_matches) {
+          let { counter, created_at, matches } = info
+          db.update('counter', counter).write()
 
-      db.get('matches').push({
-        created_at, matches
-      }).write()
+          db.get('matches').push({
+            created_at, matches
+          }).write()
 
-      db_raw.get('raws').push({
-        created_at, raws
-      }).write()
+          // db_raw.get('raws').push({
+          //   created_at, raws
+          // }).write()
 
-      return io.emit('updateCounter', {
-        created_at,
-        counter,
-        matches
-      })
+          return io.emit('updateCounter', {
+            created_at,
+            counter,
+            matches
+          })
+        } else {
+          handleProgress({status: 'Counter not changed.', matches})
+        }
+      break
     }
 
     if (code) {

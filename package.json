@@ -6,7 +6,8 @@
   "scripts": {
     "deploy": "shipit production deploy",
     "start": "node app/index.js",
-    "devScannerServer": "pm2-dev start app/scanner-server.js",
+    "devScanner": "nodemon app/scanner-server.js -e .js --ignore 'app/assets'",
+    "devWeb": "nodemon app/web-server.js -e .js --ignore 'app/assets' ",
     "scannerServer": "pm2 start -f app/scanner-server.js",
     "dev": "nodemon app/index.js -e .js --ignore 'app/assets' ",
     "test": "echo \"Error: no test specified\" && exit 1"

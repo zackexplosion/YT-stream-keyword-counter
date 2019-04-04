@@ -1,10 +1,9 @@
-const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
 const SCAN_INTERVAL = parseInt(process.env.SCAN_INTERVAL || 20)
 const rimraf = require('rimraf')
 const path = require('path')
 var last_matched = ''
 module.exports = async function main (args) {
-  const { log, handleProgress} = args
+  const { handleProgress} = args
 
   var scan_result
   try {
@@ -25,34 +24,18 @@ module.exports = async function main (args) {
     log(error)
   }
 
-  const { matches , raws } = scan_result
+  const { matches, raws } = scan_result
 
   // prevent same result
-  var same_result = true
-  var is_found_matches = false
   if ( last_matched != matches ){
     last_matched = matches
-    same_result = false
-    var counter = db.get('counter').value()
-    KEYWORDS.forEach(k => {
-      if (matches.indexOf(k) > 0) {
-        is_found_matches = true
-        counter[k]++
-      }
-    })
-  }
-
-  let created_at = moment().format('LL LTS')
-  if (is_found_matches) {
+    let created_at = moment().format('LL LTS')
     handleProgress({
       created_at,
-      counter,
       matches,
-      raws,
-      status: 'update counter'
+      // raws,
+      status: 'scan finished'
     })
-  } else {
-    handleProgress({status: 'Counter not changed.', matches})
   }
 
   var sleeping_counter = 0.1
@@ -70,17 +53,6 @@ module.exports = async function main (args) {
     }
 
   }, 1000)
-
-  // setTimeout(()=>{
-  //   handleProgress({status: `Scanner sleeping`})
-  // }, 1000 * 5)
-
-  // setTimeout(()=>{
-  //   // do next scan
-  //   main(args)
-  // }, 1000 * SCAN_INTERVAL)
-
-
 }
 
 
