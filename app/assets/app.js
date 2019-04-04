@@ -28,25 +28,13 @@
     })
   })
 
-  function createListItem(text) {
-    return `<li class="list-group-item">${text}</li>`
-  }
-
-  // function updateKeywords() {
-  //   keywords.html('')
-
-  //   Object.keys(data.counter).forEach(k => {
-  //     keywords.append(`<li class="list-group-item d-flex justify-content-between align-items-center">${k} <span class="badge badge-primary badge-pill">${data.counter[k]}</span></li>`)
-  //   })
-  // }
-
   socket.on('updateCounter', data => {
 
     $.ajax('/keywords').then(c => {
       keywords.html(c)
     })
 
-    history.prepend(createListItem(`${data.created_at}: ${data.matches}`))
+    history.prepend(`<li class="list-group-item">${data.created_at}: ${data.matches}</li>`)
   })
 
   socket.on('uuc', function updateUserCounter(data){

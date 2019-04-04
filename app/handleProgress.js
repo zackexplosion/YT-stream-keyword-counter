@@ -108,6 +108,8 @@ module.exports = ({ db, io, log })  => {
           //   created_at, raws
           // }).write()
           log('updateCounter', info)
+          // update counter code
+          io.emit('p', {c: 6})
           return io.emit('updateCounter', {
             created_at,
             matches
