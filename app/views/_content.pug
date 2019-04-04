@@ -20,7 +20,11 @@ hr
     ul#history.list-group
       each h in history.reverse()
         li.list-group-item=`${h.created_at}: ${h.matches}`
-
+hr
+.row
+  .col
+    h4 即時圖表
+    canvas#chart
 #live-counter.alert.alert-info(type='alert')
   | 目前有 #[span.badge.badge-light=user_live_count] 位又老又窮的鄉民在線上
 

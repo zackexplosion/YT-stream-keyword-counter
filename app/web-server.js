@@ -55,6 +55,54 @@ app.get('/', function (req, res) {
   })
 })
 
+const getDate = d =>{
+  return moment(d.replace(/年|月/g, '-').replace(/日/, ''))
+}
+
+var chartdata = {
+
+}
+app.get('/chartdata', function (req, res) {
+  // if (getDate(chartdata.now)) {
+  //   return res.json(chartdata)
+  // }
+  // let keywords = Object.keys(db.get('counter').value())
+  let ranges = 6
+  // filter out of range data
+  let matches = db.get('matches').value().filter(m => {
+    let a = getDate(m.created_at)
+    let b = moment().subtract(ranges, 'hour').startOf('hour')
+    return a > b
+  })
+  let x = []
+  let data = []
+  // counter
+  for (let i = 0; i <= ranges; i++){
+    let a = moment().subtract(ranges - i, 'hour').startOf('hour')
+    let b = moment().subtract(ranges - i -1, 'hour').startOf('hour')
+    data[i] = 0
+
+    matches.forEach(m =>{
+      let t = getDate(m.created_at)
+      // log('t', t.format('lll'), 'is between?', a.format('lll'), b.format('lll'), t.isBetween(a,b))
+      if (t.isBetween(a,b)) {
+        data[i]++
+      }
+    })
+
+    x.unshift(b.format('lll'))
+  }
+
+  let now = moment().format('lll')
+
+  chartdata = {
+    data,
+    x,
+    now
+  }
+  res.json(chartdata)
+})
+
 app.get('/keywords', (req, res) => {
   res.render('_keywords', {
     counter: db.get('counter').value()

@@ -1,10 +1,9 @@
 (function(){
   const socket = io('/')
   const status = document.getElementById('status')
-  const progress = document.getElementById('progress')
   const keywords = $('#keywords')
   const history = $('#history')
-  const bar = $('.progress-bar')
+  const progress_bar = $('.progress-bar')
   const live_counter = $('#live-counter .badge')
 
   $.ajax('/codesheet').then(codeSheet =>{
@@ -18,13 +17,8 @@
 
     socket.on('p', updateStatusAndProgress = data => {
       status.innerHTML = getText(data.c)
-
-      if (data.p) {
-        bar.css({width: data.p + '%'})
-        progress.style.display = 'flex'
-      } else {
-        bar.css({width: '0%'})
-      }
+      let percent = data.p || '0'
+      progress_bar.css({width: percent + '%'})
     })
   })
 
@@ -39,5 +33,42 @@
 
   socket.on('uuc', function updateUserCounter(data){
     live_counter.html(data)
+  })
+
+  var ctx_live = document.getElementById("chart")
+  var myChart = new Chart(ctx_live, {
+    type: 'bar',
+    data: {
+      labels: [],
+      datasets: [{
+        data: [],
+        borderWidth: 1,
+        borderColor:'#00c0ef',
+        label: '總出現次數',
+      }]
+    },
+    options: {
+      responsive: true,
+      // title: {
+      //   display: true,
+      //   text: "Chart.js - Dynamically Update Chart Via Ajax Requests",
+      // },
+      legend: {
+        display: false
+      },
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: true,
+          }
+        }]
+      }
+    }
+  });
+  $.ajax('/chartdata').then(res =>{
+    myChart.data.labels = res.x.reverse()
+    myChart.data.datasets[0].data = res.data
+
+    myChart.update()
   })
 })()
