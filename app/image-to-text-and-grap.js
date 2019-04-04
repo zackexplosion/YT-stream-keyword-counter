@@ -1,5 +1,5 @@
 const Tesseract = require('tesseract.js')
-const image = './tmp/stream-cutted.png'
+const image = require('path').join(BASE_DIR, '/tmp/stream-cutted.png')
 
 const done = data => {
   let result = {

@@ -1,6 +1,7 @@
 const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
 const SCAN_INTERVAL = parseInt(process.env.SCAN_INTERVAL || 20)
 const rimraf = require('rimraf')
+const path = require('path')
 var last_matched = ''
 module.exports = async function main (args) {
   const { db, log, db_raw, handleProgress, moment} = args
@@ -9,17 +10,17 @@ module.exports = async function main (args) {
   try {
     // clear tmp dir
     await new Promise((resolve, reject) => {
-      rimraf('./tmp/*.png', function(err){
+      rimraf(path.join(BASE_DIR, '/tmp/*.png'), function(err){
         if (err) reject(err)
         resolve()
       })
     })
 
     // screenshot from stream
-    await require('./stream-to-image')(handleProgress)
+    await require(path.join(BASE_DIR, '/stream-to-image'))(handleProgress)
 
     // run OCR
-    scan_result = await require('./image-to-text-and-grap')(handleProgress)
+    scan_result = await require(path.join(BASE_DIR, '/image-to-text-and-grap'))(handleProgress)
   } catch (error) {
     log(error)
   }

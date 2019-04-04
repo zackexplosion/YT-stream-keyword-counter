@@ -3,12 +3,14 @@ const db_raw = require('./db-raw')
 const moment = require('moment-timezone')
 moment.locale('zh-tw')
 moment.tz.setDefault('Asia/Taipei')
+
+const BASE_DIR = __dirname
+global.BASE_DIR = BASE_DIR
 function log(){
   let arg = Array.prototype.slice.call(arguments, 0)
   arg.unshift(moment().format('LL LTS') + ':')
   console.log.apply(null, arg)
 }
-
 // env params with default value
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 
@@ -21,12 +23,12 @@ const io = require('socket.io')(http)
 
 const { handleProgress, statusCodeSheet } = require('./handleProgress')({io, log})
 
-app.use(express.static(path.join(__dirname, '/public')))
-app.use(express.static(path.join(__dirname, '/assets')))
+app.use(express.static(path.join(BASE_DIR, '/public')))
+app.use(express.static(path.join(BASE_DIR, '/assets')))
 
 // setup view engine
 app.set('view engine', 'pug')
-app.set('views', path.join(__dirname, '/views'))
+app.set('views', path.join(BASE_DIR, '/views'))
 
 let user_live_count = 0
 // setup index route
@@ -62,10 +64,9 @@ io.on('connection', function(socket){
   })
 })
 
-
 // start app
 const PORT = process.env.PORT || 3000
 http.listen(PORT, function () {
   log(`App serving on http://localhost:${PORT}!`)
-  require('./scanner')({db, db_raw, log, moment, handleProgress})
+  require(path.join(BASE_DIR, '/scanner'))({db, db_raw, log, moment, handleProgress})
 })

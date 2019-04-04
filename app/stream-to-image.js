@@ -12,6 +12,7 @@ const bin = require('ffmpeg-binaries')
 const execFile = require('child_process').execFile
 const ytdl = require('ytdl-core')
 const sharp = require('sharp')
+const path = require('path')
 
 const takeScreenshot = (url, outFile, progress) => new Promise((resolve, reject) => {
   progress({'status': 'taking screenshot.', progress: 0.1})
@@ -27,8 +28,8 @@ const takeScreenshot = (url, outFile, progress) => new Promise((resolve, reject)
   }).catch(reject)
 })
 
-const TMP_FILE = './tmp/stream.png'
-const TMP_FILE_CUTTED = './tmp/stream-cutted.png'
+const TMP_FILE = path.join(BASE_DIR, '/tmp/stream.png')
+const TMP_FILE_CUTTED = path.join(BASE_DIR, '/tmp/stream-cutted.png')
 
 module.exports = async progress => {
   try {
