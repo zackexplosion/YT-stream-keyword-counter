@@ -1,6 +1,8 @@
 node_modules
 db.json
 db*.json
+.envrc
 *.traineddata
 tmp/*.png
+app/tmp/*.png
 yarn-error.log
