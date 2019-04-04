@@ -87,7 +87,6 @@ module.exports = ({ db, io, log })  => {
         if (skip) return
         break
       case 7:
-        log(info)
         const { matches, created_at } = info
         var is_found_matches = false
         var counter = db.get('counter').value()
@@ -108,7 +107,7 @@ module.exports = ({ db, io, log })  => {
           // db_raw.get('raws').push({
           //   created_at, raws
           // }).write()
-
+          log('updateCounter', info)
           return io.emit('updateCounter', {
             created_at,
             counter,

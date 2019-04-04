@@ -24,7 +24,6 @@
         progress.style.display = 'flex'
       } else {
         bar.css({width: '0%'})
-        progress.style.display = 'none'
       }
     })
   })
@@ -37,7 +36,7 @@
     keywords.html('')
 
     Object.keys(data.counter).forEach(k =>{
-      keywords.append(createListItem(`${k}: ${data.counter[k]}`))
+      keywords.append(`<li class="list-group-item d-flex justify-content-between align-items-center">${k} <span class="badge badge-primary badge-pill">${data.counter[k]}</span></li>`)
     })
 
     history.prepend(createListItem(`${data.created_at}: ${data.matches}`))

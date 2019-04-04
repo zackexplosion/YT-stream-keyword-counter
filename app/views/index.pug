@@ -9,8 +9,20 @@ html
     link(rel='shortcut icon', type='image/png', href='/icon.png')
     meta(content="https://hant.zackexplosion.fun/screenshot.png", property="og:image")
     style.
+      #keywords {
+        margin-top:1em;
+        margin-bottom:0.5em;
+      }
+      #keywords button {
+        margin-bottom: 0.5em;
+        margin-right: 0.5em;
+      }
+      #keywords span {
+        margin-left: 0.5em;
+      }
       body {
         padding-top: 60px;
+        padding-bottom: 80px;
       }
       .video-wrapper{
         position: relative;
@@ -31,12 +43,14 @@ html
         height: 100%;
       }
       .progress {
-        display: none;
+        margin-bottom: 3em;
       }
+      h1,h4,
       #status {
         text-align: center;
       }
       #history {
+        max-height: 500px;
         overflow-y: scroll;
       }
       #history.overflow{
@@ -44,7 +58,8 @@ html
       }
       #live-counter {
         position: fixed;
-        bottom: 10px;
+        margin-bottom: 0;
+        bottom: 0;
         right: 0;
       }
   body.container
