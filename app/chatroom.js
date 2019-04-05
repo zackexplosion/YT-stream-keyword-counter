@@ -1,9 +1,28 @@
 var faker = require('faker')
 faker.locale = 'zh_TW'
+
+const low = require('lowdb')
+const FileSync = require('lowdb/adapters/FileSync')
+const adapter = new FileSync('db-chat.json')
+const db = low(adapter)
+
+db.defaults({ messages: [] }).write()
+
 module.exports = io => {
   io.on('connection', (socket) => {
     var addedUser = false
     var sent_message = false
+
+    // add user
+    if (!addedUser){
+      // we store the username in the socket session for this client
+      socket.username = faker.name.findName()
+      addedUser = true
+      socket.emit('login', {
+        username: socket.username,
+        history: db.get('messages').takeRight(5).value()
+      })
+    }
 
     // when the client emits 'new message', this listens and executes
     socket.on('new message', (data) => {
@@ -15,23 +34,17 @@ module.exports = io => {
         })
       }
       sent_message = true
-      // we tell the client to execute 'new message'
-      io.emit('new message', {
+
+      let message = {
         username: socket.username,
         message: data,
         timestamp: moment()
-      })
+      }
+      // storage message to db
+      db.get('messages').push(message).write()
+      // we tell the client to execute 'new message'
+      io.emit('new message', message)
     })
-
-    // add user
-    if (!addedUser){
-      // we store the username in the socket session for this client
-      socket.username = faker.name.findName()
-      addedUser = true
-      socket.emit('login', {
-        username: socket.username,
-      })
-    }
 
     // when the client emits 'add user', this listens and executes
     socket.on('change username', (username) => {

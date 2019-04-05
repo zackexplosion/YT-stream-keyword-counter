@@ -19,7 +19,7 @@ module.exports = function (shipit) {
     } catch (error) {
       console.log(error)
     }
-    shipit.start('startApp')
+    // shipit.start('startApp')
   })
 
   shipit.task('startApp', async () => {

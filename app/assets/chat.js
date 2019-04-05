@@ -42,13 +42,17 @@ $(function() {
 
   // Sets the client's username
   const setUsername = () => {
+    let input = $usernameInput.val().trim()
+    // prevent empty username
+    if (input.length > 0){
+      return
+    }
+
     isChangingUsername = false
     $loginPage.fadeOut()
     $chatPage.show()
     $loginPage.off('click')
     $currentInput = $inputMessage.focus()
-
-    let input = $usernameInput.val().trim()
 
     // If the username is changed
     if (username == input ) return
@@ -256,6 +260,11 @@ $(function() {
       prepend: true
     })
     // addParticipantsMessage(data)
+    if (Array.isArray(data.history)) {
+      data.history.forEach(d => {
+        addChatMessage(d)
+      })
+    }
   })
 
   // Whenever the server emits 'new message', update the chat body
