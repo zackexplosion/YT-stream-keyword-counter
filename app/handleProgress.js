@@ -93,6 +93,8 @@ module.exports = ({ db, io, log })  => {
         KEYWORDS.forEach(k => {
           if (matches.indexOf(k) > 0) {
             is_found_matches = true
+            // prevent new keyword null issue
+            if(!counter[k]) counter[k] = 0
             counter[k]++
           }
         })
