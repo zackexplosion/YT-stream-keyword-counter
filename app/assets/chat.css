@@ -96,7 +96,7 @@ ul {
 /* Font */
 
 .messages {
-  font-size: 150%;
+  font-size: 100%;
 }
 
 .inputMessage {
@@ -131,7 +131,7 @@ ul {
 .timestamp,
 .username {
   font-weight: 700;
-  font-size: 70%;
+  /* font-size: 70%; */
   overflow: hidden;
   padding-right: 5px;
   text-align: right;

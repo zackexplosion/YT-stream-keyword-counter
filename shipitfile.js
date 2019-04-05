@@ -26,10 +26,10 @@ module.exports = function (shipit) {
     const name = 'cti-hant-counter-crawler'
     // const current_path = `${shipit.config.deployTo}/current`
     try {
-      const cmd = `pm2 start echosystem.config.js`
+      const cmd = `cd ${shipit.currentPath} && pm2 start echosystem.config.js`
       await shipit.remote(cmd)
     } catch (error) {
-      await shipit.remote(`pm2 restart ecosystem.config.js`)
+      await shipit.remote(`cd ${shipit.currentPath} && pm2 restart ecosystem.config.js`)
     }
   })
 }
