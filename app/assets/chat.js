@@ -44,8 +44,8 @@ $(function() {
   const setUsername = () => {
     let input = $usernameInput.val().trim()
     // prevent empty username
-    if (input.length > 0){
-      return
+    if (input.length <= 0){
+      return false
     }
 
     isChangingUsername = false
