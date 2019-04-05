@@ -127,7 +127,6 @@ ul {
 .message.typing .messageBody {
   color: gray;
 }
-
 .timestamp,
 .username {
   font-weight: 700;
@@ -135,6 +134,15 @@ ul {
   overflow: hidden;
   padding-right: 5px;
   text-align: right;
+}
+
+.username {
+  border: 0;
+  text-align: center;
+}
+.username:hover {
+  cursor: pointer;
+  background: #EEE;
 }
 
 /* Input */

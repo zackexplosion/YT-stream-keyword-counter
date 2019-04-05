@@ -14,11 +14,6 @@ module.exports = function (shipit) {
   })
 
   shipit.on('deployed', async function () {
-    await shipit.start('checkDep')
-    await shipit.start('startApp')
-  })
-
-  shipit.task('checkDep', async () => {
     try {
       let list = (await shipit.remote(`ls ${shipit.config.deployTo}/releases`))[0]
                 .stdout
@@ -42,7 +37,12 @@ module.exports = function (shipit) {
     } catch (error) {
       console.log(error)
     }
+    await shipit.start('startApp')
   })
+
+  // shipit.task('checkDep', async () => {
+
+  // })
 
   shipit.task('startApp', async () => {
     try {

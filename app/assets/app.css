@@ -2,11 +2,7 @@ body {
   padding-top: 60px;
   padding-bottom: 120px;
 }
-.video-wrapper{
-  position: relative;
-  padding-bottom: 56.25%;
-  overflow: hidden;
-}
+
 /* #keywords {
   margin-top:1em;
   margin-bottom:0.5em;
@@ -27,6 +23,12 @@ body {
 }
 #status {
   margin: 0.5em 0;
+}
+.video-wrapper{
+  position: relative;
+  padding-bottom: 56.25%;
+  overflow: hidden;
+  margin-bottom: 15px;
 }
 .video-wrapper iframe{
   position: absolute;

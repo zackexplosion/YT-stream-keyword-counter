@@ -51,6 +51,8 @@ function updateUserCounter () {
 setInterval(updateUserCounter, 1000 * 5)
 
 const other_streaming = [
+  'XxJKnDLYZz4',
+  'DVOHYy_m_qU',
   'j_TtgHGkzAk',
   'dxpWqjvEKaM',
   'Hu1FkdAOws0'

@@ -32,6 +32,7 @@
   "devDependencies": {
     "nodemon": "^1.18.10",
     "shipit-cli": "^4.2.0",
-    "shipit-deploy": "^4.1.4"
+    "shipit-deploy": "^4.1.4",
+    "webpack-dev-middleware": "^3.6.2"
   }
 }
