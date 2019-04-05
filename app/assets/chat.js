@@ -36,7 +36,7 @@ $(function() {
     // } else {
     //   message += "現在有 " + data.numUsers + " 位喜韓兒"
     // }
-    message += "現在有 " + data.numUsers + " 位喜韓兒"
+    // message += "現在有 " + data.numUsers + " 位喜韓兒"
     log(message)
   }
 
@@ -255,7 +255,7 @@ $(function() {
     log(message, {
       prepend: true
     })
-    addParticipantsMessage(data)
+    // addParticipantsMessage(data)
   })
 
   // Whenever the server emits 'new message', update the chat body
@@ -266,7 +266,7 @@ $(function() {
   // Whenever the server emits 'user joined', log it in the chat body
   socket.on('user joined', (data) => {
     log(data.username + ' 加入惹')
-    addParticipantsMessage(data)
+    // addParticipantsMessage(data)
   })
 
   socket.on('username changed', (data) => {
@@ -277,7 +277,7 @@ $(function() {
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) => {
     log(data.username + ' 離開了大家庭 :(')
-    addParticipantsMessage(data)
+    // addParticipantsMessage(data)
     removeChatTyping(data)
   })
 

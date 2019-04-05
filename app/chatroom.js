@@ -1,5 +1,5 @@
-var faker = require('faker/locale/zh_tw')
-var numUsers = 0
+var faker = require('faker')
+faker.locale = 'zh_TW'
 module.exports = io => {
   io.on('connection', (socket) => {
     var addedUser = false
@@ -18,16 +18,13 @@ module.exports = io => {
     if (!addedUser){
       // we store the username in the socket session for this client
       socket.username = faker.name.findName()
-      ++numUsers
       addedUser = true
       socket.emit('login', {
         username: socket.username,
-        numUsers: numUsers
       })
       // echo globally (all clients) that a person has connected
       socket.broadcast.emit('user joined', {
         username: socket.username,
-        numUsers: numUsers
       })
     }
 
@@ -40,8 +37,7 @@ module.exports = io => {
       // echo globally (all clients) that a person has connected
       socket.broadcast.emit('username changed', {
         oldusername,
-        username,
-        numUsers
+        username
       })
     })
 
@@ -62,12 +58,10 @@ module.exports = io => {
     // when the user disconnects.. perform this
     socket.on('disconnect', () => {
       if (addedUser) {
-        --numUsers
 
         // echo globally that this client has left
         socket.broadcast.emit('user left', {
           username: socket.username,
-          numUsers: numUsers
         })
       }
     })

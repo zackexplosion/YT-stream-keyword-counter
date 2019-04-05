@@ -29,7 +29,7 @@ module.exports = function (shipit) {
       const cmd = `pm2 start echosystem.config.js`
       await shipit.remote(cmd)
     } catch (error) {
-      await shipit.remote(`pm2 restart system.config.js`)
+      await shipit.remote(`pm2 restart ecosystem.config.js`)
     }
   })
 }

@@ -131,8 +131,9 @@ ul {
 .timestamp,
 .username {
   font-weight: 700;
+  font-size: 70%;
   overflow: hidden;
-  padding-right: 15px;
+  padding-right: 5px;
   text-align: right;
 }
 
