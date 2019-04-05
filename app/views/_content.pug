@@ -26,6 +26,11 @@ hr
     h4 最近六小時
     //- span 載入圖表中..
     canvas
+#chat.row
+  .col
+    .collapse#chatIframe
+      iframe(src="/chatroom")
+    button.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
 #live-counter.alert.alert-info(type='alert')
   | 目前有 #[span.badge.badge-light=user_live_count] 位又老又窮的鄉民在線上
 

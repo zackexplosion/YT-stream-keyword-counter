@@ -94,4 +94,12 @@
 
   // setInterval(chartUpdater, 3000)
 
+  // var $chatToggle = $('#chat button')
+  // var $chatIframe = $('#chat iframe')
+  // $chatToggle.click(()=>{
+  //   $chatToggle.button('toggle')
+  //   $chatIframe.toggle()
+  // })
+
+
 })()

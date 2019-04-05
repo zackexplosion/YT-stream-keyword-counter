@@ -6,6 +6,7 @@ module.exports = function (shipit) {
       workspace: '/tmp/github-monitor',
       deployTo: '/app/cti-hant-counter-crawler',
       repositoryUrl: 'https://github.com/zackexplosion/hant-counter-crawler',
+      keepReleases: 1,
     },
     production: {
       servers: 'zack@YEE'
@@ -15,7 +16,6 @@ module.exports = function (shipit) {
   shipit.on('deployed', async function () {
     try {
       await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
-      // await shipit.remote(`cd ${shipit.currentPath} && nvm use && npm install --production`)
     } catch (error) {
       console.log(error)
     }
@@ -24,15 +24,12 @@ module.exports = function (shipit) {
 
   shipit.task('startApp', async () => {
     const name = 'cti-hant-counter-crawler'
-    const current_path = `${shipit.config.deployTo}/current`
+    // const current_path = `${shipit.config.deployTo}/current`
     try {
-      // let cmd = `
-      // const KEYWORDS = '韓|國瑜|韓國瑜|賣菜郎'
-      // const cmd = `DB_RAW_PATH=${shipit.config.deployTo}/db-raw.json DB_PATH=${shipit.config.deployTo}/db.json PORT=${PORT} pm2 start ${current_path}/app/web-server.js`
       const cmd = `pm2 start echosystem.config.js`
       await shipit.remote(cmd)
     } catch (error) {
-      await shipit.remote(`pm2 restart ${name}`)
+      await shipit.remote(`pm2 restart system.config.js`)
     }
   })
 }

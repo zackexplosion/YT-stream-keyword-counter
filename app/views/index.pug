@@ -65,6 +65,24 @@ html
       #chart canvas{
         display: none;
       }
+      #chat {
+        top:0;
+        right: 15px;
+        position: fixed;
+        background: #FFF;
+      }
+      #chat .collapse{
+        width: 30vw;
+      }
+      #chat button {
+        margin-right: 15px;
+        float: right;
+      }
+      #chat iframe {
+        border: 1px solid #CCC;
+        height: 500px;
+        width: 100%;
+      }
   body.container
     include _content
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js')

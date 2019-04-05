@@ -10,5 +10,5 @@ KEYWORDS.forEach(k => {
   counter[k] = 0
 })
 db.defaults({ counter, matches: [] }).write()
-
+global.db = db
 module.exports = db
