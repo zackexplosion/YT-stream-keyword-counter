@@ -19,7 +19,7 @@ require(path.join(__dirname, 'common'))
 //   require(path.join(__dirname, 'scanner'))({handleProgress})
 // })
 
-const { getCode } = require(path.join(__dirname, 'handleProgress'))({})
+const { getCode } = require(path.join(__dirname, 'handle-progress'))({})
 
 
 

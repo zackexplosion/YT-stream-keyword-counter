@@ -12,11 +12,10 @@ module.exports = io => {
   io.on('connection', (socket) => {
     var addedUser = false
     var sent_message = false
-
     // add user
     if (!addedUser){
       // we store the username in the socket session for this client
-      socket.username = faker.name.findName()
+      socket.username = faker.name.findName().split(' ').join('')
       addedUser = true
       socket.emit('login', {
         username: socket.username,

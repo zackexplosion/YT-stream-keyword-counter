@@ -9,14 +9,17 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 require(path.join(__dirname, '/common'))
 
-const { handleProgress, statusCodeSheet } = require('./handleProgress')({io, log, db})
+const {
+  handleProgress,
+  statusCodeSheet
+} = require(path.join(__dirname, 'handle-progress'))({io, log, db})
 
-app.use(express.static(path.join(BASE_DIR, '/public')))
-app.use(express.static(path.join(BASE_DIR, '/assets')))
+app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.static(path.join(__dirname, 'assets')))
 
 // setup view engine
 app.set('view engine', 'pug')
-app.set('views', path.join(BASE_DIR, '/views'))
+app.set('views', path.join(BASE_DIR, 'views'))
 
 let user_live_count = 0
 let is_scanner_connected = false

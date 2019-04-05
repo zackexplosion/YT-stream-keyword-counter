@@ -78,7 +78,8 @@ h1, h4, h5, h6,
   float: right;
 }
 #chat iframe {
-  border: 1px solid #CCC;
+  border-left: 1px solid #CCC;
+  border-right: 1px solid #CCC;
   height: 500px;
   width: 100%;
 }
