@@ -6,7 +6,7 @@ module.exports = function (shipit) {
       workspace: '/tmp/github-monitor',
       deployTo: '/app/cti-hant-counter-crawler',
       repositoryUrl: 'https://github.com/zackexplosion/hant-counter-crawler',
-      keepReleases: 1,
+      keepReleases: 2,
     },
     production: {
       servers: 'zack@YEE'
@@ -14,19 +14,29 @@ module.exports = function (shipit) {
   })
 
   shipit.on('deployed', async function () {
+    shipit.start('checkDep')
+    shipit.start('startApp')
+  })
+
+  shipit.task('checkDep', async () => {
     try {
+      let list = (await shipit.remote(`ls ${shipit.config.deployTo}/releases`))[0]
+                .stdout
+                .trim()
+                .split('\n')
+      if (list.length > 1) {
+        // copy last node_modules
+      }
+      console.log(list)
       await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
     } catch (error) {
       console.log(error)
     }
-    // shipit.start('startApp')
   })
 
   shipit.task('startApp', async () => {
-    const name = 'cti-hant-counter-crawler'
-    // const current_path = `${shipit.config.deployTo}/current`
     try {
-      const cmd = `cd ${shipit.config.deployTo} && pm2 start echosystem.config.js`
+      const cmd = `cd ${shipit.config.deployTo} && pm2 start ecosystem.config.js`
       await shipit.remote(cmd)
     } catch (error) {
       await shipit.remote(`cd ${shipit.config.deployTo} && pm2 restart ecosystem.config.js`)
