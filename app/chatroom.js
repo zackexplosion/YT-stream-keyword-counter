@@ -16,18 +16,18 @@ module.exports = io => {
 
     var user
     var _cookie = cookie.parse(socket.handshake.headers.cookie)
-    log(socket.handshake.headers.cookie)
+    log(_cookie)
+    return
     if (_cookie['connect.sid']){
       let cookie_id = _cookie['connect.sid']
-      users[cookie_id]
-      user = users[cookie_id]
-      new_user = false
     }
 
-    if (new_user) {
-      user = users[cookie_id] = {
-        username: faker.name.findName()
-      }
+    // if (new_user) {
+
+    // }
+
+    user = users[cookie_id] = {
+      username: faker.name.findName()
     }
 
     log(user)

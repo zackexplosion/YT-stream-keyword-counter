@@ -1,5 +1,5 @@
 const db = require('./db')
-const db_raw = require('./db-raw')
+// const db_raw = require('./db-raw')
 
 require(path.join(__dirname, '/common'))
 // env params with default value
@@ -11,8 +11,10 @@ const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
-
 const { handleProgress, statusCodeSheet } = require('./handleProgress')({io, log})
+
+// inject webpack for development
+require(path.join(BASE_DIR, 'webpack.js'))(app)
 
 app.use(express.static(path.join(BASE_DIR, '/public')))
 app.use(express.static(path.join(BASE_DIR, '/assets')))
@@ -68,5 +70,5 @@ app.get('/codesheet', function (req, res) {
 const PORT = process.env.PORT || 3000
 http.listen(PORT, function () {
   log(`App serving on http://localhost:${PORT}!`)
-  require(path.join(BASE_DIR, '/scanner'))({db, db_raw, log, moment, handleProgress})
+  require(path.join(BASE_DIR, '/scanner'))({db, log, moment, handleProgress})
 })
