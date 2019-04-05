@@ -45,11 +45,15 @@ h1, h4, h5, h6,
   text-align: center;
 }
 #history {
-  max-height: 240px;
+  max-height: 360px;
   overflow-y: scroll;
 }
+#history .list-group-item {
+  height: 125px;
+  overflow: hidden;
+}
 #history.overflow{
-  max-height: 300px;
+  /* max-height: 440px; */
 }
 #live-counter {
   position: fixed;
