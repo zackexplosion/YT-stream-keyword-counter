@@ -64,7 +64,6 @@ h1, h4, h5, h6,
   top:0;
   right: 15px;
   position: fixed;
-  background: #FFF;
 }
 #chat .collapse{
   min-width: 300px;
