@@ -15,8 +15,8 @@ COPY yarn.lock ./
 RUN yarn --production
 
 # Bundle app source
-COPY . .
+COPY . scanner
 
 RUN apk del git python g++ make
-
+WORKDIR /usr/src/app/scanner
 CMD [ "yarn", "start" ]

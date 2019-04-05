@@ -10,7 +10,7 @@ module.exports = async function main (args) {
   try {
     // clear tmp dir
     await new Promise((resolve, reject) => {
-      rimraf(path.join(BASE_DIR, 'tmp', `${YOUTUBE_VIDEO_ID}*`), function(err){
+      rimraf(path.join(ROOT_DIR, 'tmp', `${YOUTUBE_VIDEO_ID}*`), function(err){
         if (err) reject(err)
         resolve()
       })

@@ -1,10 +1,10 @@
 const HOST = process.env.WEB_HOST || 'https://hant.zackexplosion.fun'
 const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
 const path = require('path')
-require(path.join(__dirname, '..', 'app', 'common'))
+require(path.join(__dirname, '..', 'util', 'common'))
 
 
-const { getCode } = require(path.join(ROOT_DIR, 'app', 'handle-progress'))({})
+const { getCode } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({})
 const socket = require('socket.io-client')(HOST)
 socket.on('connect', function(){
   log('connted to:', HOST)
