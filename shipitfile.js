@@ -14,8 +14,8 @@ module.exports = function (shipit) {
   })
 
   shipit.on('deployed', async function () {
-    shipit.start('checkDep')
-    shipit.start('startApp')
+    await shipit.start('checkDep')
+    await shipit.start('startApp')
   })
 
   shipit.task('checkDep', async () => {

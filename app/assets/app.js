@@ -1,6 +1,6 @@
 (function(){
   const status = document.getElementById('status')
-  const keywords = $('#keywords')
+  // const keywords = $('#keywords')
   const history = $('#history')
   const progress_bar = $('.progress-bar')
   const live_counter = $('#live-counter .badge')
@@ -22,10 +22,10 @@
   })
 
   socket.on('updateCounter', data => {
-    chartUpdater()
-    $.ajax('/keywords').then(c => {
-      keywords.html(c)
-    })
+    // chartUpdater()
+    // $.ajax('/keywords').then(c => {
+    //   keywords.html(c)
+    // })
 
     history.prepend(`<li class="list-group-item">${data.created_at}: ${data.matches}</li>`)
   })

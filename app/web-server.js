@@ -50,6 +50,11 @@ function updateUserCounter () {
 // update to client every 5 seconds
 setInterval(updateUserCounter, 1000 * 5)
 
+const other_streaming = [
+  'j_TtgHGkzAk',
+  'dxpWqjvEKaM',
+  'Hu1FkdAOws0'
+]
 // setup index route
 app.get('/', function (req, res) {
   res.render('index', {
@@ -57,6 +62,7 @@ app.get('/', function (req, res) {
     startedAt: db.get('matches[0].created_at').value(),
     history: db.get('matches').takeRight(5).value(),
     user_live_count,
+    other_streaming,
     YOUTUBE_VIDEO_ID
   })
 })

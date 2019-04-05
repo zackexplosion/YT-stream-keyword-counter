@@ -1,18 +1,11 @@
 const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
-const getDate = d =>{
+const CHARTDATA_CACHE_SECONDS = process.env.CHARTDATA_CACHE_SECONDS || 30
+function getDate (d) {
   return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
 }
 
-var chartdata = null
-
-module.exports = function (req, res) {
-  if (chartdata && moment.duration(getDate(chartdata.now).diff(moment()) > moment.duration(5, 'minutes') )) {
-    return res.json(chartdata)
-  }
-
-  // let keywords = Object.keys(db.get('counter').value())
+function countChartData() {
   let ranges = 6
-
   // filter out of range data
   let matches = db.get('matches').value().filter(m => {
     let a = getDate(m.created_at)
@@ -52,10 +45,24 @@ module.exports = function (req, res) {
 
   let now = moment().format('lll')
 
-  chartdata = {
+  return {
     sheets,
     x,
     now
   }
-  res.json(chartdata)
+}
+
+
+var chartData = null
+module.exports = function (req, res) {
+  // cache
+  if (chartData &&
+      moment.duration(getDate(chartData.now).diff(moment()) >
+      moment.duration(CHARTDATA_CACHE_SECONDS, 'seconds') )
+  ) {
+    return res.json(chartData)
+  }
+
+  chartData = countChartData()
+  res.json(chartData)
 }

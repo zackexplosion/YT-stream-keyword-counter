@@ -4,17 +4,17 @@
     h4 可以選台啦!原始碼都給你了!自己去架！
     //- h5 從 #{startedAt} 開始，總共統計了...
 .row
-  #chart.col-lg
+  #chart.col-lg-9
     h4 最近六小時
     //- span 載入圖表中..
     canvas
-.row
-  .col-lg-4
+  .col-lg-3
     h4 總計
     h6 新加的關鍵字一定比較少
     #keywords
       include _keywords
-  .col-lg-4
+.row
+  .col-lg-6
     h4 即時畫面
     div.video-wrapper
       iframe(src=`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
@@ -22,12 +22,20 @@
       | 即時狀態載入中...
     #progress.progress
       .progress-bar.progress-bar-striped.bg-info.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
-  .col-lg-4
+  .col-lg-6
     h4 最新記錄
     ul#history.list-group
       each h in history.reverse()
         li.list-group-item=`${h.created_at}: ${h.matches}`
-//- .row.content
+
+.row
+  .col-lg-12
+    h4 其他直播台
+  each s in other_streaming
+    .col-lg-4
+        div.video-wrapper
+          iframe(src=`https://www.youtube.com/embed/${s}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+
 
 
 //- a#download(target="_blank" href="/dbdownload") 資料庫下載
