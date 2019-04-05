@@ -1,11 +1,5 @@
-var channels = [
-  // name, video id
-  ['中天', 'wUPPkSANpyo'],
-  ['TVBS', 'Hu1FkdAOws0'],
-  ['三立', '4ZVUmEUFwaY'],
-  ['東森', 'dxpWqjvEKaM'],
-  ['民視', 'XxJKnDLYZz4']
-]
+var path = require('path')
+var channels = require(path.join('..', 'util', 'channels'))
 
 var app = {
   name: "scanner",
@@ -35,18 +29,4 @@ var scanners = channels.map(c => {
 
 module.exports = {
   apps: scanners
-    // {
-    //   name: "cti-hant-counter-crawler",
-    //   script: "./current/app/web-server.js",
-    //   watch: true,
-    //   ignore_watch: ["node_modules", "*.json"],
-    //   env: {
-    //     "NODE_ENV": "production",
-    //     "EVENT_TOKEN": "WRYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY",
-    //     "TARGET_KEYWORDS": "韓|國瑜|韓國瑜|韓粉|韓流|蔡英文|菜|拔菜|賣菜郎",
-    //     "DB_PATH": "/app/cti-hant-counter-crawler/db.json",
-    //     "DB_CHAT_PATH": "/app/cti-hant-counter-crawler/db-chat.json",
-    //     "PORT": 8082
-    //   }
-    // }
 }

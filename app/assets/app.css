@@ -60,27 +60,32 @@ h1, h4, h5, h6,
   margin-bottom: 0;
   bottom: 0;
   right: 0;
+  font-size: 90%;
 }
 #chart canvas{
   display: none;
 }
+
+#chat-toggle {
+  position: fixed;
+  top:0;
+  left:0;
+  z-index: 9999;
+}
+
 #chat {
   top:0;
-  right: 15px;
+  right:0;
   position: fixed;
-}
-#chat .collapse{
   min-width: 300px;
   width: 30vw;
 }
-#chat button {
-  margin-right: 15px;
-  float: right;
-}
+
 #chat iframe {
   border: 0;
+  border-top: 1px solid #CCC;
   border-left: 1px solid #CCC;
   border-right: 1px solid #CCC;
-  height: 500px;
   width: 100%;
+  height: calc(100vh - 120px);
 }
