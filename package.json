@@ -5,10 +5,7 @@
   "main": "index.js",
   "scripts": {
     "deploy": "shipit production deploy",
-    "devScanner": "nodemon app/scanner-server.js -e .js --ignore 'app/assets'",
-    "scanner": "nodemon start -f app/scanner-server.js",
-    "devWeb": "nodemon app/web-server.js -e .js --ignore 'app/assets' ",
-  "web": "nodemon app/web-server.js -e .js --ignore 'app/assets' ",
+    "web": "nodemon app/web-server.js -e .js --ignore 'app/assets' ",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -16,17 +13,12 @@
   "dependencies": {
     "express": "^4.16.4",
     "faker": "^4.1.0",
-    "ffmpeg-binaries": "https://github.com/BannerBomb/node-ffmpeg-binaries.git#patch-1",
     "lowdb": "^1.0.0",
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.23",
     "pm2": "^3.4.1",
     "pug": "^2.0.3",
-    "rimraf": "^2.6.3",
-    "sharp": "^0.22.0",
-    "socket.io": "^2.2.0",
-    "tesseract.js": "^1.0.14",
-    "ytdl": "^0.11.1"
+    "socket.io": "^2.2.0"
   },
   "devDependencies": {
     "nodemon": "^1.18.10",

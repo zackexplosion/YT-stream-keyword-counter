@@ -20,4 +20,4 @@ COPY . .
 RUN apk del git python g++ make
 
 EXPOSE 8080
-CMD [ "yarn", "devScanner" ]
+CMD [ "yarn", "start" ]

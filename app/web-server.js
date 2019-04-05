@@ -9,6 +9,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 require(path.join(__dirname, '/common'))
 
+global.db = require(path.join(__dirname, 'db'))
 const {
   handleProgress,
   statusCodeSheet

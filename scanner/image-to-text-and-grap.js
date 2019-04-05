@@ -1,5 +1,6 @@
+const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 const Tesseract = require('tesseract.js')
-const image = require('path').join(BASE_DIR, '/tmp/stream-cutted.png')
+const image = require('path').join(ROOT_DIR, 'tmp', `${YOUTUBE_VIDEO_ID}-stream-cutted.png`)
 
 const done = data => {
   let result = {
@@ -16,7 +17,6 @@ module.exports = (progress = function(){}) =>{
   return new Promise( (resolve, reject) => {
     Tesseract.recognize(image, {
       lang: 'chi_tra',
-      langPath: './tmp/chi_tra'
     })
     .progress(function(info){
       progress(info)
