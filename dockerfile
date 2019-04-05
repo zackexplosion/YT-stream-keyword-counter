@@ -1,12 +1,10 @@
-FROM mhart/alpine-node:8.12
+FROM node:8.12-alpine
+
+ENV NODE_ENV production
+
 # Create app directory
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
-# RUN apk add --no-cache yarn git python
-# RUN apk add --no-cache make gcc
 RUN apk update && apk add yarn git python g++ make && rm -rf /var/cache/apk/*
 
 COPY package.json ./
@@ -19,6 +17,7 @@ RUN yarn --production
 # Bundle app source
 COPY . .
 
+RUN apk del git python g++ make
 
 EXPOSE 8080
-CMD [ "yarn", "scannerServer" ]
+CMD [ "yarn", "devScanner" ]
