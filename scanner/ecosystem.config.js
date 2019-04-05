@@ -9,7 +9,7 @@ var channels = [
 
 var app = {
   name: "scanner",
-  script: "./app/scanner-server.js",
+  script: "index.js",
   ignore_watch: ["node_modules", "*.json", '*.png'],
   watch: ['*.js'],
   env: {
