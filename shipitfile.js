@@ -24,10 +24,20 @@ module.exports = function (shipit) {
                 .stdout
                 .trim()
                 .split('\n')
+                .map(n => parseInt(n))
       if (list.length > 1) {
         // copy last node_modules
+        let last = list[list.length - 2]
+        // let current = list[list.length - 1]
+        // console.log(last)
+        let cmd = [
+          `cp -a ${shipit.config.deployTo}/releases/${last}/node_modules`,
+          `${shipit.config.deployTo}/current/`
+        ].join(' ')
+        console.log(cmd)
+        await shipit.remote(cmd)
       }
-      console.log(list)
+
       await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
     } catch (error) {
       console.log(error)

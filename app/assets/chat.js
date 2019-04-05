@@ -285,7 +285,7 @@ $(function() {
 
   // Whenever the server emits 'user left', log it in the chat body
   socket.on('user left', (data) => {
-    log(data.username + ' 離開了大家庭 :(')
+    log(data.username + ' 離開了這個世界.....')
     // addParticipantsMessage(data)
     removeChatTyping(data)
   })
