@@ -9,7 +9,10 @@ faker.locale = 'zh_TW'
 
 const cookie = require('cookie')
 var users = online_users = {}
-module.exports = io => {
+module.exports = http => {
+  const io = require('socket.io')(http, {
+    path: '/chat'
+  })
   io.on('connection', (socket) => {
     var new_user = true
     var sent_message = false

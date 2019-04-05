@@ -28,7 +28,7 @@ $(function() {
   var isChangingUsername = false
   var reconnect = false
 
-  var socket = io()
+  var socket = io('/', {path : '/chat'})
 
   const addParticipantsMessage = (data) => {
     var message = ''
