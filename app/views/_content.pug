@@ -2,11 +2,15 @@
   .col-lg
     h1#title OO關鍵字計數器
     h4 可以選台啦!原始碼都給你了!自己去架！
-    h5 從 #{startedAt} 開始，總共統計了...
-.row
+    //- h5 從 #{startedAt} 開始，總共統計了...
+#chart.row
+  .col-lg
+    h4 最近六小時
+    //- span 載入圖表中..
+    canvas
   #keywords.col-lg
+    h4 總計（新加的一定比較少）
     include _keywords
-hr
 .row.content
   .col-lg
     h4 即時畫面
@@ -21,12 +25,6 @@ hr
     ul#history.list-group
       each h in history.reverse()
         li.list-group-item=`${h.created_at}: ${h.matches}`
-hr
-#chart.row
-  .col
-    h4 最近六小時
-    //- span 載入圖表中..
-    canvas
 #chat.row
   .col
     .collapse#chatIframe

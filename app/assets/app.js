@@ -1,5 +1,4 @@
 (function(){
-  const socket = io('/')
   const status = document.getElementById('status')
   const keywords = $('#keywords')
   const history = $('#history')
@@ -34,72 +33,5 @@
   socket.on('uuc', function updateUserCounter(data){
     live_counter.html(data)
   })
-
-  // var ctx_live = document.getElementById("chart")
-  var ctx_live = $('#chart canvas')
-  var myChart = new Chart(ctx_live, {
-    type: 'bar',
-    data: {
-      labels: [],
-      datasets: [
-      // {
-      //   data: [],
-      //   borderWidth: 1,
-      //   borderColor:'#00c0ef',
-      //   label: '總出現次數',
-      // }
-      ]
-    },
-    options: {
-      responsive: true,
-      // title: {
-      //   display: true,
-      //   text: "Chart.js - Dynamically Update Chart Via Ajax Requests",
-      // },
-      legend: {
-        display: false
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: true,
-          }
-        }]
-      }
-    }
-  })
-  const chartUpdater = () =>{
-    $.ajax('/chartdata').then(res =>{
-      myChart.options.title ={
-        display: true,
-        text: '現在時間:' + res.now
-      }
-      myChart.data.labels = res.x.reverse()
-      // myChart.data.datasets[0].data = res.data
-      myChart.data.datasets = []
-
-      Object.keys(res.sheets).forEach(k =>{
-        myChart.data.datasets.push(res.sheets[k])
-      })
-
-      myChart.update()
-      setTimeout(()=>{
-        $('#chart span').hide()
-      }, 1000)
-
-    })
-  }
-
-  chartUpdater()
-
-  // setInterval(chartUpdater, 3000)
-
-  // var $chatToggle = $('#chat button')
-  // var $chatIframe = $('#chat iframe')
-  // $chatToggle.click(()=>{
-  //   $chatToggle.button('toggle')
-  //   $chatIframe.toggle()
-  // })
-
 
 })()
