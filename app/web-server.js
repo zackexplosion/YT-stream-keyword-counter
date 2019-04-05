@@ -73,13 +73,18 @@ app.get('/', function (req, res) {
   })
 })
 
+require(path.join(__dirname, 'chatroom'))(io)
+app.get('/chatroom', (req, res) => {
+  res.render('chatroom')
+})
+
 const getDate = d =>{
   return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
 }
 
 var chartdata = null
 app.get('/chartdata', function (req, res) {
-  if (chartdata && moment.duration(getDate(chartdata.now).diff(moment()) < moment.duration(5, 'minutes') )) {
+  if (chartdata && moment.duration(getDate(chartdata.now).diff(moment()) > moment.duration(5, 'minutes') )) {
     return res.json(chartdata)
   }
   // let keywords = Object.keys(db.get('counter').value())
