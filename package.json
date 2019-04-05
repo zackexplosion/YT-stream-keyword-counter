@@ -15,6 +15,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cookie": "^0.3.1",
     "express": "^4.16.4",
     "faker": "^4.1.0",
     "ffmpeg-binaries": "https://github.com/BannerBomb/node-ffmpeg-binaries.git#patch-1",
