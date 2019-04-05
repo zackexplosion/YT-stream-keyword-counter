@@ -1,9 +1,10 @@
 var faker = require('faker')
 faker.locale = 'zh_TW'
 
+const DB_CHAT_PATH = process.env.DB_CHAT_PATH || 'db-chat.json'
 const low = require('lowdb')
 const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db-chat.json')
+const adapter = new FileSync(DB_CHAT_PATH)
 const db = low(adapter)
 
 db.defaults({ messages: [] }).write()

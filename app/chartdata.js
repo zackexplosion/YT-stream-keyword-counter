@@ -13,6 +13,8 @@ function countChartData() {
     return a > b
   })
 
+  // log('matches', matches)
+
   let x = []
   let data = []
   let sheets = {}
