@@ -4,15 +4,15 @@
     h4 可以選台啦!原始碼都給你了!自己去架！
     //- h5 從 #{startedAt} 開始，總共統計了...
 .row
-  #chart.col-lg-9
-    h4 最近六小時
-    //- span 載入圖表中..
-    canvas
-  .col-lg-3
-    h4 總計
-    h6 新加的關鍵字一定比較少
-    #keywords
-      include _keywords
+  #chart.col-lg-12
+    h4 近24小時
+    div.canvas-wrapper
+      canvas
+  //- .col-lg-3
+  //-   h4 總計
+  //-   h6 新加的關鍵字一定比較少
+  //-   #keywords
+  //-     include _keywords
 .row
   .col-lg-6
     h4 即時畫面

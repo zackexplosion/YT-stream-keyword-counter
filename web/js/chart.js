@@ -26,8 +26,8 @@ var config = {
     datasets: []
   },
   options: {
-    // maintainAspectRatio: false,
-    responsive: true,
+    maintainAspectRatio: false,
+    responsive: false,
     title: {
       display: true,
       // text: 'Chart.js Line Chart'
@@ -65,7 +65,9 @@ const chartUpdater = () =>{
       display: true,
       text: '現在時間:' + moment(res.now).format('lll')
     }
-    myChart.data.labels = res.x.reverse()
+    myChart.data.labels = res.x.reverse().map(x =>{
+      return moment(x).format('MM/DD LT')
+    })
     // myChart.data.datasets[0].data = res.data
     myChart.data.datasets = []
 

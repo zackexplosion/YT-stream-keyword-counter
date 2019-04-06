@@ -62,8 +62,13 @@ h1, h4, h5, h6, #status
   right: 0
   font-size: 90%
 
-#chart canvas
-  display: none
+#chart
+  .canvas-wrapper
+    overflow: scroll
+  canvas
+    display: none
+    // width: 100%;
+    min-height: 555px
 
 #chat-toggle
   position: fixed

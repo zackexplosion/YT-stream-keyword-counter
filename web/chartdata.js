@@ -1,5 +1,5 @@
 const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
-const CHARTDATA_CACHE_SECONDS = process.env.chartdata_CACHE_SECONDS || 30
+const CHARTDATA_CACHE_SECONDS = process.env.chartdata_CACHE_SECONDS || 300
 const cache_middleware = require('apicache').middleware(`${CHARTDATA_CACHE_SECONDS} seconds`)
 
 function getDate (d) {
@@ -7,7 +7,7 @@ function getDate (d) {
 }
 
 function countchartdata() {
-  let ranges = 6
+  let ranges = 24
   // filter out of range data
   let matches = db.get('matches').value().filter(m => {
     let a = getDate(m.created_at)
@@ -44,7 +44,8 @@ function countchartdata() {
       })
     })
 
-    x.unshift(b.format('LT'))
+    // x.unshift(b.format('MM-DD LT'))
+    x.unshift(b)
   }
 
   return {
@@ -54,10 +55,10 @@ function countchartdata() {
   }
 }
 
-
+// let chartdata = countchartdata()
 module.exports = app => {
   app.get('/chartdata', cache_middleware , (req, res) => {
-    chartdata = countchartdata()
+    let chartdata = countchartdata()
     return res.json(chartdata)
   })
 }
