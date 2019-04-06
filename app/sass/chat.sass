@@ -1,0 +1,135 @@
+/* Fix user-agent
+
+*
+  box-sizing: border-box
+
+html
+  font-weight: 300
+  -webkit-font-smoothing: antialiased
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+
+input
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif
+
+html, body
+  height: 100%
+  margin: 0
+  padding: 0
+  background: #FFF
+
+ul
+  list-style: none
+  word-wrap: break-word
+
+/* Pages
+
+.pages
+  height: 100%
+  margin: 0
+  padding: 0
+  width: 100%
+
+.page
+  height: 100%
+  position: absolute
+  width: 100%
+
+/* Login Page
+
+.login.page
+  display: none
+  background-color: #000
+  .form
+    height: 100px
+    margin-top: -100px
+    position: absolute
+    text-align: center
+    top: 50%
+    width: 100%
+    .usernameInput
+      background-color: transparent
+      border: none
+      border-bottom: 2px solid #fff
+      outline: none
+      padding-bottom: 15px
+      text-align: center
+      width: 400px
+  .title
+    font-size: 200%
+  .usernameInput
+    font-size: 200%
+    letter-spacing: 3px
+  .title, .usernameInput
+    color: #fff
+    font-weight: 100
+
+/* Chat page
+
+/* .chat.page {
+ *  display: none;
+ *}
+
+/* Font
+
+.messages, .inputMessage
+  font-size: 100%
+
+.log
+  color: gray
+  font-size: 70%
+  margin: 5px
+  text-align: center
+
+/* Messages
+
+.chatArea
+  height: 100%
+  padding-bottom: 60px
+
+.messages
+  height: 100%
+  margin: 0
+  overflow-y: scroll
+  padding: 10px 20px 10px 20px
+
+.message.typing .messageBody
+  color: gray
+
+.timestamp
+  font-weight: 700
+  /* font-size: 70%;
+  overflow: hidden
+  padding-right: 5px
+  text-align: right
+
+.username
+  font-weight: 700
+  /* font-size: 70%;
+  overflow: hidden
+  padding-right: 5px
+  text-align: right
+  border: 0
+  text-align: center
+  &:hover
+    cursor: pointer
+    background: #EEE
+
+/* Input
+
+section.input
+  border: 10px solid #000
+  bottom: 0
+  height: 60px
+  outline: none
+  /* padding-left: 10px;
+  position: absolute
+  right: 0
+  width: 100%
+  .username, .inputMessage
+    height: 100%
+  .username
+    width: 80px
+    float: left
+  .inputMessage
+    width: calc(100% - 80px)
+    float: right

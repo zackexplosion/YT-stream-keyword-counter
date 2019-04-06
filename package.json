@@ -32,6 +32,7 @@
     "shipit-deploy": "^4.1.4",
     "webpack": "^4.29.6",
     "webpack-cli": "^3.3.0",
-    "webpack-dev-middleware": "^3.6.2"
+    "webpack-dev-middleware": "^3.6.2",
+    "webpack-hot-middleware": "^2.24.3"
   }
 }

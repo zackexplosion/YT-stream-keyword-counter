@@ -21,7 +21,7 @@ const {
 } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({io, log, db})
 
 app.use(express.static(path.join(__dirname, 'public')))
-// app.use(express.static(path.join(__dirname, 'assets')))
+app.use(express.static(path.join(__dirname, 'dist')))
 
 
 // setup view engine
