@@ -79,6 +79,7 @@ h1, h4, h5, h6,
   position: fixed;
   min-width: 300px;
   width: 30vw;
+  z-index: 9999;
 }
 
 #chat iframe {
@@ -88,4 +89,5 @@ h1, h4, h5, h6,
   border-right: 1px solid #CCC;
   width: 100%;
   height: calc(100vh - 120px);
+  /* height: 90vh; */
 }
