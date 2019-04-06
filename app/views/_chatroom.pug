@@ -1,0 +1,19 @@
+doctype html
+html(lang='en')
+  head
+    meta(charset='UTF-8')
+    title 喜韓兒聊天室
+    link(rel='stylesheet', href='/chat.css')
+  body
+    ul.pages
+      li.chat.page
+        .chatArea
+          ul.messages
+        section.input
+          input.username(readonly)
+          input.inputMessage(placeholder='Type here...')
+      li.login.page
+        .form
+          h3.title 修改您的喜韓兒ID
+          input.usernameInput(type='text', maxlength='14')
+    script(src='/chat.js')

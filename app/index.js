@@ -1,22 +1,28 @@
 // env params with default value
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
 const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
+
 // packages
 const path = require('path')
 const express = require('express')
 const app = express()
 const http = require('http').Server(app)
 const io = require('socket.io')(http)
+
 require(path.join(__dirname, '..', 'util', 'common'))
+// inject webpack for development
+require(path.join(__dirname, 'webpack.js'))(app)
 
 global.db = require(path.join(__dirname, 'db'))
+
 const {
   handleProgress,
   statusCodeSheet
 } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({io, log, db})
 
 app.use(express.static(path.join(__dirname, 'public')))
-app.use(express.static(path.join(__dirname, 'assets')))
+// app.use(express.static(path.join(__dirname, 'assets')))
+
 
 // setup view engine
 app.set('view engine', 'pug')

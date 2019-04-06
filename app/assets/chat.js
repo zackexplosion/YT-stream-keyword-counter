@@ -26,8 +26,9 @@ $(function() {
   var lastTypingTime
   var $currentInput = $usernameInput.focus()
   var isChangingUsername = false
+  var reconnect = false
 
-  var socket = io()
+  var socket = io('/', {path : '/chat'})
 
   const addParticipantsMessage = (data) => {
     var message = ''
@@ -301,6 +302,7 @@ $(function() {
   })
 
   socket.on('disconnect', () => {
+    reconnect = true
     log('斷線囉，請稍後')
   })
 
