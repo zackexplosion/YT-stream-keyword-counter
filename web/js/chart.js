@@ -1,3 +1,4 @@
+moment.locale('zh-tw')
 const randomColor = () => {
   var letters = '0123456789ABCDEF'
   var color = '#'
@@ -62,7 +63,7 @@ const chartUpdater = () =>{
   $.ajax('/chartdata').then(res =>{
     myChart.options.title ={
       display: true,
-      text: '現在時間:' + res.now
+      text: '現在時間:' + moment(res.now).format('lll')
     }
     myChart.data.labels = res.x.reverse()
     // myChart.data.datasets[0].data = res.data
