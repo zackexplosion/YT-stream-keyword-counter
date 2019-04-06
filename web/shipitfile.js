@@ -56,7 +56,8 @@ module.exports = function (shipit) {
     try {
       await shipit.remote(cmd)
     } catch (error) {
-      await shipit.remote(`cd ${shipit.config.deployTo} && pm2 restart ecosystem.config.js`)
+      console.log(error)
+      // await shipit.remote(`cd ${shipit.config.deployTo} && pm2 restart ecosystem.config.js`)
     }
   })
 }

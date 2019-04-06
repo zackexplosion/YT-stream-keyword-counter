@@ -28,8 +28,8 @@ $(function() {
   var isChangingUsername = false
   var reconnect = false
 
-  // var socket = io('/', {path : '/chat'})
-  var socket = io('/')
+  var socket = io('/', {path : '/chat'})
+  // var socket = io('/')
 
   const addParticipantsMessage = (data) => {
     var message = ''

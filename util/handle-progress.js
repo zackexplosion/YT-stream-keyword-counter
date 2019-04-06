@@ -44,7 +44,7 @@ const excludes = [
 const DEFAULT_PROGRESS = 25
 var last_progress = 0
 
-module.exports = ({ db, io, log })  => {
+module.exports = ({ db, io })  => {
   function getCode (status) {
     let code
     statusCodeSheet.forEach(c =>{

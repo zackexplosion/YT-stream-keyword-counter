@@ -9,7 +9,13 @@ const db = low(adapter)
 
 db.defaults({ messages: [] }).write()
 
-module.exports = io => {
+module.exports = ({app, http}) => {
+  app.get('/chatroom', (req, res) => {
+    res.render('chatroom')
+  })
+  const io = require('socket.io')(http, {
+    path: '/chat'
+  })
   io.on('connection', (socket) => {
     var addedUser = false
     var sent_message = false
