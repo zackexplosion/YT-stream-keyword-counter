@@ -11,7 +11,7 @@ const io = require('socket.io')(http)
 
 require(path.join(__dirname, '..', 'util', 'common'))
 // inject webpack for development
-require(path.join(__dirname, 'webpack.js'))(app)
+// require(path.join(__dirname, 'webpack.js'))(app)
 
 global.db = require(path.join(__dirname, 'db'))
 

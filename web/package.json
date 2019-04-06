@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "deploy": "shipit production deploy",
-    "web": "nodemon app/index.js -e .js --ignore 'app/assets' ",
+    "web": "nodemon index.js -e .js --ignore 'assets' ",
+    "dev": "./node_modules/gulp/bin/gulp.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -24,6 +25,14 @@
   "devDependencies": {
     "css-hot-loader": "^1.4.4",
     "css-loader": "^2.1.1",
+    "gulp": "^4.0.0",
+    "gulp-cli": "^2.1.0",
+    "gulp-concat": "^2.6.1",
+    "gulp-csso": "^3.0.1",
+    "gulp-livereload": "^4.0.1",
+    "gulp-nodemon": "^2.4.2",
+    "gulp-sass": "^4.0.2",
+    "gulp-sourcemaps": "^2.6.5",
     "mini-css-extract-plugin": "^0.5.0",
     "node-sass": "^4.11.0",
     "nodemon": "^1.18.10",

@@ -1,5 +1,6 @@
 module.exports = function (shipit) {
   require('shipit-deploy')(shipit)
+  require('shipit-assets')(shipit)
 
   shipit.initConfig({
     default: {
@@ -7,6 +8,11 @@ module.exports = function (shipit) {
       deployTo: '/app/cti-hant-counter-crawler',
       repositoryUrl: 'https://github.com/zackexplosion/hant-counter-crawler',
       keepReleases: 2,
+      assets: {
+        'paths': [
+          'dist'
+        ]
+      }
     },
     production: {
       servers: 'zack@YEE'
@@ -34,6 +40,8 @@ module.exports = function (shipit) {
       }
 
       await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
+      await shipit.local('yarn release')
+      await shipit.start('assets:push')
     } catch (error) {
       console.log(error)
     }

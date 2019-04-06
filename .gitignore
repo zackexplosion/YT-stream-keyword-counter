@@ -4,8 +4,5 @@ db*.json
 .envrc
 *.traineddata
 tmp/*.png
-app/tmp/*.png
 yarn-error.log
-app/public/*.css
-app/public/*.js
-app/public/*.map
+web/dist/*
