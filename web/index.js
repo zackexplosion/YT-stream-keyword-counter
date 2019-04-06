@@ -20,6 +20,8 @@ const {
   statusCodeSheet
 } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({io, log, db})
 
+require(path.join(__dirname, 'hashpath'))(app)
+
 app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.static(path.join(__dirname, 'dist')))
 
@@ -74,7 +76,7 @@ app.get('/', function (req, res) {
     counter: db.get('counter').value(),
     startedAt: db.get('matches[0].created_at').value(),
     history: db.get('matches').takeRight(5).value(),
-    user_live_count,
+    // user_live_count,
     other_streaming,
     YOUTUBE_VIDEO_ID
   })

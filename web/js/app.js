@@ -1,4 +1,5 @@
 (function(){
+  require('./chart.js')
   const status = document.getElementById('status')
   // const keywords = $('#keywords')
   const history = $('#history')

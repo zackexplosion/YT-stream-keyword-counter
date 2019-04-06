@@ -18,7 +18,7 @@ html
         .collapse#chatIframe
           iframe(src="/chatroom")
     #live-counter.alert.alert-info(type='alert')
-      | 目前有 #[span.badge.badge-light=user_live_count] 位又老又窮的鄉民在線上
+      | 目前有 #[span.badge.badge-light ...] 位又老又窮的鄉民在線上
     a.github-corner(href='https://github.com/zackexplosion/hant-counter-crawler', aria-label='View source on GitHub', target="_blank")
       svg(width='80', height='80', viewBox='0 0 250 250', style='fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;', aria-hidden='true')
         path(d='M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z')
@@ -35,8 +35,7 @@ html
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
     script.
       const socket = io('/')
-    script(src="/app.js")
-    script(src="/chart.js")
+    script(src=hashPath("/app.js"))
 
     // Global site tag (gtag.js) - Google Analytics
     script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-8649920-14')

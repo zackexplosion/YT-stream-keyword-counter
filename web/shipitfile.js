@@ -1,17 +1,16 @@
 module.exports = function (shipit) {
   require('shipit-deploy')(shipit)
   require('shipit-assets')(shipit)
-
+  const deployTo = '/app/cti-hant-counter-crawler'
   shipit.initConfig({
     default: {
       workspace: '/tmp/github-monitor',
-      deployTo: '/app/cti-hant-counter-crawler',
+      deployTo,
       repositoryUrl: 'https://github.com/zackexplosion/hant-counter-crawler',
       keepReleases: 2,
       assets: {
-        'paths': [
-          'dist'
-        ]
+        remoteBasePath: `${deployTo}/current/web`,
+        paths: ['dist'],
       }
     },
     production: {
@@ -32,15 +31,15 @@ module.exports = function (shipit) {
         // let current = list[list.length - 1]
         // console.log(last)
         let cmd = [
-          `cp -a ${shipit.config.deployTo}/releases/${last}/node_modules`,
-          `${shipit.config.deployTo}/current/`
+          `cp -a ${shipit.config.deployTo}/releases/${last}/web/node_modules`,
+          `${shipit.config.deployTo}/current/web`
         ].join(' ')
         console.log(cmd)
         await shipit.remote(cmd)
       }
 
-      await shipit.remote(`cd ${shipit.currentPath} && nvm use && yarn --production`)
-      await shipit.local('yarn release')
+      await shipit.remote(`cd ${shipit.currentPath}/web && nvm use && yarn --production`)
+      await shipit.local('yarn build')
       await shipit.start('assets:push')
     } catch (error) {
       console.log(error)
@@ -53,7 +52,7 @@ module.exports = function (shipit) {
   // })
 
   shipit.task('startApp', async () => {
-    const cmd = `cd ${shipit.config.deployTo} && pm2 restart ecosystem.config.js`
+    const cmd = `cd ${shipit.config.deployTo}/current/web && pm2 restart ${shipit.config.deployTo}/web.config.js`
     try {
       await shipit.remote(cmd)
     } catch (error) {
