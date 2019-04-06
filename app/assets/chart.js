@@ -25,6 +25,7 @@ var config = {
     datasets: []
   },
   options: {
+    // maintainAspectRatio: false,
     responsive: true,
     title: {
       display: true,

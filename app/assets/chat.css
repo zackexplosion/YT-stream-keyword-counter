@@ -163,10 +163,10 @@ section.input .inputMessage {
   height: 100%;
 }
 section.input .username {
-  width: 100px;
+  width: 80px;
   float: left;
 }
 section.input .inputMessage {
-  width: calc(100% - 100px);
+  width: calc(100% - 80px);
   float: right;
 }
