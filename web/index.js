@@ -85,7 +85,7 @@ app.get('/chatroom', (req, res) => {
   res.render('chatroom')
 })
 
-app.get('/chartdata', require(path.join(__dirname, 'chartdata') ))
+require(path.join(__dirname, 'chartdata'))(app)
 
 app.get('/keywords', (req, res) => {
   res.render('_keywords', {
