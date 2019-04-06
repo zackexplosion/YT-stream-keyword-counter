@@ -20,7 +20,7 @@ module.exports = async function main (args) {
     await require(path.join(__dirname, 'stream-to-image'))(handleProgress)
 
     // run OCR
-    scan_result = await require(path.join(__dirname, 'image-to-text-and-grap'))(handleProgress)
+    scan_result = await require(path.join(__dirname, 'ocr'))(handleProgress)
   } catch (error) {
     log(error)
   }

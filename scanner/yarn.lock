@@ -2009,6 +2009,10 @@ node-pre-gyp@^0.10.0:
     semver "^5.3.0"
     tar "^4"
 
+node-tesseract-ocr@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/node-tesseract-ocr/-/node-tesseract-ocr-0.1.0.tgz#c771eb1f464b0e2beed386dddeef9183ff312086"
+
 nodemon@^1.18.10:
   version "1.18.10"
   resolved "https://registry.yarnpkg.com/nodemon/-/nodemon-1.18.10.tgz#3ba63f64eb4c283cf3e4f75f30817e9d4f393afe"
