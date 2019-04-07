@@ -32,7 +32,7 @@ channels.forEach(c => {
 
 
 
-// console.log(scanners)
+console.log(scanners)
 
 module.exports = {
   apps: scanners

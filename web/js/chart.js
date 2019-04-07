@@ -79,8 +79,8 @@
 
   var myChart = new Chart(canvas, config)
   const chartUpdater = () => {
-
-    $.ajax('/chartdata').then(res =>{
+    const channel_id = (location.pathname+location.search).substr(1).split('=')[1]
+    $.ajax('/chartdata/' + channel_id).then(res =>{
       myChart.options.title ={
         display: true,
         text: '現在時間:' + moment(res.now).format('lll')

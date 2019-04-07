@@ -29,6 +29,6 @@ else
     h4 其他直播台
   each c in channels
     .col-lg-4
-        //- a(href=`/?id=${c.id}`)=c.name
+        a(href=`/?id=${c.id}`)=c.name
         div.video-wrapper
           iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')

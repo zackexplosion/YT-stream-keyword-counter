@@ -1,5 +1,7 @@
 const KEYWORDS = (process.env.TARGET_KEYWORDS || '韓|國瑜|韓國瑜').split('|')
 const CHARTDATA_CACHE_SECONDS = process.env.chartdata_CACHE_SECONDS || 300
+const path = require('path')
+const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
 const cache_middleware = require('apicache').middleware(`${CHARTDATA_CACHE_SECONDS} seconds`)
 
 function getDate (d) {
@@ -7,13 +9,13 @@ function getDate (d) {
   return moment(d)
 }
 
-function countchartdata() {
+function countchartdata(channel) {
   let ranges = 24
 
   // let counted = db.get('counted').value()
 
   // filter out of range data
-  let matches = db.get('cti').value().filter(m => {
+  let matches = db.get(channel.id).value().filter(m => {
     let a = getDate(m[0])
     let b = moment().subtract(ranges, 'hour').startOf('hour')
     return a > b
@@ -60,8 +62,12 @@ function countchartdata() {
 
 // let chartdata = countchartdata()
 module.exports = app => {
-  app.get('/chartdata', cache_middleware , (req, res) => {
-    let chartdata = countchartdata()
+  app.get('/chartdata/:id?', cache_middleware , (req, res) => {
+    const { id } = req.params
+    const channel = CHANNELS.find(c => c.id == id)
+    if (!channel) res.json([])
+
+    let chartdata = countchartdata(channel)
     return res.json(chartdata)
   })
 }
