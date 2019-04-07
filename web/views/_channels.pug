@@ -1,5 +1,6 @@
 mixin player
-  h5 現在播放的是【#{channel.name}】
+  //- h5 現在播放的是【#{channel.name}】
+  h5 即時畫面
   div.video-wrapper
     iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
 
