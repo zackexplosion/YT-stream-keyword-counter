@@ -28,14 +28,14 @@ function countchartdata() {
     data[i] = 0
 
     KEYWORDS.forEach(k => {
+      if(!sheets[k]) {
+        sheets[k] = Array(ranges+1).fill(0)
+      }
       matches.forEach(m =>{
         let t = getDate(m.created_at)
         // log('t', t.format('lll'), 'is between?', a.format('lll'), b.format('lll'), t.isBetween(a,b))
         // log(m.matches, k, m.matches.indexOf(k))
         if (m.matches.indexOf(k) != -1 && t.isBetween(a,b)) {
-          if(!sheets[k]) {
-            sheets[k] = Array(ranges+1).fill(0)
-          }
           sheets[k][i]++
         }
         if (t.isBetween(a,b)) {

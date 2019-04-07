@@ -70,6 +70,7 @@ function watcher (cb) {
     script: 'index.js',
     ext: '*.js',
     ignore : [
+      "js/**",
       "dist/**",
       "tmp/**",
       "public/**",

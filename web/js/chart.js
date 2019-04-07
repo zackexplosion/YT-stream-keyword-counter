@@ -1,4 +1,12 @@
 moment.locale('zh-tw')
+const labelColors = {
+  '韓': '#007FFF',
+  '國瑜': '#3E8EDE',
+  '韓流': '#2D68C4',
+  '韓粉': '#0047AB',
+  '蔡': '#009E60',
+  '蔡英文': '#A7FC00'
+}
 const randomColor = () => {
   var letters = '0123456789ABCDEF'
   var color = '#'
@@ -8,8 +16,15 @@ const randomColor = () => {
   return color
 }
 
+const getColorByLabel = label => {
+  var color = labelColors[label]
+  console.log(color)
+  if (!color) color = randomColor()
+  return color
+}
+
 var createSheet = function({label, data}) {
-  var color = randomColor()
+  const color = getColorByLabel(label)
   return {
     fill: false,
     label,
