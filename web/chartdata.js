@@ -8,6 +8,9 @@ function getDate (d) {
 
 function countchartdata() {
   let ranges = 24
+
+  // let counted = db.get('counted').value()
+
   // filter out of range data
   let matches = db.get('matches').value().filter(m => {
     let a = getDate(m.created_at)
@@ -18,34 +21,33 @@ function countchartdata() {
   // log('matches', matches)
 
   let x = []
-  let data = []
   let sheets = {}
+
+  KEYWORDS.forEach(k => {
+    sheets[k] = Array(ranges+1).fill(0)
+  })
 
   // counter
   for (let i = 0; i <= ranges; i++){
     let a = moment().subtract(ranges - i, 'hour').startOf('hour')
     let b = moment().subtract(ranges - i -1, 'hour').startOf('hour')
-    data[i] = 0
 
-    KEYWORDS.forEach(k => {
-      if(!sheets[k]) {
-        sheets[k] = Array(ranges+1).fill(0)
-      }
-      matches.forEach(m =>{
-        let t = getDate(m.created_at)
-        // log('t', t.format('lll'), 'is between?', a.format('lll'), b.format('lll'), t.isBetween(a,b))
-        // log(m.matches, k, m.matches.indexOf(k))
-        if (m.matches.indexOf(k) != -1 && t.isBetween(a,b)) {
-          sheets[k][i]++
-        }
-        if (t.isBetween(a,b)) {
-          data[i]++
-        }
+    // create labels for x axis
+    x.unshift(b)
+
+    matches.forEach(m => {
+      let t = getDate(m.created_at)
+
+      // Is in current time range?
+      if (!t.isBetween(a,b)) return
+
+      // log(t, a.format(), b.format(), t.isBetween(a,b))
+      // Counte by the keywords
+      KEYWORDS.forEach(k => {
+        // is matched and between the time range
+        if (m.matches.indexOf(k) != -1) sheets[k][i]++
       })
     })
-
-    // x.unshift(b.format('MM-DD LT'))
-    x.unshift(b)
   }
 
   return {
