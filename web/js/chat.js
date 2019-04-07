@@ -28,19 +28,20 @@ $(function() {
   var isChangingUsername = false
   var reconnect = false
 
-  var socket = io('/', {path : '/chat'})
+  // var socket = io('/', {path : '/chat'})
   // var socket = io('/')
+  var socket = io('/chat')
 
-  const addParticipantsMessage = (data) => {
-    var message = ''
-    // if (data.numUsers === 1) {
-    //   message += "there's 1 participant"
-    // } else {
-    //   message += "現在有 " + data.numUsers + " 位喜韓兒"
-    // }
-    // message += "現在有 " + data.numUsers + " 位喜韓兒"
-    log(message)
-  }
+  // const addParticipantsMessage = (data) => {
+  //   var message = ''
+  //   // if (data.numUsers === 1) {
+  //   //   message += "there's 1 participant"
+  //   // } else {
+  //   //   message += "現在有 " + data.numUsers + " 位喜韓兒"
+  //   // }
+  //   // message += "現在有 " + data.numUsers + " 位喜韓兒"
+  //   log(message)
+  // }
 
   // Sets the client's username
   const setUsername = () => {
@@ -252,6 +253,7 @@ $(function() {
 
   // Whenever the server emits 'login', log the login message
   socket.on('login', (data) => {
+    if(reconnect) return
     username = data.username
     $username.val(username)
     $usernameInput.val(username)

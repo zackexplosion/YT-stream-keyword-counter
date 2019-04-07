@@ -3,19 +3,15 @@
     h1#title OO關鍵字計數器
     h4 可以選台啦!原始碼都給你了!自己去架！
     //- h5 從 #{startedAt} 開始，總共統計了...
-.row
-  #chart.col-lg-12
-    h4 近24小時
-    div.canvas-wrapper
-      canvas
   //- .col-lg-3
   //-   h4 總計
   //-   h6 新加的關鍵字一定比較少
   //-   #keywords
   //-     include _keywords
 .row
+  .col-lg-12
+    h4 您現在收看的是.....
   .col-lg-6
-    h4 即時畫面
     div.video-wrapper
       iframe(src=`https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
     #status.alert.alert-info(role='alert')
@@ -23,10 +19,15 @@
     #progress.progress
       .progress-bar.progress-bar-striped.bg-info.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
   .col-lg-6
-    h4 最新記錄
+    //- h4 最新記錄
     ul#history.list-group
       each h in history.reverse()
         li.list-group-item=`${h.created_at}: ${h.matches}`
+.row
+  #chart.col-lg-12
+    h4 近24小時
+    div.canvas-wrapper
+      canvas
 
 .row
   .col-lg-12

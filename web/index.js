@@ -27,8 +27,8 @@ app.set('views', path.join(__dirname, 'views'))
 
 require(path.join(__dirname, 'hashpath'))(app)
 require(path.join(__dirname, 'handle-socket'))({io, http, handleProgress})
-require(path.join(__dirname, 'handle-scanner'))({http, handleProgress})
-require(path.join(__dirname, 'chatroom'))({app, http})
+require(path.join(__dirname, 'handle-scanner'))({io, http, handleProgress})
+require(path.join(__dirname, 'chatroom'))({io, app, http})
 require(path.join(__dirname, 'chartdata'))(app)
 
 

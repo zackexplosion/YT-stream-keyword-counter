@@ -5,6 +5,7 @@ const sourcemaps = require('gulp-sourcemaps')
 const nodemon = require('gulp-nodemon')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpackStream = require('webpack-stream')
+const browserSync = require('browser-sync').create()
 const path = require('path')
 const webpack_param = {
   mode: process.env.NODE_ENV,
@@ -57,9 +58,7 @@ function css() {
 
 const build = parallel(css, webpack)
 
-const browserSync = require('browser-sync').create()
-
-function watcher (cb) {
+function startNodemon (cb) {
   nodemon({
     script: 'index.js',
     ext: '*.js',
@@ -71,7 +70,7 @@ function watcher (cb) {
       "public/**",
       "views/**"
     ],
-    stdout: false
+    stdout: false,
   })
   .on('stdout', function (stdout) {
     // print origin stdout
@@ -82,20 +81,37 @@ function watcher (cb) {
 
     if (!isReady) { return }
 
-    const PORT = parseInt(process.env.PORT) || 3000
-    browserSync.init({
-      proxy: `http://localhost:${PORT}`,
-      ws: true,
-      port: PORT+1
-    })
-    watch(['./views/*.pug']).on('change', browserSync.reload)
-    watch(['./sass/*.sass'], css)
-    watch(['./js/*.js'], webpack)
     cb()
   })
+  .on('stderr', (err) =>{
+    console.log(err.toString())
+  })
+
+}
+
+function startBrowserSync (cb) {
+  const PORT = parseInt(process.env.PORT) || 3000
+  browserSync.init({
+    proxy: `http://localhost:${PORT}`,
+    ws: true,
+    port: PORT+1
+  }, cb)
+}
+
+
+function watcher (cb) {
+  watch(['./views/*.pug']).on('change', browserSync.reload)
+  watch(['./sass/*.sass'], css)
+  watch(['./js/*.js'], webpack)
+  cb()
 }
 
 // exports.js = js
 exports.build = build
 // exports.default = build
-exports.default = series(build, watcher)
+exports.default = series(
+  build,
+  startNodemon,
+  startBrowserSync,
+  watcher
+)

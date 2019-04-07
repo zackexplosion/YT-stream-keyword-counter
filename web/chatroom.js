@@ -9,14 +9,14 @@ const db = low(adapter)
 
 db.defaults({ messages: [] }).write()
 
-module.exports = ({app, http}) => {
+module.exports = ({io, app}) => {
   app.get('/chatroom', (req, res) => {
     res.render('chatroom')
   })
-  const io = require('socket.io')(http, {
-    path: '/chat'
-  })
+
+  io = io.of('/chat')
   io.on('connection', (socket) => {
+    // log(socket.id)
     var addedUser = false
     var sent_message = false
     // add user

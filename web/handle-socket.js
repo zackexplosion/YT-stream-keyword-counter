@@ -1,36 +1,24 @@
-const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
+// const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
 
 let user_live_count = 0
-let is_scanner_connected = false
+
+function handle_cookie(socket, next) {
+  // log(socket.handshake.headers)
+  return next()
+}
 
 module.exports = ({io, http, handleProgress}) => {
+  io = io.of('/web')
   // user live counter
-  io.on('connection', function(socket){
+  io.use(handle_cookie)
+  io.on('connection', function(socket) {
     user_live_count++
     socket.on('disconnect', (reason) => {
-      if (socket.id == is_scanner_connected){
-        log('scanner disaconnect')
-        is_scanner_connected = false
-      }
       user_live_count--
     })
 
-    // return counter on new connection
+    // update counter on new connection
     socket.emit('uuc', user_live_count)
-
-    // reject new scanner connection
-    if (is_scanner_connected) return
-
-    // recieve scanner server messages
-    socket.on(EVENT_TOKEN, data =>{
-      if (!is_scanner_connected) {
-        user_live_count--
-        is_scanner_connected = socket.id
-        log('scanner connected', is_scanner_connected)
-      }
-
-      handleProgress(data)
-    })
   })
 
   // brocast to every client every 5 seconds

@@ -1,19 +1,13 @@
 const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
 
-module.exports = ({http, handleProgress}) => {
-  const io = require('socket.io')(http, {
-    path: '/scanner'
-  })
+var is_scanner_connected = false
+module.exports = ({io, handleProgress}) => {
 
   io.on('connection', function(socket){
+    if (is_scanner_connected) return
+
     // recieve scanner server messages
     socket.on(EVENT_TOKEN, data =>{
-      // TODO
-      // recieve mutiple scanner
-      // ignore other scanner connection
-      if (is_scanner_connected) return
-      // scanner is not an user
-      is_scanner = true
       is_scanner_connected = socket.id
       handleProgress(data)
     })
