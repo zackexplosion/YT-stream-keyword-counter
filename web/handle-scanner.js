@@ -5,6 +5,7 @@ module.exports = ({io, handleProgress}) => {
 
   io.on('connection', function(socket){
     if (is_scanner_connected) return
+    log('scanner connected', socket.id)
 
     // recieve scanner server messages
     socket.on(EVENT_TOKEN, data =>{

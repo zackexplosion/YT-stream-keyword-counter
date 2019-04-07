@@ -13,7 +13,6 @@ require(path.join(__dirname, '..', 'util', 'common'))
 global.db = require(path.join(__dirname, 'db'))
 
 const {
-  handleProgress,
   statusCodeSheet
 } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({io, db})
 
@@ -26,8 +25,7 @@ app.set('view engine', 'pug')
 app.set('views', path.join(__dirname, 'views'))
 
 require(path.join(__dirname, 'hashpath'))(app)
-require(path.join(__dirname, 'handle-socket'))({io, http, handleProgress})
-require(path.join(__dirname, 'handle-scanner'))({io, http, handleProgress})
+require(path.join(__dirname, 'handle-socket'))({io})
 require(path.join(__dirname, 'chatroom'))({io, app, http})
 require(path.join(__dirname, 'chartdata'))(app)
 

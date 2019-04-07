@@ -1,17 +1,22 @@
-// const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
-
-let user_live_count = 0
+const path = require('path')
+var user_live_count = 0
 
 function handle_cookie(socket, next) {
   // log(socket.handshake.headers)
   return next()
 }
+// module.exports = () => {
+module.exports = ({io}) => {
+  let web = io.of('/web')
+  const {
+    handleProgress
+  } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({io: web, db})
 
-module.exports = ({io, http, handleProgress}) => {
-  io = io.of('/web')
+  require(path.join(__dirname, 'handle-scanner'))({io, handleProgress})
+
   // user live counter
-  io.use(handle_cookie)
-  io.on('connection', function(socket) {
+  web.use(handle_cookie)
+  web.on('connection', function(socket) {
     user_live_count++
     socket.on('disconnect', (reason) => {
       user_live_count--
@@ -23,6 +28,8 @@ module.exports = ({io, http, handleProgress}) => {
 
   // brocast to every client every 5 seconds
   setInterval(() => {
-    io.emit('uuc', user_live_count)
+    web.emit('uuc', user_live_count)
   }, 1000 * 5)
 }
+
+
