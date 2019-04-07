@@ -27,6 +27,8 @@ module.exports = async function main (args) {
 
   const { matches, raws } = scan_result
 
+
+
   // prevent same result
   if ( last_matched != matches ){
     last_matched = matches
@@ -35,7 +37,7 @@ module.exports = async function main (args) {
       created_at,
       matches,
       raws,
-      status: 'scan finished'
+      code: 7
     })
   }
 

@@ -8,21 +8,29 @@ var app = {
   watch: ['*.js'],
   env: {
     "NODE_ENV": "production",
-    "WEB_HOST": 'http://localhost:3000',
+    "WEB_HOST": process.env.WEB_HOST,
   }
 }
+var scanners = []
+channels.forEach(c => {
+  const { id, vid, skip} = c
 
-var scanners = channels.map(c => {
-  let { id, name , vid} =c
-  return Object.assign({}, app, {
-    name: `${app.name}-${name}`,
-    env: {
-      ...app.env,
-      EVENT_TOKEN: vid + '-' + process.env.EVENT_TOKEN,
-      YOUTUBE_VIDEO_ID: vid
-    }
-  })
+  // channel skip with this attribute
+  if (skip) return false
+
+  scanners.push(
+    Object.assign({}, app, {
+      name: `${app.name}-${id}`,
+      env: {
+        ...app.env,
+        ACCESS_TOKEN: id + '-' + process.env.SCANNER_TOKEN,
+        YOUTUBE_VIDEO_ID: vid
+      }
+    })
+  )
 })
+
+
 
 // console.log(scanners)
 

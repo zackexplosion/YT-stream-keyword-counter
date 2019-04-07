@@ -15,11 +15,11 @@ const statusCodeSheet = [
     status: 'recognizing text',
     text: '高雄要發大財啦！分析中請稍後'
   },
-  {
-    code: 4,
-    status: 'Counter not changed.',
-    text: '真是又老又窮！找不到關鍵字或是掃描結果與上一次相同'
-  },
+  // {
+  //   code: 4,
+  //   status: 'Counter not changed.',
+  //   text: '真是又老又窮！找不到關鍵字或是掃描結果與上一次相同'
+  // },
   {
     code: 5,
     status: 'Scanner sleeping',
@@ -33,6 +33,7 @@ const statusCodeSheet = [
   {
     code: 7,
     status: 'scan finished',
+    text: '掃描完成'
   }
 ]
 
@@ -86,28 +87,26 @@ module.exports = ({ db, io })  => {
         // log('last_progress', last_progress, progress,  skip)
         if (skip) return
         break
-      case 7:
-        const { matches, created_at, raws } = info
-        var is_found_matches = false
+        // var is_found_matches = false
 
-        if (is_found_matches) {
-          // db.update('counter', counter).write()
+        // if (is_found_matches) {
+        //   // db.update('counter', counter).write()
 
-          db.get('cti').push([created_at, matches, raws]).write()
+        //   db.get('cti').push([created_at, matches, raws]).write()
 
-          // db_raw.get('raws').push({
-          //   created_at, raws
-          // }).write()
-          log('updateCounter', info)
-          // update counter code
-          // io.emit('p', {c: 6})
-          // return io.emit('updateCounter', {
-          //   created_at,
-          //   matches
-          // })
-        } else {
-          return handleProgress({status: 'Counter not changed.'})
-        }
+        //   // db_raw.get('raws').push({
+        //   //   created_at, raws
+        //   // }).write()
+        //   log('updateCounter', info)
+        //   // update counter code
+        //   // io.emit('p', {c: 6})
+        //   // return io.emit('updateCounter', {
+        //   //   created_at,
+        //   //   matches
+        //   // })
+        // } else {
+        //   return handleProgress({status: 'Counter not changed.'})
+        // }
     }
 
     // log(info)

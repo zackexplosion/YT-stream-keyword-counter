@@ -1,6 +1,3 @@
-// env params with default value
-const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
-
 // packages
 const path = require('path')
 const express = require('express')

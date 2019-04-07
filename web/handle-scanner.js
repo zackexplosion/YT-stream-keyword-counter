@@ -1,26 +1,61 @@
-const EVENT_TOKEN = process.env.EVENT_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
+const path = require('path')
+const SCANNER_TOKEN = process.env.SCANNER_TOKEN || 'YEEEEEEEEEEEEEEEEEEE'
+const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
 
-var is_scanner_connected = false
-module.exports = ({io, handleProgress}) => {
-  const handle_scanner = function(socket) {
-    if (is_scanner_connected) return
+const auth = (socket, next) => {
+  try {
 
-    // recieve scanner server messages
-    socket.on(EVENT_TOKEN, data => {
-      if (!is_scanner_connected) {
-        log('scanner connected', socket.id)
-        is_scanner_connected = socket.id
-      }
-      handleProgress(data)
-    })
+    // token format
+    // ${channel-id}-${TOKEN}
+    let { token } = socket.handshake.query
+    token = token.split('-')
 
-    socket.on('disconnect', (reason) => {
-      if(!is_scanner_connected) return
-      is_scanner_connected = false
-      log('scanner disconnected', socket.id, reason)
-    })
+    let channel = CHANNELS.find(c => c.id == token[0])
+
+    if (token[1] === SCANNER_TOKEN && channel) {
+      socket.channel = channel
+      return next()
+    } else {
+      throw new Error('Scanner not authorize')
+    }
+  } catch (error) {
+    console.error(error)
+    return next(error)
   }
-  io.on('connection', handle_scanner)
+}
+
+module.exports = ({io, handleProgress}) => {
   let scanner = io.of('/scanner')
-  scanner.on('connection', handle_scanner)
+  scanner.use(auth)
+
+  scanner.on('connection', socket => {
+    const { channel } = socket
+
+    log(channel.id, 'scanner connected', socket.id)
+
+    socket.on('handleProgress', data => {
+      // scan finished
+      if (data.code && data.code == 7 ){
+        const { matches, created_at } = data
+
+        try {
+          let { id } = channel
+          let row = [created_at, matches]
+          db.get(id).push(row).write()
+          log(id, 'scan finished', matches)
+        } catch (error) {
+          log(error)
+          return false
+        }
+      } else {
+        if (channel.id == 'cti') {
+          handleProgress(data)
+        }
+      }
+    })
+
+    socket.on('disconnect', data => {
+      log(channel.id, 'scanner disconnected', socket.id)
+    })
+  })
 }
