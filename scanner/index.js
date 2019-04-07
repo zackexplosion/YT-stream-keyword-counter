@@ -5,7 +5,7 @@ require(path.join(__dirname, '..', 'util', 'common'))
 
 
 const { getCode } = require(path.join(ROOT_DIR, 'util', 'handle-progress'))({})
-const socket = require('socket.io-client')(HOST)
+const socket = require('socket.io-client')(HOST + '/scanner')
 socket.on('connect', function(){
   log('connted to:', HOST)
 })

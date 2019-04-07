@@ -27,7 +27,6 @@
       })
       return text
     }
-    const socket = io('/web')
     socket.on('p', updateStatusAndProgress = data => {
       status.innerHTML = getText(data.c)
       let percent = data.p || '0'
