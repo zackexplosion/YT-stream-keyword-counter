@@ -57,7 +57,6 @@ function css() {
 }
 
 const build = parallel(css, webpack)
-
 function startNodemon (cb) {
   nodemon({
     script: 'index.js',
@@ -80,8 +79,17 @@ function startNodemon (cb) {
     const isReady = stdout.toString().includes('serving')
 
     if (!isReady) { return }
-
+    browserSync.reload()
+    console.log('calling reload')
     cb()
+  })
+  .on('restart', () => {
+    // console.log('on restart')
+    // setTimeout(() =>{
+    //   browserSync.reload
+    //   console.log('calling reload')
+    // }, 1000 )
+    browserSync.reload()
   })
   .on('stderr', (err) =>{
     console.log(err.toString())

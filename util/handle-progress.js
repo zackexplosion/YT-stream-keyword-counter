@@ -121,7 +121,7 @@ module.exports = ({ db, io })  => {
         }
     }
 
-    log(info)
+    // log(info)
 
     if (code) {
       info = {

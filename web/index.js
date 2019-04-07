@@ -29,25 +29,31 @@ require(path.join(__dirname, 'handle-socket'))({io})
 require(path.join(__dirname, 'chatroom'))({io, app, http})
 require(path.join(__dirname, 'chartdata'))(app)
 
-
-
-const other_streaming = [
-  'XxJKnDLYZz4',
-  'BiOFwDgRO10',
-  'j_TtgHGkzAk',
-  'dxpWqjvEKaM',
-  'Hu1FkdAOws0',
-  '4ZVUmEUFwaY'
-]
 // setup index route
 app.get('/', function (req, res) {
+  const { id } = req.query
+  let channels = require(path.join(ROOT_DIR, 'util', 'channels'))
+  let _channel
+  log('id', id)
+  channels = channels.filter(c => {
+    log(c)
+    let r = c.id != id
+    if (r) {
+      _channel = c
+    }
+    return r
+  })
+
+  log(_channel, channels)
+
+  // default channel
+  if(!_channel) _channel = channels.shift()
+
+  let history = db.get('matches').takeRight(5).value()
   res.render('index', {
-    counter: db.get('counter').value(),
-    startedAt: db.get('matches[0].created_at').value(),
-    history: db.get('matches').takeRight(5).value(),
-    // user_live_count,
-    other_streaming,
-    YOUTUBE_VIDEO_ID
+    history,
+    _channel,
+    channels,
   })
 })
 

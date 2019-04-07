@@ -13,8 +13,7 @@ var app = {
 }
 
 var scanners = channels.map(c => {
-  let name = c[0]
-  let vid = c[1]
+  let { id, name , vid} =c
   return Object.assign({}, app, {
     name: `${app.name}-${name}`,
     env: {
