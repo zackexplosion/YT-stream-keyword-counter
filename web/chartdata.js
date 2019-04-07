@@ -3,7 +3,8 @@ const CHARTDATA_CACHE_SECONDS = process.env.chartdata_CACHE_SECONDS || 300
 const cache_middleware = require('apicache').middleware(`${CHARTDATA_CACHE_SECONDS} seconds`)
 
 function getDate (d) {
-  return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
+  // return moment(d, ["YYYY年MM月DD日 hh:mm:ss"])
+  return moment(d)
 }
 
 function countchartdata() {
@@ -12,8 +13,8 @@ function countchartdata() {
   // let counted = db.get('counted').value()
 
   // filter out of range data
-  let matches = db.get('matches').value().filter(m => {
-    let a = getDate(m.created_at)
+  let matches = db.get('cti').value().filter(m => {
+    let a = getDate(m[0])
     let b = moment().subtract(ranges, 'hour').startOf('hour')
     return a > b
   })
@@ -36,7 +37,7 @@ function countchartdata() {
     x.unshift(b)
 
     matches.forEach(m => {
-      let t = getDate(m.created_at)
+      let t = getDate(m[0])
 
       // Is in current time range?
       if (!t.isBetween(a,b)) return
@@ -45,7 +46,7 @@ function countchartdata() {
       // Counte by the keywords
       KEYWORDS.forEach(k => {
         // is matched and between the time range
-        if (m.matches.indexOf(k) != -1) sheets[k][i]++
+        if (m[1].indexOf(k) != -1) sheets[k][i]++
       })
     })
   }

@@ -87,35 +87,24 @@ module.exports = ({ db, io })  => {
         if (skip) return
         break
       case 7:
-        const { matches, created_at } = info
+        const { matches, created_at, raws } = info
         var is_found_matches = false
-        var counter = db.get('counter').value()
-        KEYWORDS.forEach(k => {
-          if (matches.indexOf(k) > 0) {
-            is_found_matches = true
-            // prevent new keyword null issue
-            if(!counter[k]) counter[k] = 0
-            counter[k]++
-          }
-        })
 
         if (is_found_matches) {
-          db.update('counter', counter).write()
+          // db.update('counter', counter).write()
 
-          db.get('matches').push({
-            created_at, matches
-          }).write()
+          db.get('cti').push([created_at, matches, raws]).write()
 
           // db_raw.get('raws').push({
           //   created_at, raws
           // }).write()
           log('updateCounter', info)
           // update counter code
-          io.emit('p', {c: 6})
-          return io.emit('updateCounter', {
-            created_at,
-            matches
-          })
+          // io.emit('p', {c: 6})
+          // return io.emit('updateCounter', {
+          //   created_at,
+          //   matches
+          // })
         } else {
           return handleProgress({status: 'Counter not changed.'})
         }

@@ -28,6 +28,7 @@
       return text
     }
     socket.on('p', updateStatusAndProgress = data => {
+      if(!status) return
       status.innerHTML = getText(data.c)
       let percent = data.p || '0'
       progress_bar.css({width: percent + '%'})

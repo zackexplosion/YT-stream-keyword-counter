@@ -30,11 +30,11 @@ module.exports = async function main (args) {
   // prevent same result
   if ( last_matched != matches ){
     last_matched = matches
-    let created_at = moment().format('LL LTS')
+    let created_at = moment()
     handleProgress({
       created_at,
       matches,
-      // raws,
+      raws,
       status: 'scan finished'
     })
   }

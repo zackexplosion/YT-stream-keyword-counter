@@ -26,42 +26,57 @@ app.set('views', path.join(__dirname, 'views'))
 
 require(path.join(__dirname, 'hashpath'))(app)
 require(path.join(__dirname, 'handle-socket'))({io})
-require(path.join(__dirname, 'chatroom'))({io, app, http})
+require(path.join(__dirname, 'chatroom'))({io, app})
 require(path.join(__dirname, 'chartdata'))(app)
+
+const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
+function getChannels (req) {
+  // const id = req.query.id || 'cti'
+  const { id } = req.query
+  let channel
+  let channels = CHANNELS.filter(c => {
+    let r = c.id == id
+    if (r) {
+      // channel = Object.assign({}, c)
+      channel = c
+    }
+    return !r
+  })
+
+  // if id not found
+  if (!channel) {
+    let c = JSON.parse(JSON.stringify(CHANNELS))
+    channel = c.shift()
+    channels = c
+  }
+
+  // log(channel)
+  // log(channels)
+
+  let history = []
+  if (!channel.skip) {
+    history = db.get(channel.id).takeRight(5).value()
+  }
+
+  return {
+    channel,
+    channels,
+    history
+  }
+}
 
 // setup index route
 app.get('/', function (req, res) {
-  const { id } = req.query
-  let channels = require(path.join(ROOT_DIR, 'util', 'channels'))
-  let _channel
-  log('id', id)
-  channels = channels.filter(c => {
-    log(c)
-    let r = c.id != id
-    if (r) {
-      _channel = c
-    }
-    return r
-  })
-
-  log(_channel, channels)
-
-  // default channel
-  if(!_channel) _channel = channels.shift()
-
-  let history = db.get('matches').takeRight(5).value()
   res.render('index', {
-    history,
-    _channel,
-    channels,
+    ...getChannels(req)
   })
 })
 
-app.get('/keywords', (req, res) => {
-  res.render('_keywords', {
-    counter: db.get('counter').value()
-  })
-})
+// app.get('/keywords', (req, res) => {
+//   res.render('_keywords', {
+//     counter: db.get('counter').value()
+//   })
+// })
 
 app.get('/codesheet', function (req, res) {
   res.json(statusCodeSheet.map(s =>{

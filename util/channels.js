@@ -24,7 +24,7 @@ const channels = [
     id: 'wryyyy',
     name: '嗯？',
     vid: 'j_TtgHGkzAk',
-    scan: false
+    skip: true
   },
   {
     id: 'ebc',
