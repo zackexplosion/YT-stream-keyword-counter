@@ -1,15 +1,16 @@
+mixin player
+  h5 現在播放的是【#{channel.name}】
+  div.video-wrapper
+    iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+
 if history.length <= 0
   .row
     .col-xl-12
-      h5 您現在收看的是 #{channel.name}
-      div.video-wrapper
-        iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+      +player()
 else
   .row
     .col-xl-6
-      h5 現在播放的是 #{channel.name}
-      div.video-wrapper
-        iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+      +player()
       #status.alert.alert-info(role='alert')
         | 即時狀態載入中...
       #progress.progress
@@ -29,6 +30,6 @@ else
     h4 其他直播台
   each c in channels
     .col-lg-4
-        a(href=`/?id=${c.id}`)=c.name
+        h6 #[a.channel-link(target="_blank",href=`/?id=${c.id}`)=c.name]
         div.video-wrapper
           iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')

@@ -79,7 +79,10 @@
 
   var myChart = new Chart(canvas, config)
   const chartUpdater = () => {
-    const channel_id = (location.pathname+location.search).substr(1).split('=')[1]
+    let channel_id = (location.pathname+location.search).substr(1).split('=')[1]
+    if(!channel_id){
+      channel_id = 'cti'
+    }
     $.ajax('/chartdata/' + channel_id).then(res =>{
       myChart.options.title ={
         display: true,
