@@ -4,8 +4,8 @@ const labelColors = {
   '國瑜': '#3E8EDE',
   '韓流': '#2D68C4',
   '韓粉': '#0047AB',
-  '蔡': '#009E60',
-  '蔡英文': '#A7FC00'
+  '蔡': '#A7FC00',
+  '蔡英文': '#009E60'
 }
 const randomColor = () => {
   var letters = '0123456789ABCDEF'

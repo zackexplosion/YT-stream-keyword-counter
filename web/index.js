@@ -35,7 +35,7 @@ require(path.join(__dirname, 'chartdata'))(app)
 
 const other_streaming = [
   'XxJKnDLYZz4',
-  'DVOHYy_m_qU',
+  'BiOFwDgRO10',
   'j_TtgHGkzAk',
   'dxpWqjvEKaM',
   'Hu1FkdAOws0',
