@@ -74,7 +74,7 @@ var config = {
 }
 var myChart = new Chart($('#chart canvas'), config)
 const chartUpdater = () =>{
-  $.ajax('/chartdata').then(res =>{
+  $.ajax('/chartdata?t=' + moment().unix()).then(res =>{
     myChart.options.title ={
       display: true,
       text: '現在時間:' + moment(res.now).format('lll')
@@ -91,9 +91,10 @@ const chartUpdater = () =>{
     })
 
     myChart.update()
-    // setTimeout(()=>{
-    //   $('#chart span').hide()
-    // }, 1000)
+    // update in 6 minutes
+    setTimeout(()=>{
+      chartUpdater()
+    }, 1000 * 60 * 6)
   })
 }
 
