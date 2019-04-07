@@ -64,25 +64,35 @@ function watcher (cb) {
     script: 'index.js',
     ext: '*.js',
     ignore : [
+      'gulpfile.js',
       "js/**",
       "dist/**",
       "tmp/**",
       "public/**",
       "views/**"
     ],
+    stdout: false
   })
-  .on('start', () => {
+  .on('stdout', function (stdout) {
+    // print origin stdout
+    console.log(stdout.toString())
+
+    // check if app ready
+    const isReady = stdout.toString().includes('serving')
+
+    if (!isReady) { return }
+
     const PORT = parseInt(process.env.PORT) || 3000
     browserSync.init({
       proxy: `http://localhost:${PORT}`,
+      ws: true,
       port: PORT+1
     })
+    watch(['./views/*.pug']).on('change', browserSync.reload)
+    watch(['./sass/*.sass'], css)
+    watch(['./js/*.js'], webpack)
+    cb()
   })
-
-  watch(['./**/*.pug'], browserSync.reload)
-  watch(['./sass/*.sass'], css)
-  watch(['./js/*.js'], webpack)
-  cb()
 }
 
 // exports.js = js

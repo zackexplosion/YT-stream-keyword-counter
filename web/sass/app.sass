@@ -1,14 +1,11 @@
 @import "../node_modules/bootstrap/scss/functions"
 @import "../node_modules/bootstrap/scss/variables"
 @import "../node_modules/bootstrap/scss/mixins"
+@import "./_switch"
+
 body
   padding-top: 60px
   padding-bottom: 120px
-
-/* #keywords {
- *  margin-top:1em;
- *  margin-bottom:0.5em;
- *}
 
 #keywords
   button
@@ -16,10 +13,6 @@ body
     margin-right: 0.5em
   span
     margin-left: 0.5em
-
-/* .content {
- *  padding-top: 0.5em;
- *}
 
 #content
   .row
@@ -51,14 +44,6 @@ h1, h4, h5, h6, #status
   max-height: 360px
   overflow-y: scroll
 
-/* #history .list-group-item {
- *  height: 125px;
- *  overflow: hidden;
- *}
- *#history.overflow{
- *  max-height: 440px;
- *}
-
 #live-counter
   position: fixed
   margin-bottom: 0
@@ -83,19 +68,25 @@ h1, h4, h5, h6, #status
 $chatWidth: 25vw
 $chatWidth-downmd: 300px
 body.chat-opned
+  @include media-breakpoint-down(sm)
+    .github-corner,
+    #live-counter
+      display: none
   #content
-    width: 100%
-    position: absolute
+    // position: absolute
     // margin-left: calc(100vw - #{$modal-md} - #{$chatWidth} )
-    left: calc(#{$chatWidth} + 30px )
+    // margin-left: calc(100vw - #{$chatWidth} - #{$modal-lg} )
+    margin-left: calc(#{$chatWidth} + 30px )
+    // width: calc(95vw - #{$chatWidth} )
     @include media-breakpoint-down(md)
+      width: 100%
       left: calc(#{$chatWidth-downmd} + 30px )
   #chat-toggle
     left: calc(#{$chatWidth} + 1px)
     @include media-breakpoint-down(md)
       left: calc(#{$chatWidth-downmd} + 1px)
   #chat
-    display: block
+    // display: block
     left: 2px
   &.android #chat
     height: calc(100vh - 56px)
@@ -103,9 +94,8 @@ body.chat-opned
     height: calc(100vh - 115px)
     bottom: 0
 #chat
-  display: none
+  // display: none
   top: 0
-  bottom: 0
   position: fixed
   min-width: 300px
   border: 0
@@ -118,58 +108,5 @@ body.chat-opned
   @include media-breakpoint-down(md)
     left: -$chatWidth-downmd
     width: $chatWidth-downmd
-  height: 100vh /* Fallback for browsers that do not support Custom Properties */
+  height: 100vh
   z-index: 9999
-
-// #chat
-//   top: 0
-//   right: 0
-//   position: fixed
-//   min-width: 300px
-//   width: 30vw
-//   z-index: 9999
-//   iframe
-//     border: 0
-//     border-top: 1px solid #CCC
-//     border-left: 1px solid #CCC
-//     border-right: 1px solid #CCC
-//     width: 100%
-//     height: 100vh
-
-.switch
-  input
-    display: none
-  display: inline-block
-  width: 60px
-  height: 30px
-  margin: 8px
-  transform: translateY(50%)
-  position: relative
-
-.slider
-  position: absolute
-  top: 0
-  bottom: 0
-  left: 0
-  right: 0
-  border-radius: 30px
-  box-shadow: 0 0 0 2px #777, 0 0 4px #777
-  cursor: pointer
-  border: 4px solid transparent
-  overflow: hidden
-  transition: .4s
-  &:before
-    position: absolute
-    content: ""
-    width: 100%
-    height: 100%
-    background: #777
-    border-radius: 30px
-    transform: translateX(-30px)
-    transition: .4s
-
-input:checked + .slider
-  &:before
-    transform: translateX(30px)
-    background: limeGreen
-  box-shadow: 0 0 0 2px limeGreen,0 0 2px limeGreen

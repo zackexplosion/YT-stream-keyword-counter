@@ -9,7 +9,7 @@ html
     link(rel='shortcut icon', type='image/png', href='/icon.png')
     meta(content="https://hant.zackexplosion.fun/screenshot.png", property="og:image")
     link(rel='stylesheet', href='/app.css')
-  body.container
+  body
     //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
     div#chat-toggle
       label.switch
@@ -18,7 +18,7 @@ html
       | 聊天室
     iframe(src="/chatroom")#chat
     //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
-    #content
+    #content.container
       include _content
     //- #chat.row
     //-   .col
