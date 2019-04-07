@@ -80,13 +80,16 @@ h1, h4, h5, h6, #status
   left: 0
   z-index: 9999
 
-$chatWidth: 35vh
+$chatWidth: 25vw
 $chatWidth-downmd: 300px
 body.chat-opned
   #content
-    width: 100%;
+    width: 100%
+    position: absolute
+    // margin-left: calc(100vw - #{$modal-md} - #{$chatWidth} )
+    left: calc(#{$chatWidth} + 30px )
     @include media-breakpoint-down(md)
-      margin-left: $chatWidth
+      left: calc(#{$chatWidth-downmd} + 30px )
   #chat-toggle
     left: calc(#{$chatWidth} + 1px)
     @include media-breakpoint-down(md)
@@ -115,11 +118,7 @@ body.chat-opned
   @include media-breakpoint-down(md)
     left: -$chatWidth-downmd
     width: $chatWidth-downmd
-
-  // height: 100vh
-
   height: 100vh /* Fallback for browsers that do not support Custom Properties */
-  height: calc(var(--vh, 1vh) * 100)
   z-index: 9999
 
 // #chat
