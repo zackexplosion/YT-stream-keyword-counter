@@ -10,13 +10,20 @@ html
     meta(content="https://hant.zackexplosion.fun/screenshot.png", property="og:image")
     link(rel='stylesheet', href='/app.css')
   body.container
-    button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
+    //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
+    div#chat-toggle
+      label.switch
+        input(type='checkbox')
+        span.slider
+      | 聊天室
+    iframe(src="/chatroom")#chat
+    //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
     #content
       include _content
-    #chat.row
-      .col
-        .collapse#chatIframe
-          iframe(src="/chatroom")
+    //- #chat.row
+    //-   .col
+    //-     .collapse#chatIframe
+    //-       iframe(src="/chatroom")
     #live-counter.alert.alert-info(type='alert')
       | 目前有 #[span.badge.badge-light ...] 位又老又窮的鄉民在線上
     a.github-corner(href='https://github.com/zackexplosion/hant-counter-crawler', aria-label='View source on GitHub', target="_blank")

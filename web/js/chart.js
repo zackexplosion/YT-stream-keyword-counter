@@ -18,7 +18,6 @@ const randomColor = () => {
 
 const getColorByLabel = label => {
   var color = labelColors[label]
-  console.log(color)
   if (!color) color = randomColor()
   return color
 }

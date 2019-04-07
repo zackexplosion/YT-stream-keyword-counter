@@ -1,10 +1,23 @@
 (function(){
   require('./chart.js')
+  if (navigator != undefined && navigator.userAgent != undefined) {
+    user_agent = navigator.userAgent.toLowerCase()
+    if (user_agent.indexOf('android') > -1) { // Is Android.
+      $(document.body).addClass('android')
+    } else if (!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
+      $(document.body).addClass('ios')
+    }
+  }
   const status = document.getElementById('status')
   // const keywords = $('#keywords')
   const history = $('#history')
   const progress_bar = $('.progress-bar')
   const live_counter = $('#live-counter .badge')
+  const $chat_toggle = $('#chat-toggle input')
+
+  $chat_toggle.on('change', e=>{
+    $('body').toggleClass('chat-opned')
+  })
 
   $.ajax('/codesheet').then(codeSheet =>{
     const getText = code => {

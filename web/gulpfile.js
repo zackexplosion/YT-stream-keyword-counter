@@ -1,13 +1,13 @@
-const { watch, src, dest, parallel } = require('gulp')
+const { watch, src, dest, series, parallel } = require('gulp')
 const sass = require('gulp-sass')
 const minifyCSS = require('gulp-csso')
 const sourcemaps = require('gulp-sourcemaps')
-const livereload = require('gulp-livereload')
 const nodemon = require('gulp-nodemon')
-const CleanWebpackPlugin = require('clean-webpack-plugin');
+const CleanWebpackPlugin = require('clean-webpack-plugin')
 const webpackStream = require('webpack-stream')
 const path = require('path')
 const webpack_param = {
+  mode: process.env.NODE_ENV,
   entry: {
     app: `./js/app.js`,
     chat: `./js/chat.js`,
@@ -40,6 +40,7 @@ function webpack () {
   return src('./js/app.js')
     .pipe(webpackStream(webpack_param))
     .pipe(dest('dist'))
+    .pipe(browserSync.stream())
 }
 
 function css() {
@@ -51,19 +52,12 @@ function css() {
     .pipe(minifyCSS())
     .pipe(sourcemaps.write('.'))
     .pipe(dest('dist'))
+    .pipe(browserSync.stream())
 }
 
-// function js() {
-//   return src([
-//       'js/app.js',
-//       'js/chat.js',
-//     ])
-//     .pipe(sourcemaps.init())
-//     .pipe(sourcemaps.write('.'))
-//     .pipe(dest('dist'))
-// }
+const build = parallel(css, webpack)
 
-var build = parallel(css, webpack)
+const browserSync = require('browser-sync').create()
 
 function watcher (cb) {
   nodemon({
@@ -77,9 +71,15 @@ function watcher (cb) {
       "views/**"
     ],
   })
-  livereload.listen()
-  build()
+  .on('start', () => {
+    const PORT = parseInt(process.env.PORT) || 3000
+    browserSync.init({
+      proxy: `http://localhost:${PORT}`,
+      port: PORT+1
+    })
+  })
 
+  watch(['./**/*.pug'], browserSync.reload)
   watch(['./sass/*.sass'], css)
   watch(['./js/*.js'], webpack)
   cb()
@@ -88,4 +88,4 @@ function watcher (cb) {
 // exports.js = js
 exports.build = build
 // exports.default = build
-exports.default = watcher
+exports.default = series(build, watcher)
