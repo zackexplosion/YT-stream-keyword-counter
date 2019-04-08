@@ -1,4 +1,3 @@
-const fs = require('fs')
 const path = require('path')
 const glob = require("glob")
 
@@ -10,7 +9,7 @@ function hashPath (file) {
     let { base } = path.parse(files[0])
     return '/' + base
   } else {
-    throw 'assets not found'
+    return '/asset-not-found'
   }
 }
 
