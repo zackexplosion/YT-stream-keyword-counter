@@ -2,6 +2,13 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   a.navbar-brand(href='/') 關鍵字計數器
   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navMenu', aria-controls='navMenu', aria-expanded='false', aria-label='Toggle navigation')
     span.navbar-toggler-icon
+  ul.nav.navbar-nav
+    li.nav-item
+      a.nav-link.chat-toggle(href='#') 聊天室
+        div#chat-toggle
+          label.switch
+            input(type='checkbox')
+            span.slider.round
   //- ul.nav
   //-   li.nav-item
   //-     a.nav-link(href='#') 喔

@@ -13,11 +13,14 @@
   const history = $('#history')
   const progress_bar = $('.progress-bar')
   const live_counter = $('#live-counter .badge')
-  const $chat_toggle = $('#chat-toggle input')
 
-  $chat_toggle.on('change', e=>{
+  const chat_toggler = e => {
+    $('.chat-toggle').toggleClass('active')
     $('body').toggleClass('chat-opned')
-  })
+  }
+
+  $('#chat-toggle input').on('change', chat_toggler)
+  $('.chat-toggle').on('click', chat_toggler)
 
   $.ajax('/codesheet').then(codeSheet =>{
     const getText = code => {

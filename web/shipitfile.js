@@ -14,7 +14,7 @@ module.exports = function (shipit) {
       }
     },
     production: {
-      servers: 'YEE'
+      servers: 'zack@YEE'
     }
   })
 
