@@ -2,12 +2,12 @@
 const channels = [
   {
     id: 'cti',
-    name: '中天新聞',
+    name: '中天',
     vid: 'wUPPkSANpyo'
   },
   {
     id: 'ctv',
-    name: '中視新聞',
+    name: '中視',
     vid: 'BiOFwDgRO10'
   },
   {
@@ -17,7 +17,7 @@ const channels = [
   },
   {
     id: 'setn',
-    name: '三立新聞',
+    name: '三立',
     vid: '4ZVUmEUFwaY'
   },
   {
@@ -28,12 +28,12 @@ const channels = [
   },
   {
     id: 'ebc',
-    name: '東森新聞',
+    name: '東森',
     vid: 'dxpWqjvEKaM'
   },
   {
     id: 'ftv',
-    name: '民視新聞',
+    name: '民視',
     vid: 'XxJKnDLYZz4'
   }
 ]

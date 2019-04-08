@@ -52,7 +52,6 @@ module.exports = function (shipit) {
   // })
 
   shipit.task('pulldb', async () => {
-    
     try {
       await shipit.local(`scp YEE:${process.env.PROD_DB_PATH}* .`)
     } catch (error) {
