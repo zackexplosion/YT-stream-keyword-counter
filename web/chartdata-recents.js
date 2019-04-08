@@ -62,10 +62,10 @@ function countchartdata(channel) {
 
 // let chartdata = countchartdata()
 module.exports = app => {
-  app.get('/chartdata/:id?', cache_middleware , (req, res) => {
+  app.get('/chartdata-recents/:id?', cache_middleware , (req, res) => {
     const { id } = req.params
     const channel = CHANNELS.find(c => c.id == id)
-    if (!channel) res.json([])
+    if (!channel) return res.json([])
 
     let chartdata = countchartdata(channel)
     return res.json(chartdata)

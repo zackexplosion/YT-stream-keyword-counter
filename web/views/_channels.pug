@@ -21,11 +21,8 @@ else
         ul#history.list-group
           each h in history.reverse()
             li.list-group-item=`${moment(h[0]).format('lll')}: ${h[1]}`
-  .row
-    #chart.col-lg-12
-        h4 近24小時
-        div.canvas-wrapper
-          canvas
+  #chart.row
+    //- .col-lg-12
 .row
   .col-lg-12
     h4 其他直播台

@@ -24,7 +24,8 @@ app.set('views', path.join(__dirname, 'views'))
 require(path.join(__dirname, 'hashpath'))(app)
 require(path.join(__dirname, 'handle-socket'))({io})
 require(path.join(__dirname, 'chatroom'))({io, app})
-require(path.join(__dirname, 'chartdata'))(app)
+require(path.join(__dirname, 'chartdata-recents'))(app)
+require(path.join(__dirname, 'chartdata-total-months'))(app)
 
 const channels = require(path.join(ROOT_DIR, 'util', 'channels'))
 function getChannels (req) {

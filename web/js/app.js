@@ -1,7 +1,8 @@
+moment.locale('zh-tw')
+import './_chart'
 (function(){
-  require('./chart.js')
   if (navigator != undefined && navigator.userAgent != undefined) {
-    user_agent = navigator.userAgent.toLowerCase()
+    let user_agent = navigator.userAgent.toLowerCase()
     if (user_agent.indexOf('android') > -1) { // Is Android.
       $(document.body).addClass('android')
     } else if (!!navigator.platform && /iPad|iPhone|iPod/.test(navigator.platform)) {
@@ -33,7 +34,7 @@
       })
       return text
     }
-    socket.on('p', updateStatusAndProgress = data => {
+    socket.on('p', data => {
       if(!status) return
       status.innerHTML = getText(data.c)
       let percent = data.p || '0'

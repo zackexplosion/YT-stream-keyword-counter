@@ -60,12 +60,12 @@ module.exports = function (shipit) {
   })
 
   shipit.task('startApp', async () => {
-    const cmd = `cd ${shipit.config.deployTo}/current/web && pm2 restart ${shipit.config.deployTo}/web.config.js`
+    const d = shipit.config.deployTo
+    const cmd = `cd ${d}/current/web && pm2 stop ${d}/web.config.js && pm2 start ${d}/web.config.js`
     try {
       await shipit.remote(cmd)
     } catch (error) {
       console.log(error)
-      // await shipit.remote(`cd ${shipit.config.deployTo} && pm2 restart ecosystem.config.js`)
     }
   })
 }
