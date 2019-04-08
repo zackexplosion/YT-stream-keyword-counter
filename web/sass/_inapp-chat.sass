@@ -27,9 +27,10 @@ body.chat-opned
     @include media-breakpoint-down(md)
       margin-left: $chatWidth-downmd
   #chat-toggle
-    display: block
-    left: calc(#{$chatWidth} + 5px)
+    // display: block
+    // left: calc(#{$chatWidth} + 5px)
     @include media-breakpoint-down(md)
+      display: block
       left: calc(#{$chatWidth-downmd} + 5px)
   #chat
     // display: block
