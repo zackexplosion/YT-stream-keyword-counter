@@ -26,25 +26,22 @@ require(path.join(__dirname, 'handle-socket'))({io})
 require(path.join(__dirname, 'chatroom'))({io, app})
 require(path.join(__dirname, 'chartdata'))(app)
 
-const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
+const channels = require(path.join(ROOT_DIR, 'util', 'channels'))
 function getChannels (req) {
   // const id = req.query.id || 'cti'
   const { id } = req.query
   let channel
-  let channels = CHANNELS.filter(c => {
+  let other_channels = channels.filter(c => {
     let r = c.id == id
-    if (r) {
-      // channel = Object.assign({}, c)
-      channel = c
-    }
+    if (r) channel = c
     return !r
   })
 
   // if id not found
   if (!channel) {
-    let c = JSON.parse(JSON.stringify(CHANNELS))
+    let c = JSON.parse(JSON.stringify(channels))
     channel = c.shift()
-    channels = c
+    other_channels = c
   }
 
   // log(channel)
@@ -58,6 +55,7 @@ function getChannels (req) {
   return {
     channel,
     channels,
+    other_channels,
     history
   }
 }

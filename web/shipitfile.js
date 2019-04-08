@@ -14,7 +14,7 @@ module.exports = function (shipit) {
       }
     },
     production: {
-      servers: 'zack@YEE'
+      servers: 'YEE'
     }
   })
 
@@ -50,6 +50,15 @@ module.exports = function (shipit) {
   // shipit.task('checkDep', async () => {
 
   // })
+
+  shipit.task('pulldb', async () => {
+    
+    try {
+      await shipit.local(`scp YEE:${process.env.PROD_DB_PATH}* .`)
+    } catch (error) {
+      console.log(error)
+    }
+  })
 
   shipit.task('startApp', async () => {
     const cmd = `cd ${shipit.config.deployTo}/current/web && pm2 restart ${shipit.config.deployTo}/web.config.js`

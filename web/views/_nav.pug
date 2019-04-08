@@ -1,0 +1,37 @@
+nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
+  a.navbar-brand(href='/') 關鍵字計數器
+  button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navMenu', aria-controls='navMenu', aria-expanded='false', aria-label='Toggle navigation')
+    span.navbar-toggler-icon
+  //- ul.nav
+  //-   li.nav-item
+  //-     a.nav-link(href='#') 喔
+  #navMenu.collapse.navbar-collapse
+    ul.nav.navbar-nav.mx-auto
+      each c in channels
+        - var active = (c.id == channel.id) ? 'active' : ''
+        li.nav-item(class=active)
+          a.nav-link(target="_blank", href=`/?id=${c.id}`)=c.name
+      //- li.nav-item.dropdown
+      //-   a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+      //-     | 選台器
+      //-   .dropdown-menu(aria-labelledby='navbarDropdown')
+      //-     each c in channels
+      //-       a.dropdown-item(target="_blank", href=`/?id=${c.id}`)=c.name
+    ul.nav.navbar-nav.ml-auto
+      li.nav-item
+        a.nav-link(target="_blank", href='https://github.com/zackexplosion/YT-stream-keyword-counter') 原始碼
+      //- li.nav-item.dropdown
+      //-   a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+      //-     | 關於
+      //-   .dropdown-menu(aria-labelledby='navbarDropdown')
+      //-     a.dropdown-item(target="_blank", href='https://github.com/zackexplosion/YT-stream-keyword-counter') 原始碼
+      //- li.nav-item
+      //-   a.nav-link(href='#') Link
+          //- a.dropdown-item(href='#') Another action
+          //- .dropdown-divider
+          //- a.dropdown-item(href='#') Something else here
+      //- li.nav-item
+      //-   a.nav-link.disabled(href='#') Disabled
+    //- form.form-inline.my-2.my-lg-0
+    //-   input.form-control.mr-sm-2(type='search', placeholder='Search', aria-label='Search')
+    //-   button.btn.btn-outline-success.my-2.my-sm-0(type='submit') Search

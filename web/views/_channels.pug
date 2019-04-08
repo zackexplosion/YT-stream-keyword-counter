@@ -29,8 +29,8 @@ else
 .row
   .col-lg-12
     h4 其他直播台
-  each c in channels
+  each c in other_channels
     .col-lg-4
         h6 #[a.channel-link(target="_blank",href=`/?id=${c.id}`)=c.name]
         div.video-wrapper
-          iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
+          iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1&vq=tiny`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')

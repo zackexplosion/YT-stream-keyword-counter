@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "pulldb": "shipit production pulldb",
     "deploy": "shipit production deploy",
     "web": "nodemon index.js -e .js --ignore 'assets' ",
     "dev": "./node_modules/gulp/bin/gulp.js",

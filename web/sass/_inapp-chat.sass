@@ -1,26 +1,27 @@
 $chatWidth: 25vw
-$chatWidth-downmd: 300px
+$chatWidth-downmd: 280px
 body.chat-opned
   @include media-breakpoint-down(sm)
     .github-corner,
     #live-counter
       display: none
   #content
-    // position: absolute
-    // margin-left: calc(100vw - #{$modal-md} - #{$chatWidth} )
-    // margin-left: calc(100vw - #{$chatWidth} - #{$modal-lg} )
     margin-left: calc(#{$chatWidth} + 30px )
-    // width: calc(95vw - #{$chatWidth} )
     @include media-breakpoint-down(md)
       width: 100%
       left: calc(#{$chatWidth-downmd} + 30px )
-  #chat-toggle
-    left: calc(#{$chatWidth} + 1px)
+  nav
+    margin-left: $chatWidth
     @include media-breakpoint-down(md)
-      left: calc(#{$chatWidth-downmd} + 1px)
+      margin-left: $chatWidth-downmd
+  #chat-toggle
+    top: 0
+    left: calc(#{$chatWidth} + 5px)
+    @include media-breakpoint-down(md)
+      left: calc(#{$chatWidth-downmd} + 5px)
   #chat
     // display: block
-    left: 2px
+    left: 0px
   &.android #chat
     height: calc(100vh - 56px)
   &.ios #chat
@@ -30,11 +31,11 @@ body.chat-opned
   // display: none
   top: 0
   position: fixed
-  min-width: 300px
+  min-width: 280px
   border: 0
-  border-top: 1px solid #CCC
-  border-left: 1px solid #CCC
-  border-right: 1px solid #CCC
+  // border-top: 1px solid #CCC
+  // border-left: 1px solid #CCC
+  // border-right: 1px solid #CCC
 
   left: -9999px
   width: $chatWidth
