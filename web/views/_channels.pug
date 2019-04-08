@@ -10,24 +10,24 @@ if history.length <= 0
       +player()
 else
   .row
-    .col-xl-6
+    .col-xl-12
       +player()
       #status.alert.alert-info(role='alert')
         | 即時狀態載入中...
       #progress.progress
         .progress-bar.progress-bar-striped.bg-info.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
-    .col-xl-6
-        h5 文字實況
-        ul#history.list-group
-          each h in history.reverse()
-            li.list-group-item=`${moment(h[0]).format('lll')}: ${h[1]}`
   #chart.row
-    //- .col-lg-12
+  .row
+    .col-lg-12
+      h5 文字實況
+      ul#history.list-group
+        each h in history.reverse()
+          li.list-group-item=`${moment(h[0]).format('lll')}: ${h[1]}`
 .row
   .col-lg-12
-    h4 其他直播台
+    h4 看其他台
   each c in other_channels
-    .col-lg-4
-        h6 #[a.channel-link(target="_blank",href=`/?id=${c.id}`)=c.name]
+    .col-xl-2.col-lg-4.col-6
+        h6 #[a.channel-link(href=`/?id=${c.id}`)=c.name]
         div.video-wrapper
           iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1&vq=tiny`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')

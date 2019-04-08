@@ -11,24 +11,15 @@ html
     link(rel='stylesheet', href='/app.css')
   body
     include _nav
-    //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
-    //- div#chat-toggle
-    //-   label.switch
-    //-     input(type='checkbox')
-    //-     span.slider
-
     iframe(src="/chatroom")#chat
-
-    //- button#chat-toggle.btn.btn-info(type='button', data-target="#chatIframe", data-toggle="collapse") 聊天室
     #content.container
-      include _content
-    //- #chat.row
-    //-   .col
-    //-     .collapse#chatIframe
-    //-       iframe(src="/chatroom")
+      .row
+        .col-lg.title
+          h4 目前播放的是 #[br]【#{channel.name}】
+          //- p 最新功能：可以看其他新聞台的統計數字囉!
+      include _channels
     #live-counter.alert.alert-info(type='alert')
       | 目前有 #[span.badge.badge-light ...] 位又老又窮的鄉民在線上
-
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js')
