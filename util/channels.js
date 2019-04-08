@@ -23,7 +23,7 @@ const channels = [
   {
     id: 'wryyyy',
     name: '嗯？',
-    vid: 'j_TtgHGkzAk',
+    vid: 'aMrlIFKtj1I',
     skip: true
   },
   {
