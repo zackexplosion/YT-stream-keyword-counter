@@ -1,7 +1,19 @@
 $chatWidth: 25vw
 $chatWidth-downmd: 280px
+#chat-toggle
+  display: none
+  position: fixed
+  top: 20px
+  left: 5px
+  z-index: 9999
+  cursor: pointer
+.chat-toggle
+  cursor: pointer
 body.chat-opned
   @include media-breakpoint-down(sm)
+    ul.nav,
+    .navbar-toggler,
+    .chat-toggle,
     .github-corner,
     #live-counter
       display: none
@@ -15,7 +27,7 @@ body.chat-opned
     @include media-breakpoint-down(md)
       margin-left: $chatWidth-downmd
   #chat-toggle
-    top: 0
+    display: block
     left: calc(#{$chatWidth} + 5px)
     @include media-breakpoint-down(md)
       left: calc(#{$chatWidth-downmd} + 5px)

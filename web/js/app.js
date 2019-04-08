@@ -19,7 +19,10 @@
     $('body').toggleClass('chat-opned')
   }
 
-  $('#chat-toggle input').on('change', chat_toggler)
+  $('#chat-toggle input').on('click', e => {
+    chat_toggler()
+    $('#chat-toggle input').prop('checked', true)
+  })
   $('.chat-toggle').on('click', chat_toggler)
 
   $.ajax('/codesheet').then(codeSheet =>{
