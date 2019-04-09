@@ -1,8 +1,8 @@
 const YOUTUBE_VIDEO_ID = process.env.YOUTUBE_VIDEO_ID || 'wUPPkSANpyo'
-const BASE_WIDTH = process.env.OCR_BASE_WIDTH || 1920
-const BASE_HEIGHT = process.env.OCR_BASE_HEIGHT || 1080
-const OCR_IMAGE_LEFT = process.env.OCR_IMAGE_LEFT || 450
-const OCR_IMAGE_TOP = process.env.OCR_IMAGE_TOP || 860
+const BASE_WIDTH = parseInt(process.env.OCR_BASE_WIDTH) || 1920
+const BASE_HEIGHT = parseInt(process.env.OCR_BASE_HEIGHT) || 1080
+const OCR_IMAGE_LEFT = parseInt(process.env.OCR_IMAGE_LEFT) || 450
+const OCR_IMAGE_TOP = parseInt(process.env.OCR_IMAGE_TOP) || 860
 // const OCR_IMAGE_WIDTH = process.env.OCR_IMAGE_WIDTH || 1470
 // const OCR_IMAGE_HEIGHT = process.env.OCR_IMAGE_HEIGHT || 170
 const OCR_IMAGE_WIDTH = BASE_WIDTH - OCR_IMAGE_LEFT
