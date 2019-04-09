@@ -22,10 +22,10 @@ var config = {
 function main({ utils, chart }) {
   const { getColorByLabel } = utils
 
-  function update(res) {
+  function update(channel_id, res) {
     chart.options.title = {
       display: true,
-      text: '繪製時間:' + moment(res.now).format('lll')
+      text: `頻道: ${channel_id.toUpperCase()}, 統計時間: ${moment(res.now).format('lll')}`
     }
 
     let { sheets }  = res

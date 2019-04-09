@@ -5,28 +5,39 @@ const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
 const cache_middleware = require('apicache').middleware(`${CHARTDATA_CACHE_SECONDS} seconds`)
 
 function countchartdata(channel) {
+  // this time is multi scanner deploy time
   const startTime = moment('2019-04-07T13:27:12.791Z')
   let matches = db.get(channel.id).value().filter(m => {
+    // filter by record time
     let a = moment(m[0])
+
     const startOfMonth = moment().startOf('month')
     const endOfMonth   = moment().endOf('month')
-    return a > startTime && a > startOfMonth && a < endOfMonth
+
+    // make sure it's in this month and new than starTime
+    return (
+      a >= startTime &&
+      a >= startOfMonth &&
+      a <= endOfMonth
+    )
   })
+
+  // log(matches[0])
 
   let data = {}
 
+  // setup defaults by key
   KEYWORDS.forEach(k => {
     data[k] = 0
   })
 
+  // count
   matches.forEach(m => {
     KEYWORDS.forEach(k => {
       // is matched and between the time range
       if (m[1].indexOf(k) != -1) data[k]++
     })
   })
-
-  // log(matches)
 
   return {
     data,

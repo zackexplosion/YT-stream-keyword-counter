@@ -66,7 +66,7 @@ function getColorByLabel (label) {
       let api = c.className
       if (c.api) api = c.api
       $.ajax(`/chartdata-${api}/${channel_id}`).then(res =>{
-        c.update(res)
+        c.update(channel_id, res)
       })
     })
   }
