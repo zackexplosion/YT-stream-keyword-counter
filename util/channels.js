@@ -8,7 +8,7 @@ const channels = [
   {
     id: 'ctv',
     name: '中視',
-    vid: 'BiOFwDgRO10'
+    vid: '-CDnHnCkzuc'
   },
   {
     id: 'tvbs',
