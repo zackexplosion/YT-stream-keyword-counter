@@ -15,14 +15,14 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
   button.navbar-toggler(type='button', data-toggle='collapse', data-target='#navMenu', aria-controls='navMenu', aria-expanded='false', aria-label='Toggle navigation')
     span.navbar-toggler-icon
   #navMenu.collapse.navbar-collapse
-    ul.nav.navbar-nav.mx-auto
+    ul.nav.navbar-nav.mx-auto.channels
       li.nav-item.d-lg-none
         span.nav-link(href='#') 選台囉
       .dropdown-divider
       each c in channels
         - var active = (c.id == channel.id) ? 'active' : ''
         li.nav-item(class=active)
-          a.nav-link(href=`/?id=${c.id}`)=c.name
+          a.nav-link(href=`/?id=${c.id}`,data-cid=c.id)=c.name
       //- li.nav-item.dropdown
       //-   a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
       //-     | 選台器

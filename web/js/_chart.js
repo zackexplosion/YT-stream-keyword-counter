@@ -38,12 +38,16 @@ function getColorByLabel (label) {
     getColorByLabel
   }
 
+  var $channels = $('#channels .channel')
+
 
   function createCharts(configs = []) {
     let charts = []
+
+    let $charts =
     configs.forEach(c => {
       let { name , className, api, config, main, size } = c
-      $('#chart').append(`<div class="col-lg-${size}"><h4>${name}</h4><div class="canvas-wrapper"><canvas class="${className}"></canvas></div></div>`)
+      // $charts.append(`<div class="col-lg-${size}"><h4>${name}</h4><div class="canvas-wrapper"><canvas class="${className}"></canvas></div></div>`)
 
       let chart = new Chart(baseElement.find('.' + className), config)
       chart = main({utils, chart})
@@ -58,17 +62,27 @@ function getColorByLabel (label) {
 
   const charts = createCharts([recents, totalDay, totalMonth])
   const chartUpdater = () => {
-    let channel_id = (location.pathname+location.search).substr(1).split('=')[1]
-    if(!channel_id){
-      channel_id = 'cti'
-    }
-    charts.forEach(c => {
+    // let channel_id = (location.pathname+location.search).substr(1).split('=')[1]
+    // if(!channel_id){
+    //   channel_id = 'cti'
+    // }
+    $channels.each(function(){
+      let channel_id = $(this).data('cid')
       let api = c.className
       if (c.api) api = c.api
-      $.ajax(`/chartdata-${api}/${channel_id}`).then(res =>{
-        c.update(channel_id, res)
+      charts.forEach(c => {
+        $.ajax(`/chartdata-${api}/${channel_id}`).then(res =>{
+          c.update(channel_id, res)
+        })
       })
     })
+    // charts.forEach(c => {
+    //   let api = c.className
+    //   if (c.api) api = c.api
+    //   $.ajax(`/chartdata-${api}/${channel_id}`).then(res =>{
+    //     c.update(channel_id, res)
+    //   })
+    // })
   }
 
   chartUpdater()

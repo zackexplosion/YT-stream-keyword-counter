@@ -9,6 +9,21 @@ import './_chart'
       $(document.body).addClass('ios')
     }
   }
+
+  var $channels = $('#channels')
+  $channels.owlCarousel({
+    items: 1,
+    loop:true,
+    margin:10,
+    nav:true,
+  })
+
+  $('ul.nav.channels .nav-link').on('click', function(e) {
+    e.preventDefault()
+    let cid = $(this).attr('data-cid')
+    $channels
+  })
+
   const status = document.getElementById('status')
   // const keywords = $('#keywords')
   const history = $('#history')

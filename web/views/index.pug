@@ -8,22 +8,25 @@ html
     link(rel='icon', type='image/png', href='/icon.png')
     link(rel='shortcut icon', type='image/png', href='/icon.png')
     meta(content="https://hant.zackexplosion.fun/screenshot.png", property="og:image")
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css')
+    link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css')
     link(rel='stylesheet', href='/app.css')
   body
     include _nav
     iframe(src="/chatroom")#chat
     #content.container
-      .row
-        .col-lg.title
-          h4 目前播放的是【#{channel.name}】
+      //- .row
+      //-   .col-lg.title
+      //-     h4 目前播放的是【#{channel.name}】
           //- p 最新功能：可以看其他新聞台的統計數字囉!
-      include _channels
+    include _channels
     #live-counter.alert.alert-info(type='alert')
       | 目前有 #[span.badge.badge-light ...] 位又老又窮的鄉民在線上
     script(src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment-with-locales.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js')
-    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js')
     script(src='https://code.jquery.com/jquery-3.3.1.min.js', integrity='sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=', crossorigin='anonymous')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js')
+    script(src='https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js')
     script(src='https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js', integrity='sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1', crossorigin='anonymous')
     script(src='https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js', integrity='sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM', crossorigin='anonymous')
     script.
