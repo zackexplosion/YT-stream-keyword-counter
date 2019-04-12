@@ -1,72 +1,11 @@
-//- mixin player
-//-   //- h5 現在播放的是【#{channel.name}】
-//-   .col-xl-12#current-channel
-//-     h5 即時畫面
-//-     div.video-wrapper(data-cid=`${channel.id}`)
-//-       iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=1&mute=1`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
-
-//- if history.length <= 0
-//-   .row
-//-     +player()
-//- else
-//-   .row
-//-     +player()
-//-       #status.alert.alert-info(role='alert')
-//-         | 即時狀態載入中...
-//-       #progress.progress
-//-         .progress-bar.progress-bar-striped.bg-info.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
-//-   #chart.row
-//-   .row
-//-     .col-lg-12
-//-       h5 文字實況
-//-       ul#history.list-group
-//-         each h in history.reverse()
-//-           li.list-group-item=`${moment(h[0]).format('lll')}: ${h[1]}`
-//- .row
-//-   .col-lg-12
-//-     h4 看其他台
-//-   each c in other_channels
-//-     .col-xl-2.col-lg-4.col-6.other-channels
-//-         h6 #[a.channel-link(href=`/?id=${c.id}`)=c.name]
-//-         div.video-wrapper(data-cid=`${c.id}`)
-//-           iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=1&mute=1&vq=tiny`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
-mixin channel(c)
-  .container-fluid.channel(data-cid=`${c.id}`)
-    .col-lg.title
-      h4 目前播放的是【#{c.name}】
-    if c.history.length > 0
-      .charts
-        .recents #[canvas]
-        .total-days #[canvas]
-        .total-months #[canvas]
-      div.video-wrapper
-        iframe(src=`https://www.youtube.com/embed/${c.vid}?autoplay=0&mute=1&vq=tiny`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')
-      #status.alert.alert-info(role='alert')
-        | 即時狀態載入中...
-      #progress.progress
-        .progress-bar.progress-bar-striped.bg-info.progress-bar-animated(role='progressbar', aria-valuenow='75', aria-valuemin='0', aria-valuemax='100')
-      .col-lg-12
-        h5 文字實況
-        ul#history.list-group
-          each h in history.reverse()
-            li.list-group-item=`${moment(h[0]).format('lll')}: ${h[1]}`
-
-#channels.owl-carousel.owl-theme
+mixin player(channel)
+  .slick-item(data-cid=`${channel.id}`, data-skip=`${channel.skip}`, data-channel=JSON.stringify(channel))
+    .video
+      .video-wrapper #[iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=${autoplay}&controls=0&showinfo=0&mute=1&iv_load_policy=0`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')]
+#channels.slider-youtube
   each c in channels
-    //- div hello
-    +channel(c)
-
-//- #channels.carousel.slide
-//-   ol.carousel-indicators
-//-     each c in channels
-//-       li(data-target='#channels', data-slide-to='0', class=(c.id == channel.id) ? 'active' : '')
-//-   .carousel-inner
-//-     each c in channels
-//-       .carousel-item(class=(c.id == channel.id) ? 'active' : '')
-//-         +channel(c)
-//-   a.carousel-control-prev(href='#channels', role='button', data-slide='prev')
-//-     span.carousel-control-prev-icon(aria-hidden='true')
-//-     span.sr-only Previous
-//-   a.carousel-control-next(href='#channels', role='button', data-slide='next')
-//-     span.carousel-control-next-icon(aria-hidden='true')
-//-     span.sr-only Next
+    +player(c)
+.container
+  .row
+    h4.channel-name ..
+.container#charts #[.row]
