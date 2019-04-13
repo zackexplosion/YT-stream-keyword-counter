@@ -11,16 +11,37 @@ import updateChart from './_chart'
       $(document.body).addClass('ios')
     }
   }
+  const $chart = $('#charts')
 
   var is_chart_updaing = true
-
-  // updateChart().then(() => {
-  //   is_chart_updaing = false
-  // })
-
-
   var $carousel = $('#channels')
-  $carousel.slick({
+
+  function handleSlide(event, slick, currentSlide, nextSlide) {
+    var {
+      id,
+      name,
+      skip
+    } = $(slick.$slides.get(nextSlide)).data('channel')
+    console.log('skip', skip)
+    $('.channel-name').html(name)
+    if (skip) {
+      $chart.addClass('skip-chart')
+    } else {
+      is_chart_updaing = true
+      $chart.removeClass('skip-chart')
+      updateChart(id).then(() =>{
+        is_chart_updaing = false
+      })
+    }
+  }
+
+
+  $carousel
+  .on('init', function(e, slick, slide) {
+    handleSlide(e, slick, slide, 0)
+  })
+  .on('beforeChange', handleSlide)
+  .slick({
     arrows: false,
     centerMode: true,
     centerPadding: '60px',
@@ -29,31 +50,8 @@ import updateChart from './_chart'
     slidesToShow: 3
   })
 
-  function handleSlide(event, slick, currentSlide, nextSlide) {
-    var {
-      id,
-      skip
-    } = $(slick.$slides.get(nextSlide)).data('channel')
-    if (skip !== 'undefined') {
-      // console.log('skip', skip)
-      // debugger
-      $chart.addClass('skip-chart')
-    } else {
-      is_chart_updaing = true
-      $chart.removeClass('skip-chart')
-      updateChart(id).then(() =>{
-        // console.log('chart updated')
-        is_chart_updaing = false
-      })
-    }
-  }
-
-  handleSlide(null, null, 0, 0)
-
-  const $chart = $('#charts')
-  $carousel.on('beforeChange', handleSlide)
-
   $(document).on('keydown', function(e) {
+    // console.log(e.keyCode)
     if ( is_chart_updaing ) return
     if (e.keyCode == 37) {
       $carousel.slick('slickPrev')
@@ -66,12 +64,6 @@ import updateChart from './_chart'
   $(window).on('resize', function() {
     $carousel.slick('resize')
   })
-
-  // $('ul.nav.channels .nav-link').on('click', function(e) {
-  //   e.preventDefault()
-  //   let cid = $(this).attr('data-cid')
-  //   $channels
-  // })
 
   const status = document.getElementById('status')
   // const keywords = $('#keywords')
@@ -107,11 +99,6 @@ import updateChart from './_chart'
   })
 
   socket.on('updateCounter', data => {
-    // chartUpdater()
-    // $.ajax('/keywords').then(c => {
-    //   keywords.html(c)
-    // })
-
     history.prepend(`<li class="list-group-item">${data.created_at}: ${data.matches}</li>`)
   })
 
