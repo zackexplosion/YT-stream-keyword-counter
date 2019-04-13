@@ -134,4 +134,18 @@ import updateChart from './_chart'
     live_counter.html(data)
   })
 
+  let version = false
+  socket.on('checkVersion', _version => {
+    console.log('checkVersion', _version, version)
+    // reload whole page when version changed
+    if (version && version != _version) {
+      window.location = '/'
+    }
+    version = _version
+  })
+
+  socket.on('reconnect', () => {
+    console.log('reconnected')
+  })
+
 })()

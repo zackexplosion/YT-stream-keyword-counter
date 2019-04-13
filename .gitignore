@@ -6,3 +6,4 @@ db*.json
 tmp/*.png
 yarn-error.log
 web/dist/*
+REVISION

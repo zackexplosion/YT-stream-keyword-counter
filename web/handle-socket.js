@@ -1,4 +1,5 @@
 const path = require('path')
+const fs = require('fs')
 var user_live_count = 0
 
 function handle_cookie(socket, next) {
@@ -24,6 +25,13 @@ module.exports = ({io}) => {
 
     // update counter on new connection
     socket.emit('uuc', user_live_count)
+
+    try {
+      const version = fs.readFileSync(path.join(ROOT_DIR, 'REVISION'), 'utf8')
+      socket.emit('checkVersion', version)
+    } catch (error) {
+      log(error)
+    }
   })
 
   // brocast to every client every 5 seconds
