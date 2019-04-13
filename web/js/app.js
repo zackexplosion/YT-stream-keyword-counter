@@ -67,7 +67,7 @@ import updateChart from './_chart'
 
   // listen to events...
   mc.on("swipeleft swiperight", function(ev) {
-    console.log(ev.type +" gesture detected.")
+    // console.log(ev.type +" gesture detected.")
     switch(ev.type){
       case 'swipeleft':
         $carousel.slick('slickNext')
@@ -144,8 +144,8 @@ import updateChart from './_chart'
     version = _version
   })
 
-  socket.on('reconnect', () => {
-    console.log('reconnected')
-  })
+  // socket.on('reconnect', () => {
+  //   console.log('reconnected')
+  // })
 
 })()
