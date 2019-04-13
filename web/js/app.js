@@ -70,10 +70,10 @@ import updateChart from './_chart'
     console.log(ev.type +" gesture detected.")
     switch(ev.type){
       case 'swipeleft':
-        $carousel.slick('slickPrev')
+        $carousel.slick('slickNext')
       break
       case 'swiperight':
-        $carousel.slick('slickNext')
+        $carousel.slick('slickPrev')
       break
     }
   })
