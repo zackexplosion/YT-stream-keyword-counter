@@ -22,15 +22,22 @@ import updateChart from './_chart'
       name,
       skip
     } = $(slick.$slides.get(nextSlide)).data('channel')
-    console.log('skip', skip)
     $('.channel-name').html(name)
+
+    // shkped channels
     if (skip) {
       $chart.addClass('skip-chart')
     } else {
       is_chart_updaing = true
       $chart.removeClass('skip-chart')
+
+      let t = setTimeout(() => {
+        $.LoadingOverlay("show")
+      }, 100 * 5)
       updateChart(id).then(() =>{
+        clearTimeout(t)
         is_chart_updaing = false
+        $.LoadingOverlay("hide")
       })
     }
   }
