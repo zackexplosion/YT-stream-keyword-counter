@@ -57,6 +57,27 @@ import updateChart from './_chart'
     slidesToShow: 3
   })
 
+  // create a simple instance
+  // by default, it only adds horizontal recognizers
+  var mc = new Hammer($('body')[0])
+
+  mc.get('pan').set({
+    direction: Hammer.DIRECTION_ALL
+  })
+
+  // listen to events...
+  mc.on("swipeleft swiperight", function(ev) {
+    console.log(ev.type +" gesture detected.")
+    switch(ev.type){
+      case 'swipeleft':
+        $carousel.slick('slickPrev')
+      break
+      case 'swiperight':
+        $carousel.slick('slickNext')
+      break
+    }
+  })
+
   $(document).on('keydown', function(e) {
     // console.log(e.keyCode)
     if ( is_chart_updaing ) return
