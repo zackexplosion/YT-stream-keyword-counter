@@ -19,7 +19,7 @@ html
     #content.container
       .row
         .col-lg.title
-          p 最新功能：可以用鍵盤的左右鍵切換頻道囉
+          p 最新功能：可以用鍵盤的左右鍵或是直接滑動螢幕切換頻道囉
       .row
         .col-lg
           h4.channel-name ..
@@ -37,7 +37,6 @@ html
     script(src='https://hammerjs.github.io/dist/hammer.min.js')
     script.
       const socket = io('/web')
-    script(src=hashPath("/app.js"))
 
     // Global site tag (gtag.js) - Google Analytics
     script(async='', src='https://www.googletagmanager.com/gtag/js?id=UA-8649920-14')
@@ -46,4 +45,4 @@ html
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
       gtag('config', 'UA-8649920-14');
-
+    script(src=hashPath("/app.js"))

@@ -43,6 +43,9 @@ function webpack () {
   return src('./js/app.js')
     .pipe(webpackStream(webpack_param))
     .pipe(dest('dist'))
+    .on('error', e => {
+      console.log(e)
+    })
     .pipe(browserSync.stream())
 }
 

@@ -1,8 +1,10 @@
 moment.locale('zh-tw')
 import updateChart from './_chart'
+import setupPlayers from './_players'
 // import 'node_modules/slick-carousel/slick.js'
 // import 'slick-carousel/slick/slick'
 (function(){
+  // add device class
   if (navigator != undefined && navigator.userAgent != undefined) {
     let user_agent = navigator.userAgent.toLowerCase()
     if (user_agent.indexOf('android') > -1) { // Is Android.
@@ -11,19 +13,73 @@ import updateChart from './_chart'
       $(document.body).addClass('ios')
     }
   }
+
+  // show overlay
+  $.LoadingOverlay("show")
+  let isAllReady = false
+  let allReady = []
+  let isPlaying = false
+  let players
+  allReady.push(setupPlayers.then(_players => {
+    // console.log(players)
+    // debugger
+    _players.on('play', e => {
+      isPlaying = true
+    })
+    players = _players
+  }))
+
+
   const $chart = $('#charts')
 
   var is_chart_updaing = true
   var $carousel = $('#channels')
 
+  let channels = $('.slick-item').map((i, s) => {
+    return $(s).data('channel')
+  })
+
+  var initialSlide = 0
+  if (window.location.hash) {
+    let channel_id = window.location.hash.substring(1)
+    initialSlide = Array.from(channels).findIndex(c => {
+      return c.id == channel_id
+    })
+  } else {
+    initialSlide = parseInt(channels.length / 2)
+  }
+
   function handleSlide(event, slick, currentSlide, nextSlide) {
+    // var {
+    //   id,
+    //   name,
+    //   skip
+    // } = $(slick.$slides.get(nextSlide)).data('channel')
+
     var {
       id,
       name,
       skip
-    } = $(slick.$slides.get(nextSlide)).data('channel')
+    } = channels.get(nextSlide)
+
+    // navbar class
+    $('.nav-item a').removeClass('active')
+    $($('.nav-item a').get(nextSlide+1)).addClass('active')
+
+    // change url
+    window.location.hash = id
+
+    // ga tracking
+    gtag('event', 'page_view')
+
     $('.channel-name').html(name)
 
+    // console.log(players, isPlaying)
+    if (players && isPlaying) {
+      players.pause()
+      players.play(nextSlide)
+      // players.mute(nextSlide)
+    }
     // shkped channels
     if (skip) {
       $chart.addClass('skip-chart')
@@ -31,35 +87,64 @@ import updateChart from './_chart'
       is_chart_updaing = true
       $chart.removeClass('skip-chart')
 
+      // if loading time over X ms, show loading overlay
       let t = setTimeout(() => {
+        if (isAllReady) {
         $.LoadingOverlay("show")
-      }, 100 * 5)
+        }
+      }, 100 * 2)
+
       updateChart(id).then(() =>{
         clearTimeout(t)
         is_chart_updaing = false
-        $.LoadingOverlay("hide")
+        if (isAllReady) {
+          $.LoadingOverlay("hide")
+        }
       })
     }
   }
 
+  allReady.push(new Promise((resolve, reject) => {
+    $carousel
+    .on('init', function(e, slick, slide) {
+      handleSlide(e, slick, slide, initialSlide)
+      resolve()
+      console.log('slick ready')
+    })
+    .on('beforeChange', handleSlide)
+    .slick({
+      arrows: false,
+      centerMode: true,
+      centerPadding: '60px',
+      initialSlide,
+      infinite: false,
+      adaptiveHeight: true,
+      variableWidth: true,
+      slidesToShow: 3
+    })
+  }))
 
-  $carousel
-  .on('init', function(e, slick, slide) {
-    handleSlide(e, slick, slide, 0)
+  Promise.all(allReady).then(d => {
+    $.LoadingOverlay("hide")
+    // players.play()
+    // players.unmute()
+    console.log('all ready')
+    isAllReady = true
   })
-  .on('beforeChange', handleSlide)
-  .slick({
-    arrows: false,
-    centerMode: true,
-    centerPadding: '60px',
-    adaptiveHeight: true,
-    variableWidth: true,
-    slidesToShow: 3
+
+  // bind nav click events
+
+  $('.nav-item a').on('click', e => {
+    let index = $(e.target).data('index')
+    $carousel.slick('slickGoTo', index)
+    // handleSlide(null, $carousel, 0, index)
   })
+
 
   // create a simple instance
   // by default, it only adds horizontal recognizers
-  var mc = new Hammer($('body')[0])
+  // var mc = new Hammer($('body')[0])
+  var mc = new Hammer(window)
 
   mc.get('pan').set({
     direction: Hammer.DIRECTION_ALL
@@ -78,7 +163,7 @@ import updateChart from './_chart'
     }
   })
 
-  $(document).on('keydown', function(e) {
+  $(window).on('keydown', function(e) {
     // console.log(e.keyCode)
     if ( is_chart_updaing ) return
     if (e.keyCode == 37) {
@@ -94,7 +179,6 @@ import updateChart from './_chart'
   })
 
   const status = document.getElementById('status')
-  // const keywords = $('#keywords')
   const history = $('#history')
   const progress_bar = $('.progress-bar')
   const live_counter = $('#live-counter .badge')
@@ -110,6 +194,8 @@ import updateChart from './_chart'
   })
   $('.chat-toggle').on('click', chat_toggler)
 
+  // TODO
+  // real time progress update
   $.ajax('/codesheet').then(codeSheet =>{
     const getText = code => {
       let text = 'yee'
@@ -126,6 +212,7 @@ import updateChart from './_chart'
     })
   })
 
+  // Sockets
   socket.on('updateCounter', data => {
     history.prepend(`<li class="list-group-item">${data.created_at}: ${data.matches}</li>`)
   })
@@ -134,18 +221,13 @@ import updateChart from './_chart'
     live_counter.html(data)
   })
 
+    // reload whole page when version changed
   let version = false
   socket.on('checkVersion', _version => {
     console.log('checkVersion', _version, version)
-    // reload whole page when version changed
     if (version && version != _version) {
       window.location = '/'
     }
     version = _version
   })
-
-  // socket.on('reconnect', () => {
-  //   console.log('reconnected')
-  // })
-
 })()

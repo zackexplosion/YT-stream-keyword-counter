@@ -34,7 +34,7 @@ function getChannels (req) {
   let channel
   let channels = CHANNELS.map( c => {
     if (!c.skip) {
-      c.history = db.get(c.id).takeRight(5).value()
+      // c.history = db.get(c.id).takeRight(5).value()
     }
 
     return c
@@ -70,7 +70,7 @@ function getChannels (req) {
 // setup index route
 app.get('/', function (req, res) {
   res.render('index', {
-    autoplay: 1,
+    autoplay: 0,
     ...getChannels(req)
   })
 })

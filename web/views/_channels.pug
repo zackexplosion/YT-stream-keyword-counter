@@ -1,7 +1,8 @@
 mixin player(channel)
   .slick-item(data-cid=`${channel.id}`, data-skip=`${channel.skip}`, data-channel=JSON.stringify(channel))
     .video
-      .video-wrapper #[iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=${autoplay}&controls=0&showinfo=0&mute=1&iv_load_policy=0`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')]
+      //- .video-wrapper #[iframe(src=`https://www.youtube.com/embed/${channel.vid}?autoplay=${autoplay}&controls=0&showinfo=0&mute=1&iv_load_policy=0`, frameborder='0', allow='accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture', allowfullscreen='')]
+      .video-wrapper #[img(src=`https://i.ytimg.com/vi/${channel.vid}/hqdefault.jpg`)]
 #channels.slider-youtube
   each c in channels
     +player(c)

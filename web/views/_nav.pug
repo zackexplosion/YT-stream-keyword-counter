@@ -19,10 +19,10 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       li.nav-item.d-lg-none
         span.nav-link(href='#') 選台囉
       .dropdown-divider
-      each c in channels
+      each c, index in channels
         - var active = (c.id == channel.id) ? 'active' : ''
-        li.nav-item(class=active)
-          a.nav-link(href=`/?id=${c.id}`,data-cid=c.id)=c.name
+        li.nav-item
+          a.nav-link(href=`/#${c.id}`, data-index=index)=c.name
       //- li.nav-item.dropdown
       //-   a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
       //-     | 選台器
