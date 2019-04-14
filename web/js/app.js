@@ -50,12 +50,6 @@ import setupPlayers from './_players'
   }
 
   function handleSlide(event, slick, currentSlide, nextSlide) {
-    // var {
-    //   id,
-    //   name,
-    //   skip
-    // } = $(slick.$slides.get(nextSlide)).data('channel')
-
     var {
       id,
       name,
@@ -76,9 +70,9 @@ import setupPlayers from './_players'
 
     // console.log(players, isPlaying)
     if (players && isPlaying) {
-      players.pause()
+      players.mute()
       players.play(nextSlide)
-      // players.mute(nextSlide)
+      players.unMute(nextSlide)
     }
     // shkped channels
     if (skip) {
@@ -90,7 +84,7 @@ import setupPlayers from './_players'
       // if loading time over X ms, show loading overlay
       let t = setTimeout(() => {
         if (isAllReady) {
-        $.LoadingOverlay("show")
+          $.LoadingOverlay("show")
         }
       }, 100 * 2)
 
@@ -109,7 +103,7 @@ import setupPlayers from './_players'
     .on('init', function(e, slick, slide) {
       handleSlide(e, slick, slide, initialSlide)
       resolve()
-      console.log('slick ready')
+      // console.log('slick ready')
     })
     .on('beforeChange', handleSlide)
     .slick({
@@ -126,24 +120,18 @@ import setupPlayers from './_players'
 
   Promise.all(allReady).then(d => {
     $.LoadingOverlay("hide")
-    // players.play()
-    // players.unmute()
-    console.log('all ready')
     isAllReady = true
   })
 
   // bind nav click events
-
   $('.nav-item a').on('click', e => {
     let index = $(e.target).data('index')
     $carousel.slick('slickGoTo', index)
     // handleSlide(null, $carousel, 0, index)
   })
 
-
   // create a simple instance
   // by default, it only adds horizontal recognizers
-  // var mc = new Hammer($('body')[0])
   var mc = new Hammer(window)
 
   mc.get('pan').set({
@@ -178,11 +166,12 @@ import setupPlayers from './_players'
     $carousel.slick('resize')
   })
 
-  const status = document.getElementById('status')
-  const history = $('#history')
-  const progress_bar = $('.progress-bar')
-  const live_counter = $('#live-counter .badge')
+  // const status = document.getElementById('status')
+  // const history = $('#history')
+  // const progress_bar = $('.progress-bar')
 
+
+  // chatroom toggler
   const chat_toggler = e => {
     $('.chat-toggle').toggleClass('active')
     $('body').toggleClass('chat-opned')
@@ -217,6 +206,7 @@ import setupPlayers from './_players'
     history.prepend(`<li class="list-group-item">${data.created_at}: ${data.matches}</li>`)
   })
 
+  const live_counter = $('#live-counter .badge')
   socket.on('uuc', function updateUserCounter(data){
     live_counter.html(data)
   })

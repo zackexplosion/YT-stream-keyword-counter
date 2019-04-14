@@ -28,8 +28,8 @@ var players = function(_players){
   // return p
 
   return {
-    unmute: function (i) {
-      doAction('unmute', i)
+    unMute: function (i) {
+      doAction('unMute', i)
     },
     mute: function (i) {
       doAction('mute', i)
@@ -52,9 +52,14 @@ const createPlayer = function (channel, element) {
     let player = new YT.Player(element, {
       videoId: channel.vid,
       playerVars: {
+        'origin': window.location.origin,
+        'modestbranding': 1,
+        'iv_load_policy': 0,
         'pause-overlay': 0,
         'autoplay': 0,
-        'controls': 0
+        'disablekb': 1,
+        'controls': 0,
+        'fs': 0
       },
       events: {
         onReady: function(){

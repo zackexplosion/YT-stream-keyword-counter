@@ -27,51 +27,12 @@ require(path.join(__dirname, 'chatroom'))({io, app})
 require(path.join(__dirname, 'chartdata-recents'))(app)
 require(path.join(__dirname, 'chartdata-total-months'))(app)
 
-const CHANNELS = require(path.join(ROOT_DIR, 'util', 'channels'))
-function getChannels (req) {
-  // const id = req.query.id || 'cti'
-  const { id } = req.query
-  let channel
-  let channels = CHANNELS.map( c => {
-    if (!c.skip) {
-      // c.history = db.get(c.id).takeRight(5).value()
-    }
-
-    return c
-  })
-  // let other_channels = channels.filter(c => {
-  //   let r = c.id == id
-  //   if (r) channel = c
-  //   return !r
-  // })
-
-  // if id not found
-  if (!channel) {
-    let c = JSON.parse(JSON.stringify(channels))
-    channel = c.shift()
-    other_channels = c
-  }
-
-  // log(channel)
-  // log(channels)
-
-  // let history = []
-  if (!channel.skip) {
-    history = db.get(channel.id).takeRight(5).value()
-  }
-
-  return {
-    channel,
-    channels,
-    // other_channels
-  }
-}
+const channels = require(path.join(ROOT_DIR, 'util', 'channels'))
 
 // setup index route
 app.get('/', function (req, res) {
   res.render('index', {
-    autoplay: 0,
-    ...getChannels(req)
+    channels
   })
 })
 
