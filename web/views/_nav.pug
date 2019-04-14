@@ -21,7 +21,7 @@ nav.navbar.navbar-expand-lg.navbar-light.bg-light.fixed-top
       .dropdown-divider
       each c, index in channels
         //- - var active = (c.id == channel.id) ? 'active' : ''
-        li.nav-item
+        li.nav-item.channels
           a.nav-link(href=`/#${c.id}`, data-index=index)=c.name
       //- li.nav-item.dropdown
       //-   a#navbarDropdown.nav-link.dropdown-toggle(href='#', role='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')

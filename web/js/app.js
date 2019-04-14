@@ -124,7 +124,7 @@ import setupPlayers from './_players'
   })
 
   // bind nav click events
-  $('.nav-item a').on('click', e => {
+  $('.nav-item.channels a').on('click', e => {
     let index = $(e.target).data('index')
     $carousel.slick('slickGoTo', index)
     // handleSlide(null, $carousel, 0, index)
