@@ -3,6 +3,9 @@ import updateChart from './_chart'
 import setupPlayers from './_players'
 // import 'node_modules/slick-carousel/slick.js'
 // import 'slick-carousel/slick/slick'
+function getRandomInt(min, max) {
+  return parseInt(Math.random() * (max - min) + min)
+}
 (function(){
   // add device class
   if (navigator != undefined && navigator.userAgent != undefined) {
@@ -46,8 +49,11 @@ import setupPlayers from './_players'
       return c.id == channel_id
     })
   } else {
-    initialSlide = parseInt(channels.length / 2)
+    // first channel is random
+    initialSlide = getRandomInt(0, channels.length -1)
   }
+
+  // console.log(initialSlide)
 
   function handleSlide(event, slick, currentSlide, nextSlide) {
     var {
