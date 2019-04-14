@@ -1,5 +1,5 @@
 moment.locale('zh-tw')
-import updateChart from './_chart'
+import { initChart, updateChart } from './_chart'
 import setupPlayers from './_players'
 // import 'node_modules/slick-carousel/slick.js'
 // import 'slick-carousel/slick/slick'
@@ -105,26 +105,29 @@ function getRandomInt(min, max) {
   }
 
   allReady.push(new Promise((resolve, reject) => {
-    $carousel
-    .on('init', function(e, slick, slide) {
-      handleSlide(e, slick, slide, initialSlide)
-      resolve()
-      // console.log('slick ready')
-    })
-    .on('beforeChange', handleSlide)
-    .slick({
-      arrows: false,
-      centerMode: true,
-      centerPadding: '60px',
-      initialSlide,
-      infinite: false,
-      adaptiveHeight: true,
-      variableWidth: true,
-      slidesToShow: 3
+    initChart().then( _  => {
+      $carousel
+      .on('init', function(e, slick, slide) {
+        handleSlide(e, slick, slide, initialSlide)
+        resolve()
+        console.log('slick ready')
+      })
+      .on('beforeChange', handleSlide)
+      .slick({
+        arrows: false,
+        centerMode: true,
+        centerPadding: '60px',
+        initialSlide,
+        infinite: false,
+        adaptiveHeight: true,
+        variableWidth: true,
+        slidesToShow: 3
+      })
     })
   }))
 
   Promise.all(allReady).then(d => {
+    console.log(d)
     $.LoadingOverlay("hide")
     isAllReady = true
   })

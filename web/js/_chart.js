@@ -1,71 +1,65 @@
-import totalMonth from './_chart-total-month'
-import totalDay from './_chart-total-day'
-import recents from './_chart-recents.js'
+function generateLabels(chart) {
+  var data = chart.data;
+  if (data.labels.length && data.datasets.length) {
+    return data.labels.map(function (label, i) {
+      var ds = data.datasets[0];
+      var arc = chart.getDatasetMeta(0).data[i];
+      var custom = arc && arc.custom || {};
+      var getValueAtIndexOrDefault = Chart.helpers.getValueAtIndexOrDefault;
+      var arcOpts = chart.options.elements.arc;
+      var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
+      var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
+      var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
 
-const labelColors = {
-  '韓': '#007FFF',
-  '國瑜': '#3E8EDE',
-  '韓流': '#2D68C4',
-  '韓粉': '#0047AB',
-  // '蔡': '#A7FC00',
-  '蔡': '#009E60',
-  '蔡英文': '#609E60',
-  '賴清德': '#909E60',
-  '柯': '#DE2910',
-  '柯文哲': '#9E2810',
-}
+      var value = chart.config.data.datasets[chart.getDatasetMeta(0).data[i]._datasetIndex].data[chart.getDatasetMeta(0).data[i]._index];
 
-const randomColor = () => {
-  var letters = '0123456789ABCDEF'
-  var color = '#'
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)]
+      return {
+        text: label + " : " + value,
+        fillStyle: fill,
+        strokeStyle: stroke,
+        lineWidth: bw,
+        hidden: isNaN(ds.data[i]) || chart.getDatasetMeta(0).data[i].hidden,
+        index: i
+      };
+    });
+  } else {
+    return [];
   }
-  return color
 }
 
-function getColorByLabel (label) {
-  var color = labelColors[label]
-  if (!color) color = randomColor()
-  return color
-}
-let charts = [];
-
-(function(){
+var charts = [];
+export function initChart() {
   const $baseElement = $('#charts .row')
   if ($baseElement.length == 0) {
     console.error('no charts element found')
     return false
   }
 
-  const utils = {
-    getColorByLabel
-  }
-  const _charts = [recents, totalDay, totalMonth]
-  _charts.forEach(c => {
-    let { name, className, api, config, main, size } = c
-    $baseElement.append(`<div class="col-lg-${size}"><h4>${name}</h4><div class="canvas-wrapper"><canvas class="${className}"></canvas></div></div>`)
+  return $.ajax('/chart-configs').then(res => {
+    res.forEach(c => {
+      let { name, className, api, config, size } = c
 
-    let chart = new Chart($baseElement.find('.' + className), config)
-    chart = main({utils, chart})
+      $baseElement.append(`<div class="col-lg-${size}"><h4>${name}</h4><div class="canvas-wrapper"><canvas class="${className}"></canvas></div></div>`)
 
-    chart.className = className
-    chart.api = api
-    charts.push(chart)
+      if (['pie', 'polarArea'].includes(config.type)) {
+        config.options.legend.labels = {
+          generateLabels
+        }
+      }
+      let chart = new Chart($baseElement.find('.' + className), config)
+      chart.api = api || className
+      charts.push(chart)
+    })
   })
+}
 
-})()
-
-
-
-function updateChart(channel_id = 'cti') {
+export function updateChart(channel_id = 'cti') {
   var promises = []
   charts.forEach(c => {
-    let api = c.className
-    if (c.api) api = c.api
-
-    let p = $.ajax(`/chartdata-${api}/${channel_id}`).then(res =>{
-      c.update(channel_id, res)
+    let p = $.ajax(`/chartdata-${c.api}/${channel_id}`).then(res => {
+      c.data = res.data
+      c.options.title = res.options.title
+      c.update()
     })
 
     promises.push(p)
@@ -73,6 +67,3 @@ function updateChart(channel_id = 'cti') {
 
   return Promise.all(promises)
 }
-
-
-export default updateChart

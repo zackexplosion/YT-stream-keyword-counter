@@ -20,12 +20,6 @@ var players = function(_players){
       })
     }
   }
-  // let p = {}
-  // player_actions.map(a => {
-  //   p[a]
-  // })
-
-  // return p
 
   return {
     unMute: function (i) {
