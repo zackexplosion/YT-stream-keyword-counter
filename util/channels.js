@@ -21,12 +21,6 @@ const channels = [
     vid: '4ZVUmEUFwaY'
   },
   {
-    id: 'wryyyy',
-    name: '嗯？',
-    vid: 'aMrlIFKtj1I',
-    skip: true
-  },
-  {
     id: 'ebc',
     name: '東森',
     vid: 'dxpWqjvEKaM'
@@ -35,6 +29,12 @@ const channels = [
     id: 'ftv',
     name: '民視',
     vid: 'XxJKnDLYZz4'
+  },
+  {
+    id: 'wryyyy',
+    name: '嗯？',
+    vid: 'aMrlIFKtj1I',
+    skip: true
   }
 ]
 
